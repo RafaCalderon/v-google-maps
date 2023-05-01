@@ -30,9 +30,24 @@ import equal from "fast-deep-equal";
 // Composables
 import {useGmapLoader} from "@/composables/gmapLoader";
 
+//Tipos
+import type CSS from "csstype";
+
 // Definiciones
 
 const props = defineProps({
+  width: {
+    required: true,
+    type: String as PropType<CSS.Property.Width>,
+  },
+  height: {
+    required: true,
+    type: String as PropType<CSS.Property.Height>,
+  },
+  borderRadius: {
+    default: "unset",
+    type: String as PropType<CSS.Property.BorderRadius>,
+  },
   options: {
     required: true,
     type: Object as PropType<google.maps.MapOptions>,
@@ -178,7 +193,9 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .v-google-map__container {
-  width: 100%;
-  height: 18.75rem;
+  overflow: hidden;
+  width: v-bind(width);
+  height: v-bind(height);
+  border-radius: v-bind(borderRadius);
 }
 </style>
