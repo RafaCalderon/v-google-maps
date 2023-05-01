@@ -15,4 +15,23 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    cssCodeSplit: true,
+    lib: {
+      formats: ["es", "cjs"],
+      name: 'VGoogleMaps',
+      entry: "./src/index.ts",
+      fileName: 'v-google-maps',
+    },
+    rollupOptions: {
+      external: [
+        "vue",
+      ],
+      output: {
+        globals: {
+          vue: "Vue",
+        },
+      },
+    },
+  },
 });
