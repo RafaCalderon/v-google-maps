@@ -8,7 +8,7 @@ Para comenzar:
 import App from './App.vue';
 import {createApp} from 'vue';
 
-import {useGmapLoader} from "@/composables/gmapLoader";
+import {useGmapLoader} from "v-google-maps/gmapLoader";
 
 const {load} = useGmapLoader();
 
