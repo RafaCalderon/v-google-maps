@@ -330,7 +330,7 @@ const q = (n, e) => {
     t[o] = r;
   return t;
 }, B = /* @__PURE__ */ q(z, [["__scopeId", "data-v-028278a8"]]), K = (n) => {
-  n.component("VGoogleMaps", B);
+  n.component("VGoogleMap", B);
 };
 export {
   U as useGmapLoader,

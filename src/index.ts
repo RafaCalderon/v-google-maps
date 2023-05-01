@@ -12,5 +12,5 @@ export {
 };
 
 export const vGoogleMaps = (app: App) => {
-  app.component("VGoogleMaps", VGoogleMap);
+  app.component("VGoogleMap", VGoogleMap);
 };
