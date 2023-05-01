@@ -1,7 +1,7 @@
 import type CSS from "csstype";
 import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
 
-declare interface VGoogleMapProps {
+export declare interface VGoogleMapProps {
   options: google.maps.MapOptions;
   center?: google.maps.LatLngLiteral | null;
   zoom?: number | null;

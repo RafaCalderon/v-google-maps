@@ -1,12 +1,16 @@
-import type {App} from "vue";
+import type {App, Ref} from "vue";
+import type {Libraries} from "@googlemaps/js-api-loader";
+
 import {IVGoogleMap} from "@/typings/vGoogleMap";
-import type {useGmapLoader as GmapLoader} from "@/composables/gmapLoader";
 
 export declare interface VGoogleMaps {
   install(app: App): void;
 }
 
-export declare function useGmapLoader(): typeof GmapLoader;
+export declare function useGmapLoader(): {
+  gmapApi: Ref<typeof google | null>;
+  load: (apiKey: string, libraries: Libraries = []) => Promise<void>;
+}
 
 export declare function vGoogleMaps(): VGoogleMaps;
 
