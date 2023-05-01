@@ -1,7 +1,7 @@
 import type {App, Ref} from "vue";
 import type {Libraries} from "@googlemaps/js-api-loader";
 
-import {IVGoogleMap} from "@/typings/vGoogleMap";
+import {IVGoogleMap} from "./vGoogleMap";
 
 export declare interface VGoogleMaps {
   install(app: App): void;
