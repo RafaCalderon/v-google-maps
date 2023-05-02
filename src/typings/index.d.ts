@@ -22,35 +22,35 @@ export declare function useGmapLoader(): {
 export declare function vGoogleMaps(): VGoogleMaps;
 
 export interface VGoogleMapRef {
-  map: Ref<google.maps.Map>;
+  map: google.maps.Map;
 }
 
 export interface VGoogleCircleRef {
-  circle: Ref<google.maps.Circle>;
+  circle: google.maps.Circle;
 }
 
 export interface VGoogleMarkerRef {
-  marker: Ref<google.maps.Marker>;
+  marker: google.maps.Marker;
 }
 
 export interface VGoogleHeatmapRef {
-  heatmap: Ref<google.maps.Heatmap>;
+  heatmap: google.maps.Heatmap;
 }
 
 export interface VGooglePolygonRef {
-  polygon: Ref<google.maps.Polygon>;
+  polygon: google.maps.Polygon;
 }
 
 export interface VGooglePolylineRef {
-  polyline: Ref<google.maps.Polyline>;
+  polyline: google.maps.Polyline;
 }
 
 export interface VGoogleRectangleRef {
-  rectangle: Ref<google.maps.Rectangle>;
+  rectangle: google.maps.Rectangle;
 }
 
 export interface VGoogleInfoWindowRef {
-  infoWindow: Ref<google.maps.InfoWindow>;
+  infoWindow: google.maps.InfoWindow;
 }
 
 declare module '@vue/runtime-core' {
