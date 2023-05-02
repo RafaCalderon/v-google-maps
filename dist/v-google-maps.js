@@ -216,7 +216,7 @@ var k = function r(t, l) {
   }
   return t !== t && l !== l;
 };
-const T = /* @__PURE__ */ b({
+const T = { class: "v-google-map__wrapper" }, Z = /* @__PURE__ */ b({
   __name: "VGoogleMap",
   props: {
     width: {
@@ -253,9 +253,9 @@ const T = /* @__PURE__ */ b({
   setup(r, { emit: t }) {
     const l = r;
     B((o) => ({
-      "3e550e08": r.width,
-      "200aacb1": r.height,
-      "2018c7e8": r.borderRadius
+      22481266: r.width,
+      "0ceb4087": r.height,
+      "5174a33e": r.borderRadius
     }));
     const { gmapApi: u } = j(), a = O(!1), i = O(null), e = O(null);
     let s = null, f = null, v = null;
@@ -314,7 +314,7 @@ const T = /* @__PURE__ */ b({
       k(o, p) || !i.value || !o || i.value.setZoom(o);
     }), A(() => {
       n(), i.value = null;
-    }), (o, p) => (M(), N("div", null, [
+    }), (o, p) => (M(), N("div", T, [
       $("div", {
         class: "v-google-map__container",
         ref_key: "mapRef",
@@ -329,7 +329,7 @@ const x = (r, t) => {
   for (const [u, a] of t)
     l[u] = a;
   return l;
-}, Z = /* @__PURE__ */ x(T, [["__scopeId", "data-v-028278a8"]]), H = b({
+}, H = /* @__PURE__ */ x(Z, [["__scopeId", "data-v-7c6ab555"]]), Q = b({
   name: "VGoogleCircle",
   props: {
     options: {
@@ -419,7 +419,7 @@ const x = (r, t) => {
       return (o = u.default) == null ? void 0 : o.call(u);
     };
   }
-}), Q = b({
+}), X = b({
   name: "VGoogleMarker",
   props: {
     options: {
@@ -484,7 +484,7 @@ const x = (r, t) => {
       return (n = u.default) == null ? void 0 : n.call(u);
     };
   }
-}), X = b({
+}), Y = b({
   name: "VGoogleHeatmap",
   props: {
     options: {
@@ -519,7 +519,7 @@ const x = (r, t) => {
       return (e = l.default) == null ? void 0 : e.call(l);
     };
   }
-}), Y = b({
+}), ee = b({
   name: "VGooglePolygon",
   props: {
     options: {
@@ -590,7 +590,7 @@ const x = (r, t) => {
       return (n = u.default) == null ? void 0 : n.call(u);
     };
   }
-}), ee = b({
+}), te = b({
   name: "VGooglePolyline",
   props: {
     options: {
@@ -661,7 +661,7 @@ const x = (r, t) => {
       return (n = u.default) == null ? void 0 : n.call(u);
     };
   }
-}), te = b({
+}), ne = b({
   name: "VGoogleRectangle",
   props: {
     options: {
@@ -732,10 +732,10 @@ const x = (r, t) => {
       return (n = u.default) == null ? void 0 : n.call(u);
     };
   }
-}), ne = {
+}), le = {
   key: 0,
   class: "v-google-info-window__container"
-}, le = /* @__PURE__ */ b({
+}, oe = /* @__PURE__ */ b({
   __name: "VGoogleInfoWindow",
   props: {
     options: {
@@ -796,7 +796,7 @@ const x = (r, t) => {
       infoWindow: d
     }), A(() => {
       p(), d.value && (d.value.close(), d.value = null);
-    }), (h, w) => W(n) ? (M(), N("div", ne, [
+    }), (h, w) => W(n) ? (M(), N("div", le, [
       $("div", {
         ref_key: "infoWindowRef",
         ref: v
@@ -806,10 +806,10 @@ const x = (r, t) => {
     ])) : q("", !0);
   }
 });
-const oe = /* @__PURE__ */ x(le, [["__scopeId", "data-v-2f6a5bf7"]]), ie = (r) => {
-  r.component("VGoogleMap", Z), r.component("VGoogleCircle", H), r.component("VGoogleMarker", Q), r.component("VGoogleHeatmap", X), r.component("VGooglePolygon", Y), r.component("VGooglePolyline", ee), r.component("VGoogleRectangle", te), r.component("VGoogleInfoWindow", oe);
+const re = /* @__PURE__ */ x(oe, [["__scopeId", "data-v-2f6a5bf7"]]), ue = (r) => {
+  r.component("VGoogleMap", H), r.component("VGoogleCircle", Q), r.component("VGoogleMarker", X), r.component("VGoogleHeatmap", Y), r.component("VGooglePolygon", ee), r.component("VGooglePolyline", te), r.component("VGoogleRectangle", ne), r.component("VGoogleInfoWindow", re);
 };
 export {
   j as useGmapLoader,
-  ie as vGoogleMaps
+  ue as vGoogleMaps
 };

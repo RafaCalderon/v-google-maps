@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="v-google-map__wrapper">
     <div
       class="v-google-map__container"
       ref="mapRef"
@@ -192,6 +192,11 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.v-google-map__wrapper {
+  width: v-bind(width);
+  height: v-bind(height);
+}
+
 .v-google-map__container {
   overflow: hidden;
   width: v-bind(width);

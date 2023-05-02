@@ -8,15 +8,17 @@ Para comenzar:
 import App from './App.vue';
 import {createApp} from 'vue';
 
-import {useGmapLoader} from "v-google-maps/gmapLoader";
+import "v-google-maps/dist/index.css";
+import { useGmapLoader, vGoogleMaps } from "v-google-maps";
 
 const {load} = useGmapLoader();
 
 (async () => {
   await load(
-    import.meta.API_KEY,
-    ["visualization"], // Libraries
+    import.meta.env.VITE_API_KEY,
+    ["visualization", "geometry"], // Libraries
   );
+  app.use(vGoogleMaps);
   createApp(App).mount('#app');
 })();
 ```
