@@ -1,16 +1,16 @@
-import { ref as O, defineComponent as b, useCssVars as B, provide as P, computed as _, onMounted as S, markRaw as I, nextTick as D, watch as y, onBeforeUnmount as A, openBlock as M, createElementBlock as N, createElementVNode as $, renderSlot as U, createCommentVNode as q, inject as C, onUnmounted as z, useSlots as J, unref as W } from "vue";
-var F = function r(t, l) {
+import { ref as L, defineComponent as b, useCssVars as B, provide as P, computed as _, onMounted as S, markRaw as I, nextTick as D, watch as k, onBeforeUnmount as A, openBlock as M, createElementBlock as N, createElementVNode as $, renderSlot as U, createCommentVNode as q, inject as C, onUnmounted as z, useSlots as J, unref as W } from "vue";
+var F = function o(t, l) {
   if (t === l)
     return !0;
   if (t && l && typeof t == "object" && typeof l == "object") {
     if (t.constructor !== l.constructor)
       return !1;
-    var u, a, i;
+    var r, i, u;
     if (Array.isArray(t)) {
-      if (u = t.length, u != l.length)
+      if (r = t.length, r != l.length)
         return !1;
-      for (a = u; a-- !== 0; )
-        if (!r(t[a], l[a]))
+      for (i = r; i-- !== 0; )
+        if (!o(t[i], l[i]))
           return !1;
       return !0;
     }
@@ -20,14 +20,14 @@ var F = function r(t, l) {
       return t.valueOf() === l.valueOf();
     if (t.toString !== Object.prototype.toString)
       return t.toString() === l.toString();
-    if (i = Object.keys(t), u = i.length, u !== Object.keys(l).length)
+    if (u = Object.keys(t), r = u.length, r !== Object.keys(l).length)
       return !1;
-    for (a = u; a-- !== 0; )
-      if (!Object.prototype.hasOwnProperty.call(l, i[a]))
+    for (i = r; i-- !== 0; )
+      if (!Object.prototype.hasOwnProperty.call(l, u[i]))
         return !1;
-    for (a = u; a-- !== 0; ) {
-      var e = i[a];
-      if (!r(t[e], l[e]))
+    for (i = r; i-- !== 0; ) {
+      var e = u[i];
+      if (!o(t[e], l[e]))
         return !1;
     }
     return !0;
@@ -36,8 +36,8 @@ var F = function r(t, l) {
 };
 const R = "__googleMapsScriptId";
 var V;
-(function(r) {
-  r[r.INITIALIZED = 0] = "INITIALIZED", r[r.LOADING = 1] = "LOADING", r[r.SUCCESS = 2] = "SUCCESS", r[r.FAILURE = 3] = "FAILURE";
+(function(o) {
+  o[o.INITIALIZED = 0] = "INITIALIZED", o[o.LOADING = 1] = "LOADING", o[o.SUCCESS = 2] = "SUCCESS", o[o.FAILURE = 3] = "FAILURE";
 })(V || (V = {}));
 class G {
   /**
@@ -49,8 +49,8 @@ class G {
    * const loader = Loader({apiKey, version: 'weekly', libraries: ['places']});
    * ```
    */
-  constructor({ apiKey: t, authReferrerPolicy: l, channel: u, client: a, id: i = R, language: e, libraries: s = [], mapIds: f, nonce: v, region: d, retries: g = 3, url: m = "https://maps.googleapis.com/maps/api/js", version: n }) {
-    if (this.CALLBACK = "__googleMapsCallback", this.callbacks = [], this.done = !1, this.loading = !1, this.errors = [], this.apiKey = t, this.authReferrerPolicy = l, this.channel = u, this.client = a, this.id = i || R, this.language = e, this.libraries = s, this.mapIds = f, this.nonce = v, this.region = d, this.retries = g, this.url = m, this.version = n, G.instance) {
+  constructor({ apiKey: t, authReferrerPolicy: l, channel: r, client: i, id: u = R, language: e, libraries: c = [], mapIds: f, nonce: p, region: v, retries: g = 3, url: h = "https://maps.googleapis.com/maps/api/js", version: n }) {
+    if (this.CALLBACK = "__googleMapsCallback", this.callbacks = [], this.done = !1, this.loading = !1, this.errors = [], this.apiKey = t, this.authReferrerPolicy = l, this.channel = r, this.client = i, this.id = u || R, this.language = e, this.libraries = c, this.mapIds = f, this.nonce = p, this.region = v, this.retries = g, this.url = h, this.version = n, G.instance) {
       if (!F(this.options, G.instance.options))
         throw new Error(`Loader must not be called again with different options. ${JSON.stringify(this.options)} !== ${JSON.stringify(G.instance.options)}`);
       return G.instance;
@@ -105,8 +105,8 @@ class G {
    */
   loadPromise() {
     return new Promise((t, l) => {
-      this.loadCallback((u) => {
-        u ? l(u.error) : t(window.google);
+      this.loadCallback((r) => {
+        r ? l(r.error) : t(window.google);
       });
     });
   }
@@ -165,12 +165,12 @@ class G {
     }
   }
 }
-const E = O(null);
-async function K(r, t = []) {
+const E = L(null);
+async function K(o, t = []) {
   if (E.value)
     return;
   const l = new G({
-    apiKey: r,
+    apiKey: o,
     libraries: t
   });
   E.value = await l.load();
@@ -181,18 +181,18 @@ function j() {
     load: K
   };
 }
-var k = function r(t, l) {
+var O = function o(t, l) {
   if (t === l)
     return !0;
   if (t && l && typeof t == "object" && typeof l == "object") {
     if (t.constructor !== l.constructor)
       return !1;
-    var u, a, i;
+    var r, i, u;
     if (Array.isArray(t)) {
-      if (u = t.length, u != l.length)
+      if (r = t.length, r != l.length)
         return !1;
-      for (a = u; a-- !== 0; )
-        if (!r(t[a], l[a]))
+      for (i = r; i-- !== 0; )
+        if (!o(t[i], l[i]))
           return !1;
       return !0;
     }
@@ -202,14 +202,14 @@ var k = function r(t, l) {
       return t.valueOf() === l.valueOf();
     if (t.toString !== Object.prototype.toString)
       return t.toString() === l.toString();
-    if (i = Object.keys(t), u = i.length, u !== Object.keys(l).length)
+    if (u = Object.keys(t), r = u.length, r !== Object.keys(l).length)
       return !1;
-    for (a = u; a-- !== 0; )
-      if (!Object.prototype.hasOwnProperty.call(l, i[a]))
+    for (i = r; i-- !== 0; )
+      if (!Object.prototype.hasOwnProperty.call(l, u[i]))
         return !1;
-    for (a = u; a-- !== 0; ) {
-      var e = i[a];
-      if (!r(t[e], l[e]))
+    for (i = r; i-- !== 0; ) {
+      var e = u[i];
+      if (!o(t[e], l[e]))
         return !1;
     }
     return !0;
@@ -250,86 +250,88 @@ const T = { class: "v-google-map__wrapper" }, Z = /* @__PURE__ */ b({
     "update:zoom",
     "update:center"
   ],
-  setup(r, { emit: t }) {
-    const l = r;
-    B((o) => ({
-      22481266: r.width,
-      "0ceb4087": r.height,
-      "5174a33e": r.borderRadius
+  setup(o, { expose: t, emit: l }) {
+    const r = o;
+    B((a) => ({
+      "77cd9c80": o.width,
+      "6816f9ad": o.height,
+      c9433038: o.borderRadius
     }));
-    const { gmapApi: u } = j(), a = O(!1), i = O(null), e = O(null);
-    let s = null, f = null, v = null;
-    P("google-map", i);
-    const d = _({
+    const { gmapApi: i } = j(), u = L(!1), e = L(null), c = L(null);
+    let f = null, p = null, v = null;
+    P("google-map", e);
+    const g = _({
       get() {
-        return l.center;
+        return r.center;
       },
-      set(o) {
-        t("update:center", o);
+      set(a) {
+        l("update:center", a);
       }
-    }), g = _({
+    }), h = _({
       get() {
-        return l.zoom;
+        return r.zoom;
       },
-      set(o) {
-        t("update:zoom", o);
+      set(a) {
+        l("update:zoom", a);
       }
     });
     S(async () => {
-      if (!e.value || !u.value)
+      if (!c.value || !i.value)
         return;
-      const o = {
-        ...l.options
+      const a = {
+        ...r.options
       };
-      d.value && (o.center = {
-        ...d.value
-      }), g.value && (o.zoom = g.value), i.value = I(new u.value.maps.Map(e.value, {
-        ...o
-      })), a.value = !0, await D(), m(), t("ready");
+      g.value && (a.center = {
+        ...g.value
+      }), h.value && (a.zoom = h.value), e.value = I(new i.value.maps.Map(c.value, {
+        ...a
+      })), u.value = !0, await D(), n(), l("ready");
     });
-    function m() {
-      i.value && (s = i.value.addListener("click", c), f = i.value.addListener("dragend", () => {
-        var o, p;
-        d.value = ((p = (o = i.value) == null ? void 0 : o.getCenter()) == null ? void 0 : p.toJSON()) ?? null;
-      }), v = i.value.addListener("zoom_changed", () => {
-        var o;
-        g.value = ((o = i.value) == null ? void 0 : o.getZoom()) ?? 0;
+    function n() {
+      e.value && (f = e.value.addListener("click", s), p = e.value.addListener("dragend", () => {
+        var a, m;
+        g.value = ((m = (a = e.value) == null ? void 0 : a.getCenter()) == null ? void 0 : m.toJSON()) ?? null;
+      }), v = e.value.addListener("zoom_changed", () => {
+        var a;
+        h.value = ((a = e.value) == null ? void 0 : a.getZoom()) ?? 0;
       }));
     }
-    function n() {
-      s && s.remove(), f && f.remove(), v && v.remove();
+    function d() {
+      f && f.remove(), p && p.remove(), v && v.remove();
     }
-    function c(o) {
-      t("click", o);
+    function s(a) {
+      l("click", a);
     }
-    return y(() => l.options, (o, p) => {
-      !i.value || k(o, p) || i.value.setOptions(l.options);
+    return k(() => r.options, (a, m) => {
+      !e.value || O(a, m) || e.value.setOptions(r.options);
     }, {
       deep: !0
-    }), y(d, (o, p) => {
-      k(o, p) || !i.value || !o || i.value.setCenter({
-        ...o
+    }), k(g, (a, m) => {
+      O(a, m) || !e.value || !a || e.value.setCenter({
+        ...a
       });
-    }), y(g, (o, p) => {
-      k(o, p) || !i.value || !o || i.value.setZoom(o);
+    }), k(h, (a, m) => {
+      O(a, m) || !e.value || !a || e.value.setZoom(a);
+    }), t({
+      map: e
     }), A(() => {
-      n(), i.value = null;
-    }), (o, p) => (M(), N("div", T, [
+      d(), e.value = null;
+    }), (a, m) => (M(), N("div", T, [
       $("div", {
         class: "v-google-map__container",
         ref_key: "mapRef",
-        ref: e
+        ref: c
       }, null, 512),
-      a.value ? U(o.$slots, "default", { key: 0 }, void 0, !0) : q("", !0)
+      u.value ? U(a.$slots, "default", { key: 0 }, void 0, !0) : q("", !0)
     ]));
   }
 });
-const x = (r, t) => {
-  const l = r.__vccOpts || r;
-  for (const [u, a] of t)
-    l[u] = a;
+const x = (o, t) => {
+  const l = o.__vccOpts || o;
+  for (const [r, i] of t)
+    l[r] = i;
   return l;
-}, H = /* @__PURE__ */ x(Z, [["__scopeId", "data-v-7c6ab555"]]), Q = b({
+}, H = /* @__PURE__ */ x(Z, [["__scopeId", "data-v-6a7d8b8f"]]), Q = b({
   name: "VGoogleCircle",
   props: {
     options: {
@@ -350,73 +352,73 @@ const x = (r, t) => {
     "update:center",
     "update:radius"
   ],
-  setup(r, { emit: t, expose: l, slots: u }) {
-    const { gmapApi: a } = j(), i = C("google-map");
+  setup(o, { emit: t, expose: l, slots: r }) {
+    const { gmapApi: i } = j(), u = C("google-map");
     S(() => {
-      if (i != null && i.value && a.value) {
-        const o = {
-          ...r.options
+      if (u != null && u.value && i.value) {
+        const s = {
+          ...o.options
         };
-        d.value && (o.center = {
-          ...d.value
-        }), g.value && (o.radius = g.value), e.value = I(new a.value.maps.Circle({
-          map: i.value,
-          ...o
-        })), m();
+        v.value && (s.center = {
+          ...v.value
+        }), g.value && (s.radius = g.value), e.value = I(new i.value.maps.Circle({
+          map: u.value,
+          ...s
+        })), h();
       }
     });
-    const e = O(null);
-    let s = null, f = null, v = null;
-    const d = _({
+    const e = L(null);
+    let c = null, f = null, p = null;
+    const v = _({
       get() {
-        return r.center;
+        return o.center;
       },
-      set(o) {
-        t("update:center", o);
+      set(s) {
+        t("update:center", s);
       }
     }), g = _({
       get() {
-        return r.radius;
+        return o.radius;
       },
-      set(o) {
-        t("update:radius", o);
+      set(s) {
+        t("update:radius", s);
       }
     });
-    function m() {
-      e.value && (s = e.value.addListener("click", c), f = e.value.addListener("radius_changed", () => {
-        var o;
-        g.value = ((o = e.value) == null ? void 0 : o.getRadius()) ?? null;
-      }), v = e.value.addListener("center_changed", () => {
-        var p, L;
-        const o = (L = (p = e.value) == null ? void 0 : p.getCenter()) == null ? void 0 : L.toJSON();
-        o && (d.value = {
-          ...o
+    function h() {
+      e.value && (c = e.value.addListener("click", d), f = e.value.addListener("radius_changed", () => {
+        var s;
+        g.value = ((s = e.value) == null ? void 0 : s.getRadius()) ?? null;
+      }), p = e.value.addListener("center_changed", () => {
+        var a, m;
+        const s = (m = (a = e.value) == null ? void 0 : a.getCenter()) == null ? void 0 : m.toJSON();
+        s && (v.value = {
+          ...s
         });
       }));
     }
     function n() {
-      s && s.remove(), f && f.remove(), v && v.remove();
+      c && c.remove(), f && f.remove(), p && p.remove();
     }
-    function c(o) {
-      t("click", o);
+    function d(s) {
+      t("click", s);
     }
-    return y(() => r.options, (o, p) => {
-      !e.value || k(o, p) || e.value.setOptions(r.options);
+    return k(() => o.options, (s, a) => {
+      !e.value || O(s, a) || e.value.setOptions(o.options);
     }, {
       deep: !0
-    }), y(d, (o, p) => {
-      k(o, p) || !e.value || !o || e.value.setCenter({
-        ...o
+    }), k(v, (s, a) => {
+      O(s, a) || !e.value || !s || e.value.setCenter({
+        ...s
       });
-    }), y(g, (o, p) => {
-      k(o, p) || !e.value || !o || e.value.setRadius(o);
+    }), k(g, (s, a) => {
+      O(s, a) || !e.value || !s || e.value.setRadius(s);
     }), l({
       circle: e
     }), A(() => {
       n(), e.value && (e.value.setMap(null), e.value = null);
     }), () => {
-      var o;
-      return (o = u.default) == null ? void 0 : o.call(u);
+      var s;
+      return (s = r.default) == null ? void 0 : s.call(r);
     };
   }
 }), X = b({
@@ -435,53 +437,53 @@ const x = (r, t) => {
     "click",
     "update:model-value"
   ],
-  setup(r, { emit: t, expose: l, slots: u }) {
-    const { gmapApi: a } = j(), i = C("google-map"), e = O(null);
-    let s = null, f = null;
-    if (i != null && i.value && a.value) {
+  setup(o, { emit: t, expose: l, slots: r }) {
+    const { gmapApi: i } = j(), u = C("google-map"), e = L(null);
+    let c = null, f = null;
+    if (u != null && u.value && i.value) {
       const n = {
-        ...r.options
+        ...o.options
       };
-      r.modelValue && (n.position = {
-        ...r.modelValue
-      }), e.value = I(new a.value.maps.Marker({
-        map: i.value,
+      o.modelValue && (n.position = {
+        ...o.modelValue
+      }), e.value = I(new i.value.maps.Marker({
+        map: u.value,
         ...n
-      })), d();
+      })), v();
     }
-    const v = _({
+    const p = _({
       get() {
-        return r.modelValue;
+        return o.modelValue;
       },
       set(n) {
         t("update:model-value", n);
       }
     });
-    function d() {
-      e.value && (s = e.value.addListener("click", m), f = e.value.addListener("mouseup", () => {
-        var n, c;
-        v.value = ((c = (n = e.value) == null ? void 0 : n.getPosition()) == null ? void 0 : c.toJSON()) ?? null;
+    function v() {
+      e.value && (c = e.value.addListener("click", h), f = e.value.addListener("mouseup", () => {
+        var n, d;
+        p.value = ((d = (n = e.value) == null ? void 0 : n.getPosition()) == null ? void 0 : d.toJSON()) ?? null;
       }));
     }
     function g() {
-      s && s.remove(), f && f.remove();
+      c && c.remove(), f && f.remove();
     }
-    function m(n) {
+    function h(n) {
       t("click", n);
     }
-    return y(() => r.options, (n, c) => {
-      !e.value || k(n, c) || e.value.setOptions(r.options);
+    return k(() => o.options, (n, d) => {
+      !e.value || O(n, d) || e.value.setOptions(o.options);
     }, {
       deep: !0
-    }), y(v, (n, c) => {
-      k(n, c) || !e.value || e.value.setPosition(n);
+    }), k(p, (n, d) => {
+      O(n, d) || !e.value || e.value.setPosition(n);
     }), l({
       marker: e
     }), P("marker", e), A(() => {
       g(), e.value && (e.value.setMap(null), e.value = null);
     }), () => {
       var n;
-      return (n = u.default) == null ? void 0 : n.call(u);
+      return (n = r.default) == null ? void 0 : n.call(r);
     };
   }
 }), Y = b({
@@ -492,28 +494,28 @@ const x = (r, t) => {
       type: Object
     }
   },
-  setup(r, { expose: t, slots: l }) {
-    const { gmapApi: u } = j(), a = C("google-map");
+  setup(o, { expose: t, slots: l }) {
+    const { gmapApi: r } = j(), i = C("google-map");
     S(() => {
-      if (a != null && a.value && u.value) {
+      if (i != null && i.value && r.value) {
         const e = {
-          ...r.options
+          ...o.options
         };
-        i.value = I(new u.value.maps.visualization.HeatmapLayer({
-          map: a.value,
+        u.value = I(new r.value.maps.visualization.HeatmapLayer({
+          map: i.value,
           ...e
         }));
       }
     });
-    const i = O(null);
-    return y(() => r.options, (e, s) => {
-      !i.value || k(e, s) || i.value.setOptions(r.options);
+    const u = L(null);
+    return k(() => o.options, (e, c) => {
+      !u.value || O(e, c) || u.value.setOptions(o.options);
     }, {
       deep: !0
     }), z(() => {
-      i.value && (i.value.setMap(null), i.value = null);
+      u.value && (u.value.setMap(null), u.value = null);
     }), t({
-      heatmap: i
+      heatmap: u
     }), () => {
       var e;
       return (e = l.default) == null ? void 0 : e.call(l);
@@ -535,59 +537,59 @@ const x = (r, t) => {
     "click",
     "update:model-value"
   ],
-  setup(r, { emit: t, expose: l, slots: u }) {
-    const { gmapApi: a } = j(), i = C("google-map");
+  setup(o, { emit: t, expose: l, slots: r }) {
+    const { gmapApi: i } = j(), u = C("google-map");
     S(() => {
-      if (i != null && i.value && a.value) {
+      if (u != null && u.value && i.value) {
         const n = {
-          ...r.options
+          ...o.options
         };
-        v.value && (n.paths = [
-          ...v.value
-        ]), e.value = I(new a.value.maps.Polygon({
-          map: i.value,
+        p.value && (n.paths = [
+          ...p.value
+        ]), e.value = I(new i.value.maps.Polygon({
+          map: u.value,
           ...n
-        })), d();
+        })), v();
       }
     });
-    const e = O(null);
-    let s = null, f = null;
-    const v = _({
+    const e = L(null);
+    let c = null, f = null;
+    const p = _({
       get() {
-        return r.modelValue;
+        return o.modelValue;
       },
       set(n) {
         t("update:model-value", n);
       }
     });
-    function d() {
-      e.value && (s = e.value.addListener("click", m), f = e.value.addListener("mouseup", () => {
-        var c, o, p;
-        const n = (p = (o = (c = e.value) == null ? void 0 : c.getPath()) == null ? void 0 : o.getArray()) == null ? void 0 : p.map((L) => L.toJSON());
-        n && (v.value = [
+    function v() {
+      e.value && (c = e.value.addListener("click", h), f = e.value.addListener("mouseup", () => {
+        var d, s, a;
+        const n = (a = (s = (d = e.value) == null ? void 0 : d.getPath()) == null ? void 0 : s.getArray()) == null ? void 0 : a.map((m) => m.toJSON());
+        n && (p.value = [
           ...n
         ]);
       }));
     }
     function g() {
-      s && s.remove(), f && f.remove();
+      c && c.remove(), f && f.remove();
     }
-    function m(n) {
+    function h(n) {
       t("click", n);
     }
-    return y(() => r.options, (n, c) => {
-      !e.value || k(n, c) || e.value.setOptions(r.options);
+    return k(() => o.options, (n, d) => {
+      !e.value || O(n, d) || e.value.setOptions(o.options);
     }, {
       deep: !0
-    }), y(v, (n, c) => {
-      k(n, c) || !e.value || !n || e.value.setPath(n);
+    }), k(p, (n, d) => {
+      O(n, d) || !e.value || !n || e.value.setPath(n);
     }), l({
       polygon: e
     }), A(() => {
       g(), e.value && (e.value.setMap(null), e.value = null);
     }), () => {
       var n;
-      return (n = u.default) == null ? void 0 : n.call(u);
+      return (n = r.default) == null ? void 0 : n.call(r);
     };
   }
 }), te = b({
@@ -606,59 +608,59 @@ const x = (r, t) => {
     "click",
     "update:model-value"
   ],
-  setup(r, { emit: t, expose: l, slots: u }) {
-    const { gmapApi: a } = j(), i = C("google-map");
+  setup(o, { emit: t, expose: l, slots: r }) {
+    const { gmapApi: i } = j(), u = C("google-map");
     S(() => {
-      if (i != null && i.value && a.value) {
+      if (u != null && u.value && i.value) {
         const n = {
-          ...r.options
+          ...o.options
         };
-        v.value && (n.path = [
-          ...v.value
-        ]), e.value = I(new a.value.maps.Polyline({
+        p.value && (n.path = [
+          ...p.value
+        ]), e.value = I(new i.value.maps.Polyline({
           ...n,
-          map: i.value
-        })), d();
+          map: u.value
+        })), v();
       }
     });
-    const e = O(null);
-    let s = null, f = null;
-    const v = _({
+    const e = L(null);
+    let c = null, f = null;
+    const p = _({
       get() {
-        return r.modelValue;
+        return o.modelValue;
       },
       set(n) {
         t("update:model-value", n);
       }
     });
-    function d() {
-      e.value && (s = e.value.addListener("click", m), f = e.value.addListener("mouseup", () => {
-        var c, o, p;
-        const n = (p = (o = (c = e.value) == null ? void 0 : c.getPath()) == null ? void 0 : o.getArray()) == null ? void 0 : p.map((L) => L.toJSON());
-        n && (v.value = [
+    function v() {
+      e.value && (c = e.value.addListener("click", h), f = e.value.addListener("mouseup", () => {
+        var d, s, a;
+        const n = (a = (s = (d = e.value) == null ? void 0 : d.getPath()) == null ? void 0 : s.getArray()) == null ? void 0 : a.map((m) => m.toJSON());
+        n && (p.value = [
           ...n
         ]);
       }));
     }
     function g() {
-      s && s.remove(), f && f.remove();
+      c && c.remove(), f && f.remove();
     }
-    function m(n) {
+    function h(n) {
       t("click", n);
     }
-    return y(() => r.options, (n, c) => {
-      !e.value || k(n, c) || e.value.setOptions(r.options);
+    return k(() => o.options, (n, d) => {
+      !e.value || O(n, d) || e.value.setOptions(o.options);
     }, {
       deep: !0
-    }), y(v, (n, c) => {
-      k(n, c) || !e.value || !n || e.value.setPath(n);
+    }), k(p, (n, d) => {
+      O(n, d) || !e.value || !n || e.value.setPath(n);
     }), l({
       polyline: e
     }), A(() => {
       g(), e.value && (e.value.setMap(null), e.value = null);
     }), () => {
       var n;
-      return (n = u.default) == null ? void 0 : n.call(u);
+      return (n = r.default) == null ? void 0 : n.call(r);
     };
   }
 }), ne = b({
@@ -677,59 +679,59 @@ const x = (r, t) => {
     "click",
     "update:model-value"
   ],
-  setup(r, { emit: t, expose: l, slots: u }) {
-    const { gmapApi: a } = j(), i = C("google-map");
+  setup(o, { emit: t, expose: l, slots: r }) {
+    const { gmapApi: i } = j(), u = C("google-map");
     S(() => {
-      if (i != null && i.value && a.value) {
+      if (u != null && u.value && i.value) {
         const n = {
-          ...r.options
+          ...o.options
         };
-        v.value && (n.bounds = {
-          ...v.value
-        }), e.value = I(new a.value.maps.Rectangle({
-          map: i.value,
+        p.value && (n.bounds = {
+          ...p.value
+        }), e.value = I(new i.value.maps.Rectangle({
+          map: u.value,
           ...n
-        })), d();
+        })), v();
       }
     });
-    const e = O(null);
-    let s = null, f = null;
-    const v = _({
+    const e = L(null);
+    let c = null, f = null;
+    const p = _({
       get() {
-        return r.modelValue;
+        return o.modelValue;
       },
       set(n) {
         t("update:model-value", n);
       }
     });
-    function d() {
-      e.value && (s = e.value.addListener("click", m), f = e.value.addListener("bounds_changed", () => {
-        var c, o;
-        const n = (o = (c = e.value) == null ? void 0 : c.getBounds()) == null ? void 0 : o.toJSON();
-        n && (v.value = {
+    function v() {
+      e.value && (c = e.value.addListener("click", h), f = e.value.addListener("bounds_changed", () => {
+        var d, s;
+        const n = (s = (d = e.value) == null ? void 0 : d.getBounds()) == null ? void 0 : s.toJSON();
+        n && (p.value = {
           ...n
         });
       }));
     }
     function g() {
-      s && s.remove(), f && f.remove();
+      c && c.remove(), f && f.remove();
     }
-    function m(n) {
+    function h(n) {
       t("click", n);
     }
-    return y(() => r.options, (n, c) => {
-      !e.value || k(n, c) || e.value.setOptions(r.options);
+    return k(() => o.options, (n, d) => {
+      !e.value || O(n, d) || e.value.setOptions(o.options);
     }, {
       deep: !0
-    }), y(v, (n, c) => {
-      k(n, c) || !e.value || !n || e.value.setBounds(n);
+    }), k(p, (n, d) => {
+      O(n, d) || !e.value || !n || e.value.setBounds(n);
     }), l({
       rectangle: e
     }), A(() => {
       g(), e.value && (e.value.setMap(null), e.value = null);
     }), () => {
       var n;
-      return (n = u.default) == null ? void 0 : n.call(u);
+      return (n = r.default) == null ? void 0 : n.call(r);
     };
   }
 }), le = {
@@ -751,63 +753,63 @@ const x = (r, t) => {
     "click",
     "update:model-value"
   ],
-  setup(r, { expose: t, emit: l }) {
-    const u = r, a = J(), { gmapApi: i } = j(), e = C("google-map"), s = C("marker", O(null));
+  setup(o, { expose: t, emit: l }) {
+    const r = o, i = J(), { gmapApi: u } = j(), e = C("google-map"), c = C("marker", L(null));
     S(() => {
-      var h;
-      i.value && (d.value = I(new i.value.maps.InfoWindow({
-        ...u.options,
-        content: n.value ? v.value : (h = u.options) == null ? void 0 : h.content
-      })), o(), c.value && L());
+      var y;
+      u.value && (v.value = I(new u.value.maps.InfoWindow({
+        ...r.options,
+        content: n.value ? p.value : (y = r.options) == null ? void 0 : y.content
+      })), s(), d.value && m());
     });
-    const f = O(!1), v = O(), d = O(null);
-    let g = null, m = null;
+    const f = L(!1), p = L(), v = L(null);
+    let g = null, h = null;
     const n = _(() => {
-      var h;
-      return (h = a.default) == null ? void 0 : h.call(a).some((w) => w.type !== Comment);
-    }), c = _({
+      var y;
+      return (y = i.default) == null ? void 0 : y.call(i).some((w) => w.type !== Comment);
+    }), d = _({
       get() {
-        return u.modelValue;
+        return r.modelValue;
       },
-      set(h) {
-        l("update:model-value", h);
+      set(y) {
+        l("update:model-value", y);
       }
     });
-    function o() {
-      var h;
-      !(s != null && s.value) || !d.value || (m = (h = s.value) == null ? void 0 : h.addListener("click", L), g = d.value.addListener("closeclick", L));
+    function s() {
+      var y;
+      !(c != null && c.value) || !v.value || (h = (y = c.value) == null ? void 0 : y.addListener("click", m), g = v.value.addListener("closeclick", m));
     }
-    function p() {
-      m && m.remove(), g && g.remove();
+    function a() {
+      h && h.remove(), g && g.remove();
     }
-    function L() {
-      !d.value || !(e != null && e.value) || (f.value = !f.value, f.value ? d.value.open({
+    function m() {
+      !v.value || !(e != null && e.value) || (f.value = !f.value, f.value ? v.value.open({
         map: e.value,
-        anchor: s == null ? void 0 : s.value
-      }) : d.value.close(), c.value = f.value);
+        anchor: c == null ? void 0 : c.value
+      }) : v.value.close(), d.value = f.value);
     }
-    return y(() => u.options, (h, w) => {
-      !d.value || k(h, w) || d.value.setOptions(u.options);
+    return k(() => r.options, (y, w) => {
+      !v.value || O(y, w) || v.value.setOptions(r.options);
     }, {
       deep: !0
-    }), y(c, (h) => {
-      h === null || h === f.value || L();
+    }), k(d, (y) => {
+      y === null || y === f.value || m();
     }), t({
-      infoWindow: d
+      infoWindow: v
     }), A(() => {
-      p(), d.value && (d.value.close(), d.value = null);
-    }), (h, w) => W(n) ? (M(), N("div", le, [
+      a(), v.value && (v.value.close(), v.value = null);
+    }), (y, w) => W(n) ? (M(), N("div", le, [
       $("div", {
         ref_key: "infoWindowRef",
-        ref: v
+        ref: p
       }, [
-        U(h.$slots, "default", {}, void 0, !0)
+        U(y.$slots, "default", {}, void 0, !0)
       ], 512)
     ])) : q("", !0);
   }
 });
-const re = /* @__PURE__ */ x(oe, [["__scopeId", "data-v-2f6a5bf7"]]), ue = (r) => {
-  r.component("VGoogleMap", H), r.component("VGoogleCircle", Q), r.component("VGoogleMarker", X), r.component("VGoogleHeatmap", Y), r.component("VGooglePolygon", ee), r.component("VGooglePolyline", te), r.component("VGoogleRectangle", ne), r.component("VGoogleInfoWindow", re);
+const re = /* @__PURE__ */ x(oe, [["__scopeId", "data-v-2f6a5bf7"]]), ue = (o) => {
+  o.component("VGoogleMap", H), o.component("VGoogleCircle", Q), o.component("VGoogleMarker", X), o.component("VGoogleHeatmap", Y), o.component("VGooglePolygon", ee), o.component("VGooglePolyline", te), o.component("VGoogleRectangle", ne), o.component("VGoogleInfoWindow", re);
 };
 export {
   j as useGmapLoader,

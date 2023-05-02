@@ -11,6 +11,7 @@ export declare interface VGoogleMapProps {
   "@click"?: (ev: google.maps.MapMouseEvent) => void;
   "@update:center"?: (center: google.maps.LatLngLiteral | null) => void;
   "@update:zoom"?: (zoom: number | null) => void;
+  "@ready"?: () => void;
 }
 
 export declare const IVGoogleMap: new () => {

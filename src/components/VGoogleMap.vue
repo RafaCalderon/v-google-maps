@@ -183,6 +183,12 @@ watch(zoomValue, (newValue: number | null, oldValue: number | null) => {
   map.value.setZoom(newValue);
 });
 
+// Expose
+
+defineExpose({
+  map,
+});
+
 // BeforeUnmounted
 
 onBeforeUnmount(() => {

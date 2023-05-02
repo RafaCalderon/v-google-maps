@@ -1,7 +1,6 @@
 import {createApp} from 'vue';
 import App from './App.vue';
 
-import './assets/main.css';
 import {useGmapLoader} from "@/composables/gmapLoader";
 
 const {load} = useGmapLoader();

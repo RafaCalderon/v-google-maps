@@ -21,6 +21,38 @@ export declare function useGmapLoader(): {
 
 export declare function vGoogleMaps(): VGoogleMaps;
 
+export interface VGoogleMapRef {
+  map: Ref<google.maps.Map>;
+}
+
+export interface VGoogleCircleRef {
+  circle: Ref<google.maps.Circle>;
+}
+
+export interface VGoogleMarkerRef {
+  marker: Ref<google.maps.Marker>;
+}
+
+export interface VGoogleHeatmapRef {
+  heatmap: Ref<google.maps.Heatmap>;
+}
+
+export interface VGooglePolygonRef {
+  polygon: Ref<google.maps.Polygon>;
+}
+
+export interface VGooglePolylineRef {
+  polyline: Ref<google.maps.Polyline>;
+}
+
+export interface VGoogleRectangleRef {
+  rectangle: Ref<google.maps.Rectangle>;
+}
+
+export interface VGoogleInfoWindowRef {
+  infoWindow: Ref<google.maps.InfoWindow>;
+}
+
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     VGoogleMap: typeof IVGoogleMap;
