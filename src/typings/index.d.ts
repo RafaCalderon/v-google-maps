@@ -2,7 +2,7 @@ import type {App, Ref} from "vue";
 import type {Libraries} from "@googlemaps/js-api-loader";
 
 import {IVGoogleMap} from "./vGoogleMap";
-import {IVGoogleCircle} from "./vGoogleCircle";
+import VGoogleCircle from "./vGoogleCircle";
 import {IVGoogleMarker} from "./vGoogleMarker";
 import {IVGoogleHeatmap} from "./vGoogleHeatmap";
 import {IVGooglePolygon} from "./vGooglePolygon";
@@ -56,7 +56,7 @@ export interface VGoogleInfoWindowRef {
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     VGoogleMap: typeof IVGoogleMap;
-    VGoogleCircle: typeof IVGoogleCircle;
+    VGoogleCircle: VGoogleCircle;
     VGoogleMarker: typeof IVGoogleMarker;
     VGoogleHeatmap: typeof IVGoogleHeatmap;
     VGooglePolygon: typeof IVGooglePolygon;
