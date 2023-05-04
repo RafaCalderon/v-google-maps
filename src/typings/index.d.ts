@@ -2,7 +2,7 @@ import type {App, Ref} from "vue";
 import type {Libraries} from "@googlemaps/js-api-loader";
 
 import {IVGoogleMap} from "./vGoogleMap";
-import VGoogleCircle from "./vGoogleCircle";
+import {VGoogleCircle} from "./vGoogleCircle";
 import {IVGoogleMarker} from "./vGoogleMarker";
 import {IVGoogleHeatmap} from "./vGoogleHeatmap";
 import {IVGooglePolygon} from "./vGooglePolygon";

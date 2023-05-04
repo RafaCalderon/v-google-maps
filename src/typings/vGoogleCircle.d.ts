@@ -1,6 +1,6 @@
-import type {PropType} from "vue";
+import type {PropType, DefineComponent} from "vue";
 
-export default DefineComponent<{
+export type VGoogleCircle =  DefineComponent<{
   options: {
     required: true;
     type: PropType<google.maps.MarkerOptions>
