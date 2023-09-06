@@ -1,14 +1,20 @@
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type {PropType, DefineComponent} from "vue";
 
-export declare interface VGoogleCircleProps {
-  options: google.maps.CircleOptions;
-  center?: google.maps.LatLngLiteral | null | undefined;
-  radius?: number | null | undefined;
-  "@click"?: (ev: google.maps.MapMouseEvent) => void;
-  "@update:center"?: (center: google.maps.LatLngLiteral | null) => void;
-  "@update:radius"?: (zoom: number | null) => void;
-}
-
-export declare const IVGoogleCircle: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGoogleCircleProps;
-};
+export type VGoogleCircle =  DefineComponent<{
+  options: {
+    required: true;
+    type: PropType<google.maps.MarkerOptions>
+  };
+  center: {
+    default: null;
+    type: PropType<google.maps.LatLngLiteral | null>;
+  };
+  radius: {
+    default: null;
+    type: PropType<number | null>;
+  }
+}, {}, {}, {}, {}, {}, {}, {
+  "click": void;
+  "update:center": void;
+  "update:radius": void;
+}>;
