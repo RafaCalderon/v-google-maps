@@ -1,7 +1,10 @@
 <template>
-  <div v-if="hasSlotContent" class="v-google-info-window__container">
+  <div
+    v-if="hasSlotContent"
+    class="v-google-info-window__container"
+  >
     <div ref="infoWindowRef">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
@@ -17,15 +20,15 @@ import {
   useSlots,
   onMounted,
   onBeforeUnmount,
-  type Ref,
   type PropType,
 } from "vue";
 
 // Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGmapLoader } from "@/composables/gmapLoader";
 
 // Utils
 import equal from "fast-deep-equal";
+import { mapSymbol, markerSymbol } from "@/shared/symbols";
 
 // Definiciones
 
@@ -40,29 +43,28 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits([
-  "click",
-  "update:model-value",
-]);
+const emits = defineEmits(["click", "update:model-value"]);
 
 // Composables
 
 const slots = useSlots();
-const {gmapApi} = useGmapLoader();
+const { gmapApi } = useGmapLoader();
 
 // Injects
 
-const map = inject<Ref<google.maps.Map | null>>("google-map");
-const marker = inject<Ref<google.maps.Marker | null>>("marker", ref(null));
+const map = inject(mapSymbol, ref(null));
+const marker = inject(markerSymbol, ref(null));
 
 // Mounted
 
 onMounted(() => {
   if (gmapApi.value) {
-    infoWindow.value = markRaw(new gmapApi.value.maps.InfoWindow({
-      ...props.options,
-      content: hasSlotContent.value ? infoWindowRef.value : props.options?.content,
-    }));
+    infoWindow.value = markRaw(
+      new gmapApi.value.maps.InfoWindow({
+        ...props.options,
+        content: hasSlotContent.value ? infoWindowRef.value : props.options?.content,
+      }),
+    );
     addListeners();
     if (model.value) toggle();
   }
@@ -92,8 +94,8 @@ const model = computed({
 // Methods
 
 function addListeners() {
-  if (!marker?.value || !infoWindow.value) return;
-  markerClickListener = marker.value?.addListener("click", toggle);
+  if (!marker.value || !infoWindow.value) return;
+  markerClickListener = marker.value.addListener("click", toggle);
   closeClickListener = infoWindow.value.addListener("closeclick", toggle);
 }
 
@@ -107,12 +109,12 @@ function removeListeners() {
 }
 
 function toggle() {
-  if (!infoWindow.value || !map?.value) return;
+  if (!infoWindow.value || !map.value) return;
   opened.value = !opened.value;
   if (opened.value) {
     infoWindow.value.open({
       map: map.value,
-      anchor: marker?.value,
+      anchor: marker.value,
     });
   } else {
     infoWindow.value.close();
@@ -122,12 +124,19 @@ function toggle() {
 
 // Watchs
 
-watch(() => props.options, (newValue: google.maps.InfoWindowOptions | null, oldValue: google.maps.InfoWindowOptions | null) => {
-  if (!infoWindow.value || equal(newValue, oldValue)) return;
-  infoWindow.value.setOptions(props.options);
-}, {
-  deep: true,
-});
+watch(
+  () => props.options,
+  (
+    newValue: google.maps.InfoWindowOptions | null,
+    oldValue: google.maps.InfoWindowOptions | null,
+  ) => {
+    if (!infoWindow.value || equal(newValue, oldValue)) return;
+    infoWindow.value.setOptions(props.options);
+  },
+  {
+    deep: true,
+  },
+);
 
 watch(model, (newValue: boolean | null) => {
   if (newValue === null || newValue === opened.value) return;

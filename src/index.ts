@@ -1,8 +1,8 @@
 // Tipos
-import type {App} from "vue";
+import type { App } from "vue";
 
 // Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGmapLoader } from "@/composables/gmapLoader";
 
 // Componentes
 import VGoogleMap from "@/components/VGoogleMap.vue";
@@ -14,9 +14,7 @@ import VGooglePolyline from "@/components/VGooglePolyline";
 import VGoogleRectangle from "@/components/VGoogleRectangle";
 import VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
 
-export {
-  useGmapLoader,
-};
+export { useGmapLoader };
 
 export const vGoogleMaps = (app: App) => {
   app.component("VGoogleMap", VGoogleMap);

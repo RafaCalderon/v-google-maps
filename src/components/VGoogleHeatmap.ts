@@ -7,15 +7,15 @@ import {
   onMounted,
   onUnmounted,
   defineComponent,
-  type Ref,
   type PropType,
 } from "vue";
 
 // Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGmapLoader } from "@/composables/gmapLoader";
 
 // Utils
 import equal from "fast-deep-equal";
+import { mapSymbol } from "@/shared/symbols";
 
 export default defineComponent({
   name: "VGoogleHeatmap",
@@ -25,26 +25,28 @@ export default defineComponent({
       type: Object as PropType<google.maps.visualization.HeatmapLayerOptions>,
     },
   },
-  setup(props, {expose, slots}) {
+  setup(props, { expose, slots }) {
     // Composables
 
-    const {gmapApi} = useGmapLoader();
+    const { gmapApi } = useGmapLoader();
 
     // Injects
 
-    const map = inject<Ref<google.maps.Map | null>>("google-map");
+    const map = inject(mapSymbol, ref(null));
 
     // Mounted
 
     onMounted(() => {
-      if (map?.value && gmapApi.value) {
+      if (map.value && gmapApi.value) {
         const options: google.maps.visualization.HeatmapLayerOptions = {
           ...props.options,
         };
-        heatmap.value = markRaw(new gmapApi.value.maps.visualization.HeatmapLayer({
-          map: map.value,
-          ...options,
-        }));
+        heatmap.value = markRaw(
+          new gmapApi.value.maps.visualization.HeatmapLayer({
+            map: map.value,
+            ...options,
+          }),
+        );
       }
     });
 
@@ -54,12 +56,19 @@ export default defineComponent({
 
     // Watchs
 
-    watch(() => props.options, (newValue: google.maps.visualization.HeatmapLayerOptions, oldValue: google.maps.visualization.HeatmapLayerOptions) => {
-      if (!heatmap.value || equal(newValue, oldValue)) return;
-      heatmap.value.setOptions(props.options);
-    }, {
-      deep: true,
-    });
+    watch(
+      () => props.options,
+      (
+        newValue: google.maps.visualization.HeatmapLayerOptions,
+        oldValue: google.maps.visualization.HeatmapLayerOptions,
+      ) => {
+        if (!heatmap.value || equal(newValue, oldValue)) return;
+        heatmap.value.setOptions(props.options);
+      },
+      {
+        deep: true,
+      },
+    );
 
     // Unmounted
 
@@ -74,7 +83,6 @@ export default defineComponent({
     expose({
       heatmap,
     });
-
 
     return () => slots.default?.();
   },

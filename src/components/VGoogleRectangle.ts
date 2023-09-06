@@ -8,15 +8,15 @@ import {
   onMounted,
   defineComponent,
   onBeforeUnmount,
-  type Ref,
   type PropType,
 } from "vue";
 
 // Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGmapLoader } from "@/composables/gmapLoader";
 
 // Utils
 import equal from "fast-deep-equal";
+import { mapSymbol } from "@/shared/symbols";
 
 export default defineComponent({
   name: "VGoogleRectangle",
@@ -30,23 +30,20 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngBoundsLiteral | null>,
     },
   },
-  emits: [
-    "click",
-    "update:model-value",
-  ],
-  setup(props, {emit, expose, slots}) {
+  emits: ["click", "update:model-value"],
+  setup(props, { emit, expose, slots }) {
     // Composables
 
-    const {gmapApi} = useGmapLoader();
+    const { gmapApi } = useGmapLoader();
 
     // Injects
 
-    const map = inject<Ref<google.maps.Map | null>>("google-map");
+    const map = inject(mapSymbol, ref(null));
 
     // Mounted
 
     onMounted(() => {
-      if (map?.value && gmapApi.value) {
+      if (map.value && gmapApi.value) {
         const options: google.maps.RectangleOptions = {
           ...props.options,
         };
@@ -55,10 +52,12 @@ export default defineComponent({
             ...model.value,
           };
         }
-        rectangle.value = markRaw(new gmapApi.value.maps.Rectangle({
-          map: map.value,
-          ...options,
-        }));
+        rectangle.value = markRaw(
+          new gmapApi.value.maps.Rectangle({
+            map: map.value,
+            ...options,
+          }),
+        );
         addListeners();
       }
     });
@@ -111,17 +110,27 @@ export default defineComponent({
 
     // Watchs
 
-    watch(() => props.options, (newValue: google.maps.PolylineOptions, oldValue: google.maps.PolylineOptions) => {
-      if (!rectangle.value || equal(newValue, oldValue)) return;
-      rectangle.value.setOptions(props.options);
-    }, {
-      deep: true,
-    });
+    watch(
+      () => props.options,
+      (newValue: google.maps.PolylineOptions, oldValue: google.maps.PolylineOptions) => {
+        if (!rectangle.value || equal(newValue, oldValue)) return;
+        rectangle.value.setOptions(props.options);
+      },
+      {
+        deep: true,
+      },
+    );
 
-    watch(model, (newValue: google.maps.LatLngBoundsLiteral | null, oldValue: google.maps.LatLngBoundsLiteral | null) => {
-      if (equal(newValue, oldValue) || !rectangle.value || !newValue) return;
-      rectangle.value.setBounds(newValue);
-    });
+    watch(
+      model,
+      (
+        newValue: google.maps.LatLngBoundsLiteral | null,
+        oldValue: google.maps.LatLngBoundsLiteral | null,
+      ) => {
+        if (equal(newValue, oldValue) || !rectangle.value || !newValue) return;
+        rectangle.value.setBounds(newValue);
+      },
+    );
 
     // Exposes
 

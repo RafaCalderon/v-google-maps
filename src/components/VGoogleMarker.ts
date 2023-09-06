@@ -8,15 +8,15 @@ import {
   computed,
   defineComponent,
   onBeforeUnmount,
-  type Ref,
   type PropType,
 } from "vue";
 
 // Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGmapLoader } from "@/composables/gmapLoader";
 
 // Utils
 import equal from "fast-deep-equal";
+import { mapSymbol, markerSymbol, markerClustererSymbol } from "@/shared/symbols";
 
 export default defineComponent({
   name: "VGoogleMarker",
@@ -30,18 +30,16 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngLiteral | null>,
     },
   },
-  emits: [
-    "click",
-    "update:model-value",
-  ],
-  setup(props, {emit, expose, slots}) {
+  emits: ["click", "update:model-value"],
+  setup(props, { emit, expose, slots }) {
     // Composables
 
-    const {gmapApi} = useGmapLoader();
+    const { gmapApi } = useGmapLoader();
 
     // Injects
 
-    const map = inject<Ref<google.maps.Map | null>>("google-map");
+    const map = inject(mapSymbol, ref(null));
+    const markerClusterer = inject(markerClustererSymbol, ref(null));
 
     // Data
 
@@ -49,7 +47,7 @@ export default defineComponent({
     let clickListener: google.maps.MapsEventListener | null = null;
     let mouseUpListener: google.maps.MapsEventListener | null = null;
 
-    if (map?.value && gmapApi.value) {
+    if (map.value && gmapApi.value) {
       const options: google.maps.MarkerOptions = {
         ...props.options,
       };
@@ -58,10 +56,15 @@ export default defineComponent({
           ...props.modelValue,
         };
       }
-      marker.value = markRaw(new gmapApi.value.maps.Marker({
-        map: map.value,
-        ...options,
-      }));
+      marker.value = markRaw(
+        new gmapApi.value.maps.Marker({
+          map: markerClusterer.value === null ? map.value : null,
+          ...options,
+        }),
+      );
+      if (markerClusterer.value) {
+        markerClusterer.value.addMarker(marker.value);
+      }
       addListeners();
     }
 
@@ -103,17 +106,24 @@ export default defineComponent({
 
     // Watchs
 
-    watch(() => props.options, (newValue: google.maps.MarkerOptions, oldValue: google.maps.MarkerOptions) => {
-      if (!marker.value || equal(newValue, oldValue)) return;
-      marker.value.setOptions(props.options);
-    }, {
-      deep: true,
-    });
+    watch(
+      () => props.options,
+      (newValue: google.maps.MarkerOptions, oldValue: google.maps.MarkerOptions) => {
+        if (!marker.value || equal(newValue, oldValue)) return;
+        marker.value.setOptions(props.options);
+      },
+      {
+        deep: true,
+      },
+    );
 
-    watch(model, (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
-      if (equal(newValue, oldValue) || !marker.value) return;
-      marker.value.setPosition(newValue);
-    });
+    watch(
+      model,
+      (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
+        if (equal(newValue, oldValue) || !marker.value) return;
+        marker.value.setPosition(newValue);
+      },
+    );
 
     // Exposes
 
@@ -123,13 +133,16 @@ export default defineComponent({
 
     // Provide
 
-    provide("marker", marker);
+    provide(markerSymbol, marker);
 
     // BeforeUnmount
 
     onBeforeUnmount(() => {
       removeListeners();
       if (!marker.value) return;
+      if (markerClusterer.value) {
+        markerClusterer.value.removeMarker(marker.value);
+      }
       marker.value.setMap(null);
       marker.value = null;
     });

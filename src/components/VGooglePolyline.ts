@@ -8,15 +8,15 @@ import {
   onMounted,
   defineComponent,
   onBeforeUnmount,
-  type Ref,
   type PropType,
 } from "vue";
 
 // Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGmapLoader } from "@/composables/gmapLoader";
 
 // Utils
 import equal from "fast-deep-equal";
+import { mapSymbol } from "@/shared/symbols";
 
 export default defineComponent({
   name: "VGooglePolyline",
@@ -30,35 +30,32 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngLiteral[] | null>,
     },
   },
-  emits: [
-    "click",
-    "update:model-value",
-  ],
-  setup(props, {emit, expose, slots}) {
+  emits: ["click", "update:model-value"],
+  setup(props, { emit, expose, slots }) {
     // Composables
 
-    const {gmapApi} = useGmapLoader();
+    const { gmapApi } = useGmapLoader();
 
     // Injects
 
-    const map = inject<Ref<google.maps.Map | null>>("google-map");
+    const map = inject(mapSymbol, ref(null));
 
     // Mounted
 
     onMounted(() => {
-      if (map?.value && gmapApi.value) {
+      if (map.value && gmapApi.value) {
         const options: google.maps.PolylineOptions = {
           ...props.options,
         };
         if (model.value) {
-          options.path = [
-            ...model.value,
-          ];
+          options.path = [...model.value];
         }
-        polyline.value = markRaw(new gmapApi.value.maps.Polyline({
-          ...options,
-          map: map.value
-        }));
+        polyline.value = markRaw(
+          new gmapApi.value.maps.Polyline({
+            ...options,
+            map: map.value,
+          }),
+        );
         addListeners();
       }
     });
@@ -86,11 +83,12 @@ export default defineComponent({
       if (!polyline.value) return;
       clickListener = polyline.value.addListener("click", onClick);
       mouseUpListener = polyline.value.addListener("mouseup", () => {
-        const path = polyline.value?.getPath()?.getArray()?.map(position => position.toJSON());
+        const path = polyline.value
+          ?.getPath()
+          ?.getArray()
+          ?.map((position) => position.toJSON());
         if (!path) return;
-        model.value = [
-          ...path,
-        ];
+        model.value = [...path];
       });
     }
 
@@ -111,17 +109,27 @@ export default defineComponent({
 
     // Watchs
 
-    watch(() => props.options, (newValue: google.maps.PolylineOptions, oldValue: google.maps.PolylineOptions) => {
-      if (!polyline.value || equal(newValue, oldValue)) return;
-      polyline.value.setOptions(props.options);
-    }, {
-      deep: true,
-    });
+    watch(
+      () => props.options,
+      (newValue: google.maps.PolylineOptions, oldValue: google.maps.PolylineOptions) => {
+        if (!polyline.value || equal(newValue, oldValue)) return;
+        polyline.value.setOptions(props.options);
+      },
+      {
+        deep: true,
+      },
+    );
 
-    watch(model, (newValue: google.maps.LatLngLiteral[] | null, oldValue: google.maps.LatLngLiteral[] | null) => {
-      if (equal(newValue, oldValue) || !polyline.value || !newValue) return;
-      polyline.value.setPath(newValue);
-    });
+    watch(
+      model,
+      (
+        newValue: google.maps.LatLngLiteral[] | null,
+        oldValue: google.maps.LatLngLiteral[] | null,
+      ) => {
+        if (equal(newValue, oldValue) || !polyline.value || !newValue) return;
+        polyline.value.setPath(newValue);
+      },
+    );
 
     // Exposes
 
@@ -133,7 +141,7 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       removeListeners();
-      if(!polyline.value) return;
+      if (!polyline.value) return;
       polyline.value.setMap(null);
       polyline.value = null;
     });

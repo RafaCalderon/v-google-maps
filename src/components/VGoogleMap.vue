@@ -4,9 +4,7 @@
       class="v-google-map__container"
       ref="mapRef"
     ></div>
-    <slot
-      v-if="mounted"
-    />
+    <slot v-if="mounted" />
   </div>
 </template>
 
@@ -24,29 +22,30 @@ import {
   type PropType,
 } from "vue";
 
+// Composables
+import { useGmapLoader } from "@/composables/gmapLoader";
+
 // Utils
 import equal from "fast-deep-equal";
+import { mapSymbol } from "@/shared/symbols";
 
-// Composables
-import {useGmapLoader} from "@/composables/gmapLoader";
-
-//Tipos
-import type CSS from "csstype";
+// Types
+import type { Property } from "csstype";
 
 // Definiciones
 
 const props = defineProps({
   width: {
     required: true,
-    type: String as PropType<CSS.Property.Width>,
+    type: String as PropType<Property.Width>,
   },
   height: {
     required: true,
-    type: String as PropType<CSS.Property.Height>,
+    type: String as PropType<Property.Height>,
   },
   borderRadius: {
     default: "unset",
-    type: String as PropType<CSS.Property.BorderRadius>,
+    type: String as PropType<Property.BorderRadius>,
   },
   options: {
     required: true,
@@ -62,16 +61,11 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits([
-  "ready",
-  "click",
-  "update:zoom",
-  "update:center",
-]);
+const emits = defineEmits(["ready", "click", "update:zoom", "update:center"]);
 
 // Composables
 
-const {gmapApi} = useGmapLoader();
+const { gmapApi } = useGmapLoader();
 
 // Data
 
@@ -84,7 +78,7 @@ let zoomChangedListener: google.maps.MapsEventListener | null = null;
 
 // Provides
 
-provide("google-map", map);
+provide(mapSymbol, map);
 
 // Computed
 
@@ -121,15 +115,16 @@ onMounted(async () => {
   if (zoomValue.value) {
     options.zoom = zoomValue.value;
   }
-  map.value = markRaw(new gmapApi.value.maps.Map(mapRef.value, {
-    ...options,
-  }));
+  map.value = markRaw(
+    new gmapApi.value.maps.Map(mapRef.value, {
+      ...options,
+    }),
+  );
   mounted.value = true;
   await nextTick();
   addListeners();
   emits("ready");
 });
-
 
 // Methods
 
@@ -164,19 +159,26 @@ function onClick(ev: google.maps.MapMouseEvent) {
 
 // Watchs
 
-watch(() => props.options, (newValue: google.maps.MapOptions, oldValue: google.maps.MapOptions) => {
-  if (!map.value || equal(newValue, oldValue)) return;
-  map.value.setOptions(props.options);
-}, {
-  deep: true,
-});
+watch(
+  () => props.options,
+  (newValue: google.maps.MapOptions, oldValue: google.maps.MapOptions) => {
+    if (!map.value || equal(newValue, oldValue)) return;
+    map.value.setOptions(props.options);
+  },
+  {
+    deep: true,
+  },
+);
 
-watch(centerValue, (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
-  if (equal(newValue, oldValue) || !map.value || !newValue) return;
-  map.value.setCenter({
-    ...newValue,
-  });
-});
+watch(
+  centerValue,
+  (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
+    if (equal(newValue, oldValue) || !map.value || !newValue) return;
+    map.value.setCenter({
+      ...newValue,
+    });
+  },
+);
 
 watch(zoomValue, (newValue: number | null, oldValue: number | null) => {
   if (equal(newValue, oldValue) || !map.value || !newValue) return;
