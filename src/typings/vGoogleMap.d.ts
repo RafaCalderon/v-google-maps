@@ -1,19 +1,43 @@
-import type CSS from "csstype";
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type { Property } from "csstype";
+import type { PropType, DefineComponent } from "vue";
 
-export declare interface VGoogleMapProps {
-  options: google.maps.MapOptions;
-  center?: google.maps.LatLngLiteral | null | undefined;
-  zoom?: number | null | undefined;
-  width: CSS.Property.Width;
-  height: CSS.Property.Height;
-  borderRadius?: CSS.Property.BorderRadius | undefined;
-  "@click"?: (ev: google.maps.MapMouseEvent) => void;
-  "@update:center"?: (center: google.maps.LatLngLiteral | null) => void;
-  "@update:zoom"?: (zoom: number | null) => void;
-  "@ready"?: () => void;
-}
-
-export declare const IVGoogleMap: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGoogleMapProps;
-};
+export type VGoogleMap = DefineComponent<
+  {
+    width: {
+      required: true;
+      type: PropType<Property.Width>;
+    };
+    height: {
+      required: true;
+      type: PropType<Property.Height>;
+    };
+    borderRadius: {
+      default: "initial";
+      type: PropType<Property.BorderRadius>;
+    };
+    options: {
+      required: true;
+      type: PropType<google.maps.MapOptions>;
+    };
+    center: {
+      default: null;
+      type: PropType<google.maps.LatLngLiteral | null>;
+    };
+    zoom: {
+      default: null;
+      type: PropType<number | null>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    ready: void;
+    click: void;
+    "update:zoom": void;
+    "update:center": void;
+  }
+>;

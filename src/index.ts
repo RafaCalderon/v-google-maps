@@ -13,10 +13,11 @@ import VGooglePolygon from "@/components/VGooglePolygon";
 import VGooglePolyline from "@/components/VGooglePolyline";
 import VGoogleRectangle from "@/components/VGoogleRectangle";
 import VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
+import VGoogleMarkerClusterer from "@/components/VGoogleMarkerClusterer";
 
 export { useGmapLoader };
 
-export const vGoogleMaps = (app: App) => {
+export function vGoogleMaps(app: App) {
   app.component("VGoogleMap", VGoogleMap);
   app.component("VGoogleCircle", VGoogleCircle);
   app.component("VGoogleMarker", VGoogleMarker);
@@ -25,4 +26,5 @@ export const vGoogleMaps = (app: App) => {
   app.component("VGooglePolyline", VGooglePolyline);
   app.component("VGoogleRectangle", VGoogleRectangle);
   app.component("VGoogleInfoWindow", VGoogleInfoWindow);
-};
+  app.component("VGoogleMarkerClusterer", VGoogleMarkerClusterer);
+}

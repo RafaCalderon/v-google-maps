@@ -1,12 +1,24 @@
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type { PropType, DefineComponent } from "vue";
 
-export declare interface VGoogleMarkerProps {
-  options: google.maps.MarkerOptions;
-  modelValue?: google.maps.LatLngLiteral | null | undefined;
-  "@click"?: (ev: google.maps.MapMouseEvent) => void;
-  "@update:model-value"?: (value: google.maps.LatLngLiteral | null) => void;
-}
-
-export declare const IVGoogleMarker: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGoogleMarkerProps;
-};
+export type VGoogleMarker = DefineComponent<
+  {
+    options: {
+      required: true;
+      type: PropType<google.maps.MarkerOptions>;
+    };
+    modelValue: {
+      default: null;
+      type: PropType<google.maps.LatLngLiteral | null>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    click: void;
+    "update:model-value": void;
+  }
+>;

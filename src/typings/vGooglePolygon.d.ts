@@ -1,12 +1,24 @@
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type { PropType, DefineComponent } from "vue";
 
-export declare interface VGooglePolygonProps {
-  options: google.maps.PolygonOptions;
-  modelValue?: google.maps.LatLngLiteral[] | null | undefined;
-  "@click"?: (ev: google.maps.MapMouseEvent) => void;
-  "@update:model-value"?: (value: google.maps.LatLngLiteral[] | null) => void;
-}
-
-export declare const IVGooglePolygon: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGooglePolygonProps;
-};
+export type VGooglePolygon = DefineComponent<
+  {
+    options: {
+      required: true;
+      type: PropType<google.maps.PolygonOptions>;
+    };
+    modelValue: {
+      default: null;
+      type: PropType<google.maps.LatLngLiteral[] | null>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    click: void;
+    "update:model-value": void;
+  }
+>;

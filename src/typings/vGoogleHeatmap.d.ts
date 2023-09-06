@@ -1,9 +1,17 @@
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type { PropType, DefineComponent } from "vue";
 
-export declare interface VGoogleHeatmapProps {
-  options: google.maps.visualization.HeatmapLayerOptions;
-}
-
-export declare const IVGoogleHeatmap: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGoogleHeatmapProps;
-};
+export type VGoogleHeatmap = DefineComponent<
+  {
+    options: {
+      required: true;
+      type: PropType<google.maps.visualization.HeatmapLayerOptions>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {}
+>;

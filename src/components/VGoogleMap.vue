@@ -44,7 +44,7 @@ const props = defineProps({
     type: String as PropType<Property.Height>,
   },
   borderRadius: {
-    default: "unset",
+    default: "initial",
     type: String as PropType<Property.BorderRadius>,
   },
   options: {

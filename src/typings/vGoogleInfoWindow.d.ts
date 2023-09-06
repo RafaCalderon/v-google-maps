@@ -1,12 +1,24 @@
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type { PropType, DefineComponent } from "vue";
 
-export declare interface VGoogleInfoWindowProps {
-  options?: google.maps.InfoWindowOptions;
-  modelValue?: boolean | null | undefined;
-  "@click"?: (ev: google.maps.MapMouseEvent) => void;
-  "@update:model-value"?: (value: boolean | null) => void;
-}
-
-export declare const IVGoogleInfoWindow: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGoogleInfoWindowProps;
-};
+export type VGoogleInfoWindow = DefineComponent<
+  {
+    options: {
+      default: null;
+      type: PropType<google.maps.InfoWindowOptions | null>;
+    };
+    modelValue: {
+      default: null;
+      type: BooleanConstructor;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    click: void;
+    "update:model-value": void;
+  }
+>;

@@ -1,12 +1,24 @@
-import type {AllowedComponentProps, ComponentCustomProps, VNodeProps} from "vue";
+import type { PropType, DefineComponent } from "vue";
 
-export declare interface VGoogleRectangleProps {
-  options: google.maps.RectangleOptions;
-  modelValue?: google.maps.LatLngBoundsLiteral | null | undefined;
-  "@click"?: (ev: google.maps.MapMouseEvent) => void;
-  "@update:model-value"?: (value: google.maps.LatLngBoundsLiteral | null) => void;
-}
-
-export declare const IVGoogleRectangle: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & VGoogleRectangleProps;
-};
+export type VGoogleRectangle = DefineComponent<
+  {
+    options: {
+      required: true;
+      type: PropType<google.maps.RectangleOptions>;
+    };
+    modelValue: {
+      default: null;
+      type: PropType<google.maps.LatLngBoundsLiteral | null>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    click: void;
+    "update:model-value": void;
+  }
+>;
