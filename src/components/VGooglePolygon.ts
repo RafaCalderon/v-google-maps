@@ -30,7 +30,7 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngLiteral[] | null>,
     },
   },
-  emits: ["click", "update:model-value"],
+  emits: ["click", "mouseover", "mouseout", "update:model-value"],
   setup(props, { emit, expose, slots }) {
     // Composables
 
@@ -65,6 +65,8 @@ export default defineComponent({
     const polygon = ref<google.maps.Polygon | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let mouseUpListener: google.maps.MapsEventListener | null = null;
+    let mouseOutListener: google.maps.MapsEventListener | null = null;
+    let mouseOverListener: google.maps.MapsEventListener | null = null;
 
     // Computed
 
@@ -82,6 +84,8 @@ export default defineComponent({
     function addListeners() {
       if (!polygon.value) return;
       clickListener = polygon.value.addListener("click", onClick);
+      mouseOutListener = polygon.value.addListener("mouseout", onMouseOut);
+      mouseOverListener = polygon.value.addListener("mouseover", onMouseOver);
       mouseUpListener = polygon.value.addListener("mouseup", () => {
         const path = polygon.value
           ?.getPath()
@@ -99,12 +103,26 @@ export default defineComponent({
       if (mouseUpListener) {
         mouseUpListener.remove();
       }
+      if (mouseOutListener) {
+        mouseOutListener.remove();
+      }
+      if (mouseOverListener) {
+        mouseOverListener.remove();
+      }
     }
 
     // Emits
 
     function onClick(ev: google.maps.MapMouseEvent) {
       emit("click", ev);
+    }
+
+    function onMouseOver(ev: google.maps.MapMouseEvent) {
+      emit("mouseover", ev);
+    }
+
+    function onMouseOut(ev: google.maps.MapMouseEvent) {
+      emit("mouseout", ev);
     }
 
     // Watchs
