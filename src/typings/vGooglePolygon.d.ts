@@ -19,6 +19,8 @@ export type VGooglePolygon = DefineComponent<
   {},
   {
     click: void;
+    mouseout: void;
+    mouseover: void;
     "update:model-value": void;
   }
 >;
