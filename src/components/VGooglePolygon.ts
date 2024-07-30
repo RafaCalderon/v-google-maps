@@ -11,14 +11,16 @@ import {
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-export default defineComponent({
+const VGooglePolygon = defineComponent({
   name: "VGooglePolygon",
   props: {
     options: {
@@ -34,31 +36,11 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
-
-    // Mounted
-
-    onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.PolygonOptions = {
-          ...props.options,
-        };
-        if (model.value) {
-          options.paths = [...model.value];
-        }
-        polygon.value = markRaw(
-          new gmapApi.value.maps.Polygon({
-            map: map.value,
-            ...options,
-          }),
-        );
-        addListeners();
-      }
-    });
 
     // Data
 
@@ -67,6 +49,21 @@ export default defineComponent({
     let mouseUpListener: google.maps.MapsEventListener | null = null;
     let mouseOutListener: google.maps.MapsEventListener | null = null;
     let mouseOverListener: google.maps.MapsEventListener | null = null;
+
+    // Mounted
+
+    onMounted(() => {
+      if (map.value && maps.value) {
+        polygon.value = markRaw(
+          new maps.value.Polygon({
+            ...props.options,
+            map: map.value,
+            paths: model.value ? [...model.value] : props.options?.paths,
+          }),
+        );
+        addListeners();
+      }
+    });
 
     // Computed
 
@@ -83,9 +80,18 @@ export default defineComponent({
 
     function addListeners() {
       if (!polygon.value) return;
-      clickListener = polygon.value.addListener("click", onClick);
-      mouseOutListener = polygon.value.addListener("mouseout", onMouseOut);
-      mouseOverListener = polygon.value.addListener("mouseover", onMouseOver);
+      clickListener = polygon.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+        emit("click", ev);
+      });
+      mouseOutListener = polygon.value.addListener("mouseout", (ev: google.maps.MapMouseEvent) => {
+        emit("mouseout", ev);
+      });
+      mouseOverListener = polygon.value.addListener(
+        "mouseover",
+        (ev: google.maps.MapMouseEvent) => {
+          emit("mouseover", ev);
+        },
+      );
       mouseUpListener = polygon.value.addListener("mouseup", () => {
         const path = polygon.value
           ?.getPath()
@@ -97,32 +103,10 @@ export default defineComponent({
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (mouseUpListener) {
-        mouseUpListener.remove();
-      }
-      if (mouseOutListener) {
-        mouseOutListener.remove();
-      }
-      if (mouseOverListener) {
-        mouseOverListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
-    }
-
-    function onMouseOver(ev: google.maps.MapMouseEvent) {
-      emit("mouseover", ev);
-    }
-
-    function onMouseOut(ev: google.maps.MapMouseEvent) {
-      emit("mouseout", ev);
+      clickListener?.remove();
+      mouseUpListener?.remove();
+      mouseOutListener?.remove();
+      mouseOverListener?.remove();
     }
 
     // Watchs
@@ -144,7 +128,7 @@ export default defineComponent({
         newValue: google.maps.LatLngLiteral[] | null,
         oldValue: google.maps.LatLngLiteral[] | null,
       ) => {
-        if (equal(newValue, oldValue) || !polygon.value || !newValue) return;
+        if (!polygon.value || !newValue || equal(newValue, oldValue)) return;
         polygon.value.setPath(newValue);
       },
     );
@@ -167,3 +151,7 @@ export default defineComponent({
     return () => slots.default?.();
   },
 });
+
+export type VGooglePolygonType = typeof VGooglePolygon;
+
+export default VGooglePolygon;

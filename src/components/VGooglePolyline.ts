@@ -11,14 +11,16 @@ import {
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-export default defineComponent({
+const VGooglePolyline = defineComponent({
   name: "VGooglePolyline",
   props: {
     options: {
@@ -34,37 +36,32 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
-
-    // Mounted
-
-    onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.PolylineOptions = {
-          ...props.options,
-        };
-        if (model.value) {
-          options.path = [...model.value];
-        }
-        polyline.value = markRaw(
-          new gmapApi.value.maps.Polyline({
-            ...options,
-            map: map.value,
-          }),
-        );
-        addListeners();
-      }
-    });
 
     // Data
 
     const polyline = ref<google.maps.Polyline | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let mouseUpListener: google.maps.MapsEventListener | null = null;
+
+    // Mounted
+
+    onMounted(() => {
+      if (map.value && maps.value) {
+        polyline.value = markRaw(
+          new maps.value.Polyline({
+            ...props.options,
+            map: map.value,
+            path: model.value ? [...model.value] : props.options?.path,
+          }),
+        );
+        addListeners();
+      }
+    });
 
     // Computed
 
@@ -81,7 +78,9 @@ export default defineComponent({
 
     function addListeners() {
       if (!polyline.value) return;
-      clickListener = polyline.value.addListener("click", onClick);
+      clickListener = polyline.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+        emit("click", ev);
+      });
       mouseUpListener = polyline.value.addListener("mouseup", () => {
         const path = polyline.value
           ?.getPath()
@@ -93,18 +92,8 @@ export default defineComponent({
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (mouseUpListener) {
-        mouseUpListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
+      clickListener?.remove();
+      mouseUpListener?.remove();
     }
 
     // Watchs
@@ -126,7 +115,7 @@ export default defineComponent({
         newValue: google.maps.LatLngLiteral[] | null,
         oldValue: google.maps.LatLngLiteral[] | null,
       ) => {
-        if (equal(newValue, oldValue) || !polyline.value || !newValue) return;
+        if (!polyline.value || !newValue || equal(newValue, oldValue)) return;
         polyline.value.setPath(newValue);
       },
     );
@@ -149,3 +138,7 @@ export default defineComponent({
     return () => slots.default?.();
   },
 });
+
+export type VGooglePolylineType = typeof VGooglePolyline;
+
+export default VGooglePolyline;

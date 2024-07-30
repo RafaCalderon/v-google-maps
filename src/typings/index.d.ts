@@ -1,29 +1,32 @@
 import type { App, Ref } from "vue";
-import type { Libraries } from "@googlemaps/js-api-loader";
+import type { Libraries, Loader } from "@googlemaps/js-api-loader";
 import type { MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
-import { VGoogleMap } from "./vGoogleMap";
-import { VGoogleCircle } from "./vGoogleCircle";
-import { VGoogleMarker } from "./vGoogleMarker";
-import { VGoogleHeatmap } from "./vGoogleHeatmap";
-import { VGooglePolygon } from "./vGooglePolygon";
-import { VGooglePolyline } from "./vGooglePolyline";
-import { VGoogleRectangle } from "./vGoogleRectangle";
-import { VGoogleInfoWindow } from "./vGoogleInfoWindow";
-import { VGoogleMarkerClusterer } from "./vGoogleMarkerClusterer";
+import type VGoogleMap from "@/components/VGoogleMap.vue";
+import type VGoogleMarker from "@/components/VGoogleMarker.vue";
+import type { VGoogleCircleType } from "@/components/VGoogleCircle";
+import type { VGoogleHeatmapType } from "@/components/VGoogleHeatmap";
+import type { VGooglePolygonType } from "@/components/VGooglePolygon";
+import type VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
+import type { VGooglePolylineType } from "@/components/VGooglePolyline";
+import type { VGoogleRectangleType } from "@/components/VGoogleRectangle";
+import type { VGoogleMarkerClustererType } from "@/components/VGoogleMarkerClusterer";
 
 export declare interface VGoogleMaps {
   install(app: App): void;
 }
 
-export declare function useGmapLoader(): {
-  gmapApi: Ref<typeof google | null>;
-  load: (apiKey: string, libraries: Libraries = []) => Promise<void>;
+export declare function useGoogleMapsLoader(): {
+  loader: Ref<Loader | null>;
+  maps: Ref<google.maps.MapsLibrary | null>;
+  markers: Ref<google.maps.MarkerLibrary | null>;
+  visualization: Ref<google.maps.VisualizationLibrary | null>;
+  init: (apiKey: string, libraries: Libraries = []) => Promise<void>;
 };
 
 export declare function vGoogleMaps(): VGoogleMaps;
 
-export { type MarkerClustererOptions };
+export type { MarkerClustererOptions };
 
 export interface VGoogleMapRef {
   map: google.maps.Map;
@@ -34,7 +37,7 @@ export interface VGoogleCircleRef {
 }
 
 export interface VGoogleMarkerRef {
-  marker: google.maps.Marker;
+  marker: google.maps.marker.AdvancedMarkerElement;
 }
 
 export interface VGoogleHeatmapRef {
@@ -59,14 +62,14 @@ export interface VGoogleInfoWindowRef {
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
-    VGoogleMap: VGoogleMap;
-    VGoogleCircle: VGoogleCircle;
-    VGoogleMarker: VGoogleMarker;
-    VGoogleHeatmap: VGoogleHeatmap;
-    VGooglePolygon: VGooglePolygon;
-    VGooglePolyline: VGooglePolyline;
-    VGoogleRectangle: VGoogleRectangle;
-    VGoogleInfoWindow: VGoogleInfoWindow;
-    VGoogleMarkerClusterer: VGoogleMarkerClusterer;
+    VGoogleMap: typeof VGoogleMap;
+    VGoogleCircle: VGoogleCircleType;
+    VGoogleHeatmap: VGoogleHeatmapType;
+    VGooglePolygon: VGooglePolygonType;
+    VGoogleMarker: typeof VGoogleMarker;
+    VGooglePolyline: VGooglePolylineType;
+    VGoogleRectangle: VGoogleRectangleType;
+    VGoogleInfoWindow: typeof VGoogleInfoWindow;
+    VGoogleMarkerClusterer: VGoogleMarkerClustererType;
   }
 }

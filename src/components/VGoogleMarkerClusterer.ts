@@ -14,7 +14,7 @@ import {
 import { mapSymbol, markerClustererSymbol } from "@/shared/symbols";
 import { MarkerClusterer, type MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
-export default defineComponent({
+const VGoogleMarkerClusterer = defineComponent({
   name: "VGoogleMarkerClusterer",
   props: {
     options: {
@@ -34,8 +34,8 @@ export default defineComponent({
     if (map.value) {
       markerClusterer.value = markRaw(
         new MarkerClusterer({
-          map: map.value,
           ...props.options,
+          map: map.value,
         }),
       );
     }
@@ -56,3 +56,7 @@ export default defineComponent({
     return () => slots.default?.();
   },
 });
+
+export type VGoogleMarkerClustererType = typeof VGoogleMarkerClusterer;
+
+export default VGoogleMarkerClusterer;

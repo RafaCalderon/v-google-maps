@@ -1,9 +1,9 @@
 <template>
   <div
-    v-if="hasSlotContent"
-    class="v-google-info-window__container"
+    v-if="defaultSlot && !slotIsComment"
+    style="display: none"
   >
-    <div ref="infoWindowRef">
+    <div ref="contentRef">
       <slot />
     </div>
   </div>
@@ -17,78 +17,79 @@ import {
   inject,
   markRaw,
   computed,
+  nextTick,
   useSlots,
   onMounted,
   onBeforeUnmount,
-  type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol, markerSymbol } from "@/shared/symbols";
 
-// Definiciones
+// Definitions
 
-const props = defineProps({
-  options: {
-    default: null,
-    type: Object as PropType<google.maps.InfoWindowOptions | null>,
-  },
-  modelValue: {
-    type: Boolean,
-    default: null,
-  },
+interface Props {
+  options?: google.maps.InfoWindowOptions | null;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  options: null,
 });
 
-const emits = defineEmits(["click", "update:model-value"]);
+const model = defineModel<boolean>({
+  default: false,
+  required: false,
+});
 
 // Composables
 
 const slots = useSlots();
-const { gmapApi } = useGmapLoader();
+const { maps } = useGoogleMapsLoader();
 
 // Injects
 
 const map = inject(mapSymbol, ref(null));
 const marker = inject(markerSymbol, ref(null));
 
+// Data
+
+const opened = ref(false);
+const contentRef = ref<HTMLElement>();
+const infoWindow = ref<google.maps.InfoWindow | null>(null);
+let closeClickListener: google.maps.MapsEventListener | null = null;
+let markerClickListener: google.maps.MapsEventListener | null = null;
+
 // Mounted
 
-onMounted(() => {
-  if (gmapApi.value) {
+onMounted(async () => {
+  if (maps.value) {
     infoWindow.value = markRaw(
-      new gmapApi.value.maps.InfoWindow({
+      new maps.value.InfoWindow({
         ...props.options,
-        content: hasSlotContent.value ? infoWindowRef.value : props.options?.content,
+        content:
+          defaultSlot.value && !slotIsComment.value ? contentRef.value : props.options?.content,
       }),
     );
+    await nextTick();
     addListeners();
     if (model.value) toggle();
   }
 });
 
-// Data
-
-const opened = ref(false);
-const infoWindowRef = ref<HTMLElement>();
-const infoWindow = ref<google.maps.InfoWindow | null>(null);
-let closeClickListener: google.maps.MapsEventListener | null = null;
-let markerClickListener: google.maps.MapsEventListener | null = null;
-
 // Computed
 
-const hasSlotContent = computed(() => slots.default?.().some((vnode) => vnode.type !== Comment));
+const defaultSlot = computed(() => {
+  return slots.default?.()?.[0] ?? null;
+});
 
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value: boolean | null) {
-    emits("update:model-value", value);
-  },
+const slotIsComment = computed(() => {
+  return defaultSlot.value?.type === Comment;
 });
 
 // Methods
@@ -158,9 +159,3 @@ onBeforeUnmount(() => {
   infoWindow.value = null;
 });
 </script>
-
-<style scoped>
-.v-google-info-window__container {
-  display: none;
-}
-</style>

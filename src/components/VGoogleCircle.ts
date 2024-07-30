@@ -11,14 +11,16 @@ import {
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-export default defineComponent({
+const VGoogleCircle = defineComponent({
   name: "VGoogleCircle",
   props: {
     options: {
@@ -38,36 +40,11 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
-
-    // Mounted
-
-    onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.CircleOptions = {
-          ...props.options,
-        };
-        if (centerValue.value) {
-          options.center = {
-            ...centerValue.value,
-          };
-        }
-        if (radiusValue.value) {
-          options.radius = radiusValue.value;
-        }
-        circle.value = markRaw(
-          new gmapApi.value.maps.Circle({
-            map: map.value,
-            ...options,
-          }),
-        );
-        addListeners();
-      }
-    });
 
     // Data
 
@@ -75,6 +52,22 @@ export default defineComponent({
     let clickListener: google.maps.MapsEventListener | null = null;
     let radiusChangedListener: google.maps.MapsEventListener | null = null;
     let centerChangedListener: google.maps.MapsEventListener | null = null;
+
+    // Mounted
+
+    onMounted(() => {
+      if (map.value && maps.value) {
+        circle.value = markRaw(
+          new maps.value.Circle({
+            ...props.options,
+            map: map.value,
+            center: centerValue.value ?? props.options?.center,
+            radius: radiusValue.value ?? props.options?.radius,
+          }),
+        );
+        addListeners();
+      }
+    });
 
     // Computed
 
@@ -100,7 +93,9 @@ export default defineComponent({
 
     function addListeners() {
       if (!circle.value) return;
-      clickListener = circle.value.addListener("click", onClick);
+      clickListener = circle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+        emit("click", ev);
+      });
       radiusChangedListener = circle.value.addListener("radius_changed", () => {
         radiusValue.value = circle.value?.getRadius() ?? null;
       });
@@ -114,21 +109,9 @@ export default defineComponent({
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (radiusChangedListener) {
-        radiusChangedListener.remove();
-      }
-      if (centerChangedListener) {
-        centerChangedListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
+      clickListener?.remove();
+      radiusChangedListener?.remove();
+      centerChangedListener?.remove();
     }
 
     // Watchs
@@ -147,7 +130,7 @@ export default defineComponent({
     watch(
       centerValue,
       (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
-        if (equal(newValue, oldValue) || !circle.value || !newValue) return;
+        if (!circle.value || !newValue || equal(newValue, oldValue)) return;
         circle.value.setCenter({
           ...newValue,
         });
@@ -155,7 +138,7 @@ export default defineComponent({
     );
 
     watch(radiusValue, (newValue: number | null, oldValue: number | null) => {
-      if (equal(newValue, oldValue) || !circle.value || !newValue) return;
+      if (!circle.value || !newValue || equal(newValue, oldValue)) return;
       circle.value.setRadius(newValue);
     });
 
@@ -177,3 +160,7 @@ export default defineComponent({
     return () => slots.default?.();
   },
 });
+
+export type VGoogleCircleType = typeof VGoogleCircle;
+
+export default VGoogleCircle;

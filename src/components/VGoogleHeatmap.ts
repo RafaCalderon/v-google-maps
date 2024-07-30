@@ -5,19 +5,21 @@ import {
   inject,
   markRaw,
   onMounted,
-  onUnmounted,
+  onBeforeUnmount,
   defineComponent,
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-export default defineComponent({
+const VGoogleHeatmap = defineComponent({
   name: "VGoogleHeatmap",
   props: {
     options: {
@@ -28,31 +30,28 @@ export default defineComponent({
   setup(props, { expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { visualization } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
 
+    // Data
+
+    const heatmap = ref<google.maps.visualization.HeatmapLayer | null>(null);
+
     // Mounted
 
     onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.visualization.HeatmapLayerOptions = {
-          ...props.options,
-        };
+      if (map.value && visualization.value) {
         heatmap.value = markRaw(
-          new gmapApi.value.maps.visualization.HeatmapLayer({
+          new visualization.value.HeatmapLayer({
             map: map.value,
-            ...options,
+            ...props.options,
           }),
         );
       }
     });
-
-    // Data
-
-    const heatmap = ref<google.maps.visualization.HeatmapLayer | null>(null);
 
     // Watchs
 
@@ -70,20 +69,24 @@ export default defineComponent({
       },
     );
 
-    // Unmounted
-
-    onUnmounted(() => {
-      if (!heatmap.value) return;
-      heatmap.value.setMap(null);
-      heatmap.value = null;
-    });
-
     // Exposes
 
     expose({
       heatmap,
     });
 
+    // Unmounted
+
+    onBeforeUnmount(() => {
+      if (!heatmap.value) return;
+      heatmap.value.setMap(null);
+      heatmap.value = null;
+    });
+
     return () => slots.default?.();
   },
 });
+
+export type VGoogleHeatmapType = typeof VGoogleHeatmap;
+
+export default VGoogleHeatmap;

@@ -11,14 +11,16 @@ import {
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-export default defineComponent({
+const VGoogleRectangle = defineComponent({
   name: "VGoogleRectangle",
   props: {
     options: {
@@ -34,39 +36,32 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
-
-    // Mounted
-
-    onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.RectangleOptions = {
-          ...props.options,
-        };
-        if (model.value) {
-          options.bounds = {
-            ...model.value,
-          };
-        }
-        rectangle.value = markRaw(
-          new gmapApi.value.maps.Rectangle({
-            map: map.value,
-            ...options,
-          }),
-        );
-        addListeners();
-      }
-    });
 
     // Data
 
     const rectangle = ref<google.maps.Rectangle | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let boundsChangedListener: google.maps.MapsEventListener | null = null;
+
+    // Mounted
+
+    onMounted(() => {
+      if (map.value && maps.value) {
+        rectangle.value = markRaw(
+          new maps.value.Rectangle({
+            ...props.options,
+            map: map.value,
+            bounds: model.value ?? props.options?.bounds,
+          }),
+        );
+        addListeners();
+      }
+    });
 
     // Computed
 
@@ -83,7 +78,9 @@ export default defineComponent({
 
     function addListeners() {
       if (!rectangle.value) return;
-      clickListener = rectangle.value.addListener("click", onClick);
+      clickListener = rectangle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+        emit("click", ev);
+      });
       boundsChangedListener = rectangle.value.addListener("bounds_changed", () => {
         const bounds = rectangle.value?.getBounds()?.toJSON();
         if (!bounds) return;
@@ -94,18 +91,8 @@ export default defineComponent({
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (boundsChangedListener) {
-        boundsChangedListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
+      clickListener?.remove();
+      boundsChangedListener?.remove();
     }
 
     // Watchs
@@ -127,7 +114,7 @@ export default defineComponent({
         newValue: google.maps.LatLngBoundsLiteral | null,
         oldValue: google.maps.LatLngBoundsLiteral | null,
       ) => {
-        if (equal(newValue, oldValue) || !rectangle.value || !newValue) return;
+        if (!rectangle.value || !newValue || equal(newValue, oldValue)) return;
         rectangle.value.setBounds(newValue);
       },
     );
@@ -150,3 +137,7 @@ export default defineComponent({
     return () => slots.default?.();
   },
 });
+
+export type VGoogleRectangleType = typeof VGoogleRectangle;
+
+export default VGoogleRectangle;
