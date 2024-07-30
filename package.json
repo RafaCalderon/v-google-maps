@@ -2,35 +2,36 @@
   "name": "v-google-maps",
   "version": "1.0.0",
   "private": true,
-  "main": "dist/v-google-maps.umd.cjs",
-  "module": "dist/v-google-maps.js",
-  "browser": "dist/v-google-maps.js",
   "type": "module",
-  "types": "src/typings/index.d.ts",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "files": [
-    "dist/index.css",
-    "dist/*.{js,cjs,mjs}",
-    "src/typings/*.d.ts"
+    "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "dev": "vite --host",
-    "build": "run-p type-check build-only",
+    "build": "vue-tsc --declaration --project tsconfig.build.json && run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
     "format": "prettier --write src",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint \"src/**/*.{js,vue}\""
-  },
-  "exports": {
-    ".": {
-      "types": "./src/typings/index.d.ts",
-      "import": "./dist/v-google-maps.js",
-      "require": "./dist/v-google-maps.umd.cjs"
-    },
-    "./dist/index.css": {
-      "import": "./dist/index.css",
-      "require": "./dist/index.css"
-    }
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
@@ -52,5 +53,8 @@
     "typescript-eslint": "^7.18.0",
     "vite": "^5.3.5",
     "vue-tsc": "^2.0.29"
+  },
+  "peerDependencies": {
+    "vue": "^3"
   }
 }

@@ -14,10 +14,10 @@ export default defineConfig({
   build: {
     cssCodeSplit: true,
     lib: {
-      formats: ["es", "cjs"],
+      formats: ["umd"],
       name: "VGoogleMaps",
       entry: "./src/index.ts",
-      fileName: "v-google-maps",
+      fileName: "index",
     },
     rollupOptions: {
       external: ["vue"],
