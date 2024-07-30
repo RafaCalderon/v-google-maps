@@ -28,3 +28,5 @@ export function vGoogleMaps(app: App) {
   app.component("VGoogleInfoWindow", VGoogleInfoWindow);
   app.component("VGoogleMarkerClusterer", VGoogleMarkerClusterer);
 }
+
+export * from "./components/index";

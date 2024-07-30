@@ -1,0 +1,9 @@
+export { default as VGoogleMap } from "@/components/VGoogleMap.vue";
+export { default as VGoogleCircle } from "@/components/VGoogleCircle";
+export { default as VGoogleHeatmap } from "@/components/VGoogleHeatmap";
+export { default as VGooglePolygon } from "@/components/VGooglePolygon";
+export { default as VGoogleMarker } from "@/components/VGoogleMarker.vue";
+export { default as VGooglePolyline } from "@/components/VGooglePolyline";
+export { default as VGoogleRectangle } from "@/components/VGoogleRectangle";
+export { default as VGoogleInfoWindow } from "@/components/VGoogleInfoWindow.vue";
+export { default as VGoogleMarkerClusterer } from "@/components/VGoogleMarkerClusterer";

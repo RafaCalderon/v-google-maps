@@ -12,6 +12,7 @@ export default defineConfig({
     },
   },
   build: {
+    emptyOutDir: false,
     cssCodeSplit: true,
     lib: {
       formats: ["umd"],
