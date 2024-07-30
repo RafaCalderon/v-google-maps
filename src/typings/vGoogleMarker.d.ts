@@ -1,6 +1,6 @@
 import type { PropType, DefineComponent } from "vue";
 
-export type VGoogleMarker = DefineComponent<
+export type vGoogleMarker = DefineComponent<
   {
     options: {
       required: true;

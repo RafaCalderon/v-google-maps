@@ -20,7 +20,7 @@ import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 // Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-const VGooglePolyline = defineComponent({
+export default defineComponent({
   name: "VGooglePolyline",
   props: {
     options: {
@@ -138,7 +138,3 @@ const VGooglePolyline = defineComponent({
     return () => slots.default?.();
   },
 });
-
-export type VGooglePolylineType = typeof VGooglePolyline;
-
-export default VGooglePolyline;

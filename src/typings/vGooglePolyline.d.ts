@@ -11,14 +11,14 @@ export type VGooglePolyline = DefineComponent<
       type: PropType<google.maps.LatLngLiteral[] | null>;
     };
   },
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
+  object,
+  object,
+  object,
+  object,
+  object,
+  object,
   {
-    click: void;
-    "update:model-value": void;
+    click: google.maps.MapMouseEvent;
+    "update:model-value": google.maps.LatLngLiteral[] | null;
   }
 >;

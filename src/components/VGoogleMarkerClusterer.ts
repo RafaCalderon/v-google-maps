@@ -14,7 +14,7 @@ import {
 import { mapSymbol, markerClustererSymbol } from "@/shared/symbols";
 import { MarkerClusterer, type MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
-const VGoogleMarkerClusterer = defineComponent({
+export default defineComponent({
   name: "VGoogleMarkerClusterer",
   props: {
     options: {
@@ -56,7 +56,3 @@ const VGoogleMarkerClusterer = defineComponent({
     return () => slots.default?.();
   },
 });
-
-export type VGoogleMarkerClustererType = typeof VGoogleMarkerClusterer;
-
-export default VGoogleMarkerClusterer;

@@ -20,7 +20,7 @@ import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 // Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-const VGoogleRectangle = defineComponent({
+export default defineComponent({
   name: "VGoogleRectangle",
   props: {
     options: {
@@ -137,7 +137,3 @@ const VGoogleRectangle = defineComponent({
     return () => slots.default?.();
   },
 });
-
-export type VGoogleRectangleType = typeof VGoogleRectangle;
-
-export default VGoogleRectangle;

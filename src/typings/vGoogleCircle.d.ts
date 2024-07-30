@@ -1,10 +1,10 @@
 import type { PropType, DefineComponent } from "vue";
 
-export type VGoogleCircle = DefineComponent<
+export type vGoogleCircle = DefineComponent<
   {
     options: {
       required: true;
-      type: PropType<google.maps.MarkerOptions>;
+      type: PropType<google.maps.CircleOptions>;
     };
     center: {
       default: null;
@@ -15,15 +15,15 @@ export type VGoogleCircle = DefineComponent<
       type: PropType<number | null>;
     };
   },
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
+  object,
+  object,
+  object,
+  object,
+  object,
+  object,
   {
-    click: void;
-    "update:center": void;
-    "update:radius": void;
+    "update:radius": number | null;
+    click: google.maps.MapMouseEvent;
+    "update:center": google.maps.LatLngLiteral | null;
   }
 >;

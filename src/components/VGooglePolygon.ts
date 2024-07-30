@@ -20,7 +20,7 @@ import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 // Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-const VGooglePolygon = defineComponent({
+export default defineComponent({
   name: "VGooglePolygon",
   props: {
     options: {
@@ -151,7 +151,3 @@ const VGooglePolygon = defineComponent({
     return () => slots.default?.();
   },
 });
-
-export type VGooglePolygonType = typeof VGooglePolygon;
-
-export default VGooglePolygon;

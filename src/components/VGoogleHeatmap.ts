@@ -19,7 +19,7 @@ import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 // Symbols
 import { mapSymbol } from "@/shared/symbols";
 
-const VGoogleHeatmap = defineComponent({
+export default defineComponent({
   name: "VGoogleHeatmap",
   props: {
     options: {
@@ -86,7 +86,3 @@ const VGoogleHeatmap = defineComponent({
     return () => slots.default?.();
   },
 });
-
-export type VGoogleHeatmapType = typeof VGoogleHeatmap;
-
-export default VGoogleHeatmap;

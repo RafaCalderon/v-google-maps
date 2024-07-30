@@ -2,15 +2,15 @@ import type { App, Ref } from "vue";
 import type { Libraries, Loader } from "@googlemaps/js-api-loader";
 import type { MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
-import type VGoogleMap from "@/components/VGoogleMap.vue";
-import type VGoogleMarker from "@/components/VGoogleMarker.vue";
-import type { VGoogleCircleType } from "@/components/VGoogleCircle";
-import type { VGoogleHeatmapType } from "@/components/VGoogleHeatmap";
-import type { VGooglePolygonType } from "@/components/VGooglePolygon";
-import type VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
-import type { VGooglePolylineType } from "@/components/VGooglePolyline";
-import type { VGoogleRectangleType } from "@/components/VGoogleRectangle";
-import type { VGoogleMarkerClustererType } from "@/components/VGoogleMarkerClusterer";
+import type { vGoogleMap } from "./vGoogleMap";
+import type { vGoogleCircle } from "./vGoogleCircle";
+import type { vGoogleMarker } from "./vGoogleMarker";
+import type { vGoogleHeatmap } from "./vGoogleHeatmap";
+import type { vGooglePolygon } from "./vGooglePolygon";
+import type { vGooglePolyline } from "./vGooglePolyline";
+import type { vGoogleRectangle } from "./vGoogleRectangle";
+import type { vGoogleInfoWindow } from "./vGoogleInfoWindow";
+import type { vGoogleMarkerClusterer } from "./vGoogleMarkerClusterer";
 
 export declare interface VGoogleMaps {
   install(app: App): void;
@@ -62,14 +62,14 @@ export interface VGoogleInfoWindowRef {
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
-    VGoogleMap: typeof VGoogleMap;
-    VGoogleCircle: VGoogleCircleType;
-    VGoogleHeatmap: VGoogleHeatmapType;
-    VGooglePolygon: VGooglePolygonType;
-    VGoogleMarker: typeof VGoogleMarker;
-    VGooglePolyline: VGooglePolylineType;
-    VGoogleRectangle: VGoogleRectangleType;
-    VGoogleInfoWindow: typeof VGoogleInfoWindow;
-    VGoogleMarkerClusterer: VGoogleMarkerClustererType;
+    VGoogleMap: vGoogleMap;
+    VGoogleCircle: vGoogleCircle;
+    VGoogleMarker: vGoogleMarker;
+    VGoogleHeatmap: vGoogleHeatmap;
+    VGooglePolygon: vGooglePolygon;
+    VGooglePolyline: vGooglePolyline;
+    VGoogleRectangle: vGoogleRectangle;
+    VGoogleInfoWindow: vGoogleInfoWindow;
+    VGoogleMarkerClusterer: vGoogleMarkerClusterer;
   }
 }

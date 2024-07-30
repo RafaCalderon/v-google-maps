@@ -1,7 +1,7 @@
 import type { Property } from "csstype";
 import type { PropType, DefineComponent } from "vue";
 
-export type VGoogleMap = DefineComponent<
+export type vGoogleMap = DefineComponent<
   {
     width: {
       required: true;
