@@ -47,6 +47,7 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_WithDefaults<
 }, {}>;
 declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, ReturnType<typeof __VLS_template>>;
 export default _default;
+
 type __VLS_WithDefaults<P, D> = {
     [K in keyof Pick<P, keyof P>]: K extends keyof D ? __VLS_Prettify<P[K] & {
         default: D[K];

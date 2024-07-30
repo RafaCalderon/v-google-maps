@@ -135,15 +135,15 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_TypePropsToOp
         unbindAll: () => void;
     } | null>;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    "update:zoom": (zoom: number | null) => void;
     "update:center": (center: google.maps.LatLngLiteral | null) => void;
+    "update:zoom": (zoom: number | null) => void;
     ready: () => void;
     click: (ev: google.maps.MapMouseEvent) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToOption<__VLS_PublicProps>>> & {
     onClick?: ((ev: google.maps.MapMouseEvent) => any) | undefined;
+    "onUpdate:center"?: ((center: google.maps.LatLngLiteral | null) => any) | undefined;
     onReady?: (() => any) | undefined;
     "onUpdate:zoom"?: ((zoom: number | null) => any) | undefined;
-    "onUpdate:center"?: ((center: google.maps.LatLngLiteral | null) => any) | undefined;
 }, {}, {}>;
 declare const _default: __VLS_WithTemplateSlots<typeof __VLS_component, ReturnType<typeof __VLS_template>>;
 export default _default;

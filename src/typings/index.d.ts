@@ -2,15 +2,15 @@ import type { App, Ref } from "vue";
 import type { Libraries, Loader } from "@googlemaps/js-api-loader";
 import type { MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
-import type { VGoogleMap } from "./vGoogleMap";
-import type { VGoogleCircle } from "./vGoogleCircle";
-import type { VGoogleMarker } from "./vGoogleMarker";
-import type { VGoogleHeatmap } from "./vGoogleHeatmap";
-import type { VGooglePolygon } from "./vGooglePolygon";
-import type { VGooglePolyline } from "./vGooglePolyline";
-import type { VGoogleRectangle } from "./vGoogleRectangle";
-import type { VGoogleInfoWindow } from "./vGoogleInfoWindow";
-import type { VGoogleMarkerClusterer } from "./vGoogleMarkerClusterer";
+import type VGoogleMap from "./components/VGoogleMap.vue";
+import type VGoogleCircle from "./components/VGoogleCircle";
+import type VGoogleHeatmap from "./components/VGoogleHeatmap";
+import type VGooglePolygon from "./components/VGooglePolygon";
+import type VGoogleMarker from "./components/VGoogleMarker.vue";
+import type VGooglePolyline from "./components/VGooglePolyline";
+import type VGoogleRectangle from "./components/VGoogleRectangle";
+import type VGoogleInfoWindow from "./components/VGoogleInfoWindow.vue";
+import type VGoogleMarkerClusterer from "./components/VGoogleMarkerClusterer";
 
 export declare interface VGoogleMaps {
   install(app: App): void;

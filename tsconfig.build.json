@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "dist/types",
+    "outDir": "src/typings",
     "emitDeclarationOnly": true
-  }
+  },
+  "include": ["src/components/**/*"]
 }
