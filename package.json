@@ -18,13 +18,6 @@
       "types": "./src/typings/index.d.ts"
     }
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/typings/index.d.ts"
-      ]
-    }
-  },
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --declaration --project tsconfig.build.json && run-p type-check build-only",
