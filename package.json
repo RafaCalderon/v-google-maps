@@ -9,7 +9,8 @@
   "module": "dist/index.mjs",
   "types": "src/typings/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src/typings/*.d.ts"
   ],
   "exports": {
     ".": {
