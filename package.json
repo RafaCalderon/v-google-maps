@@ -9,7 +9,7 @@
   "types": "src/typings/index.d.ts",
   "files": [
     "dist/*.{js,cjs,mjs}",
-    "src/typings/*.d.ts"
+    "src/typings/**/*.d.ts"
   ],
   "exports": {
     ".": {
