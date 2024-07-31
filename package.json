@@ -2,21 +2,20 @@
   "name": "v-google-maps",
   "version": "1.0.0",
   "private": true,
+  "main": "dist/v-google-maps.umd.cjs",
+  "module": "dist/v-google-maps.js",
+  "browser": "dist/v-google-maps.js",
   "type": "module",
-  "unpkg": "dist/index.umd.js",
-  "jsdelivr": "dist/index.umd.js",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
   "types": "src/typings/index.d.ts",
   "files": [
-    "dist",
-    "src/typings"
+    "dist/*.{js,cjs,mjs}",
+    "src/typings/*.d.ts"
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./src/typings/index.d.ts"
+      "types": "./src/typings/index.d.ts",
+      "import": "./dist/v-google-maps.js",
+      "require": "./dist/v-google-maps.umd.cjs"
     }
   },
   "scripts": {

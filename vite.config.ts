@@ -12,16 +12,17 @@ export default defineConfig({
     },
   },
   build: {
-    emptyOutDir: false,
     cssCodeSplit: true,
     lib: {
-      formats: ["umd"],
-      name: "VGoogleMaps",
+      formats: ["es", "cjs"],
+      name: 'VGoogleMaps',
       entry: "./src/index.ts",
-      fileName: "index",
+      fileName: 'v-google-maps',
     },
     rollupOptions: {
-      external: ["vue"],
+      external: [
+        "vue",
+      ],
       output: {
         globals: {
           vue: "Vue",
