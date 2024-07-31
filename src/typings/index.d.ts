@@ -1,5 +1,5 @@
-import type { App } from "vue";
-import type { useGoogleMapsLoader } from "./composables/googleMapsLoader";
+import type { App, Ref } from "vue";
+import type { Libraries, Loader } from "@googlemaps/js-api-loader";
 import type { MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
 import type VGoogleMap from "./components/VGoogleMap.vue";
@@ -16,7 +16,14 @@ export declare interface VGoogleMaps {
   install(app: App): void;
 }
 
-export type { useGoogleMapsLoader };
+export declare function useGoogleMapsLoader(): {
+  loader: Ref<Loader | null>;
+  maps: Ref<google.maps.MapsLibrary | null>;
+  core: Ref<google.maps.CoreLibrary | null>;
+  markers: Ref<google.maps.MarkerLibrary | null>;
+  visualization: Ref<google.maps.VisualizationLibrary | null>;
+  init: (apiKey: string, libraries: Libraries = []) => Promise<void>;
+};
 
 export declare function vGoogleMaps(): VGoogleMaps;
 
