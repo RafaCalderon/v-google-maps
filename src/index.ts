@@ -1,3 +1,6 @@
+// Types
+import type { App } from "vue";
+
 // Composables
 import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 
@@ -12,15 +15,16 @@ import VGoogleRectangle from "@/components/VGoogleRectangle";
 import VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
 import VGoogleMarkerClusterer from "@/components/VGoogleMarkerClusterer";
 
-export {
-  useGoogleMapsLoader,
-  VGoogleMap,
-  VGoogleCircle,
-  VGoogleHeatmap,
-  VGooglePolygon,
-  VGoogleMarker,
-  VGooglePolyline,
-  VGoogleRectangle,
-  VGoogleInfoWindow,
-  VGoogleMarkerClusterer,
-};
+export { useGoogleMapsLoader };
+
+export function vGoogleMaps(app: App) {
+  app.component("VGoogleMap", VGoogleMap);
+  app.component("VGoogleCircle", VGoogleCircle);
+  app.component("VGoogleMarker", VGoogleMarker);
+  app.component("VGoogleHeatmap", VGoogleHeatmap);
+  app.component("VGooglePolygon", VGooglePolygon);
+  app.component("VGooglePolyline", VGooglePolyline);
+  app.component("VGoogleRectangle", VGoogleRectangle);
+  app.component("VGoogleInfoWindow", VGoogleInfoWindow);
+  app.component("VGoogleMarkerClusterer", VGoogleMarkerClusterer);
+}
