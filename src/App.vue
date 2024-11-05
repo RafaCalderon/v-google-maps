@@ -5,6 +5,10 @@ import VGoogleMap from "@/components/VGoogleMap.vue";
 import VGoogleMarker from "@/components/VGoogleMarker.vue";
 
 const showing = ref(false);
+
+function a(ev) {
+  console.log(ev);
+}
 </script>
 
 <template>
@@ -17,6 +21,7 @@ const showing = ref(false);
         mapId: 'map',
         center: { lat: -35.4293256, lng: -71.6556442 },
       }"
+      @click="a"
     >
       <VGoogleMarker
         v-if="showing"

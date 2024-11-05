@@ -6,14 +6,14 @@
   "module": "dist/v-google-maps.js",
   "browser": "dist/v-google-maps.js",
   "type": "module",
-  "types": "src/typings/index.d.ts",
+  "types": "types/shims-vue.d.ts",
   "files": [
-    "dist/*.{js,cjs,mjs}",
-    "src/typings/**/*.d.ts"
+    "types/**/*.d.ts",
+    "dist/*.{js,cjs,mjs}"
   ],
   "exports": {
     ".": {
-      "types": "./src/typings/index.d.ts",
+      "types": "./types/shims-vue.d.ts",
       "import": "./dist/v-google-maps.js",
       "require": "./dist/v-google-maps.umd.cjs"
     }
