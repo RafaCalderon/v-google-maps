@@ -7,7 +7,7 @@ import type VGoogleCircle from "./components/VGoogleCircle";
 import type VGoogleHeatmap from "./components/VGoogleHeatmap";
 import type VGooglePolygon from "./components/VGooglePolygon";
 import type VGoogleMarker from "./components/VGoogleMarker.vue";
-import type VGooglePolyline from "./components/VGooglePolyline";
+// import type VGooglePolyline from "./components/VGooglePolyline";
 import type VGoogleRectangle from "./components/VGoogleRectangle";
 import type VGoogleInfoWindow from "./components/VGoogleInfoWindow.vue";
 import type VGoogleMarkerClusterer from "./components/VGoogleMarkerClusterer";
@@ -63,18 +63,37 @@ export interface VGoogleInfoWindowRef {
 
 import "@vue/runtime-core";
 
-export declare const ASD: new () => {
+export declare const VGooglePolyline: new () => {
   $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
   $slots: {
     default?: (({ Component, route }: { Component: VNode }) => VNode[]) | undefined;
   };
 };
 
-declare module "vue" {
-  export interface GlobalComponents {
-    ASD: typeof ASD;
+import type { PropType, DefineComponent } from "vue";
+
+export declare const VGooglePolyline2: DefineComponent<
+  {
+    options: {
+      required: true;
+      type: PropType<google.maps.PolylineOptions>;
+    };
+    modelValue: {
+      default: null;
+      type: PropType<google.maps.LatLngLiteral[] | null>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    click: void;
+    "update:model-value": void;
   }
-}
+>;
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
@@ -83,7 +102,6 @@ declare module "@vue/runtime-core" {
     VGoogleMarker: VGoogleMarker;
     VGoogleHeatmap: VGoogleHeatmap;
     VGooglePolygon: VGooglePolygon;
-    VGooglePolyline: VGooglePolyline;
     VGoogleRectangle: VGoogleRectangle;
     VGoogleInfoWindow: VGoogleInfoWindow;
     VGoogleMarkerClusterer: VGoogleMarkerClusterer;
