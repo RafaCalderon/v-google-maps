@@ -4,8 +4,10 @@ declare const VGooglePolyline: new () => {
   $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
 };
 
-declare module "vue" {
+declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     VGooglePolyline: typeof VGooglePolyline;
   }
 }
+
+export {}
