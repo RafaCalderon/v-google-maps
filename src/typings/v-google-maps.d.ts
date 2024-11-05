@@ -27,8 +27,6 @@ export declare function useGoogleMapsLoader(): {
 
 export declare function vGoogleMaps(): VGoogleMaps;
 
-export type { MarkerClustererOptions };
-
 export interface VGoogleMapRef {
   map: google.maps.Map;
 }
@@ -61,16 +59,15 @@ export interface VGoogleInfoWindowRef {
   infoWindow: google.maps.InfoWindow;
 }
 
-declare module "@vue/runtime-core" {
-  export interface GlobalComponents {
-    VGoogleMap: VGoogleMap;
-    VGoogleCircle: VGoogleCircle;
-    VGoogleMarker: VGoogleMarker;
-    VGoogleHeatmap: VGoogleHeatmap;
-    VGooglePolygon: VGooglePolygon;
-    VGooglePolyline: VGooglePolyline;
-    VGoogleRectangle: VGoogleRectangle;
-    VGoogleInfoWindow: VGoogleInfoWindow;
-    VGoogleMarkerClusterer: VGoogleMarkerClusterer;
-  }
-}
+export type {
+  VGoogleMap,
+  VGoogleCircle,
+  VGoogleMarker,
+  VGoogleHeatmap,
+  VGooglePolygon,
+  VGooglePolyline,
+  VGoogleRectangle,
+  VGoogleInfoWindow,
+  VGoogleMarkerClusterer,
+  MarkerClustererOptions,
+};
