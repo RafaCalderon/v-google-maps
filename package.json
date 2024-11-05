@@ -6,14 +6,14 @@
   "module": "dist/v-google-maps.js",
   "browser": "dist/v-google-maps.js",
   "type": "module",
-  "types": "types/global-components.d.ts",
+  "types": "types/v-google-maps.d.ts",
   "files": [
     "types/**/*.d.ts",
     "dist/*.{js,cjs,mjs}"
   ],
   "exports": {
     ".": {
-      "types": "./types/global-components.d.ts",
+      "types": "./types/v-google-maps.d.ts",
       "import": "./dist/v-google-maps.js",
       "require": "./dist/v-google-maps.umd.cjs"
     }
