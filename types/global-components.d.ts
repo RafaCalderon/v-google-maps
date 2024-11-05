@@ -1,13 +1,32 @@
-import { VNodeProps, ComponentCustomProps, AllowedComponentProps } from "vue";
+import { PropType, DefineComponent } from "vue";
 
-declare const VGooglePolyline: new () => {
-  $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
-};
+export type VGooglePolyline = DefineComponent<
+  {
+    options: {
+      required: true;
+      type: PropType<google.maps.PolylineOptions>;
+    };
+    modelValue: {
+      default: null;
+      type: PropType<google.maps.LatLngLiteral[] | null>;
+    };
+  },
+  {},
+  {},
+  {},
+  {},
+  {},
+  {},
+  {
+    click: void;
+    "update:model-value": void;
+  }
+>;
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
-    VGooglePolyline: typeof VGooglePolyline;
+    VGooglePolyline: VGooglePolyline;
   }
 }
 
-export {}
+export {};
