@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "run-p type-check build-only",
+    "build": "vue-tsc --declaration --project tsconfig.build.json && run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
     "format": "prettier --write src",

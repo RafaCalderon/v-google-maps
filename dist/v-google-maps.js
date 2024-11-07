@@ -169,17 +169,17 @@ class Z {
     ), !((t = (e = window == null ? void 0 : window.google) === null || e === void 0 ? void 0 : e.maps) === null || t === void 0) && t.importLibrary || ((i) => {
       let n, c, a, h = "The Google Maps JavaScript API", l = "google", f = "importLibrary", p = "__ib__", m = document, d = window;
       d = d[l] || (d[l] = {});
-      const v = d.maps || (d.maps = {}), u = /* @__PURE__ */ new Set(), g = new URLSearchParams(), y = () => (
+      const g = d.maps || (d.maps = {}), u = /* @__PURE__ */ new Set(), v = new URLSearchParams(), y = () => (
         // @ts-ignore
         n || (n = new Promise((M, F) => Ie(this, void 0, void 0, function* () {
           var R;
-          yield c = m.createElement("script"), c.id = this.id, g.set("libraries", [...u] + "");
+          yield c = m.createElement("script"), c.id = this.id, v.set("libraries", [...u] + "");
           for (a in i)
-            g.set(a.replace(/[A-Z]/g, (H) => "_" + H[0].toLowerCase()), i[a]);
-          g.set("callback", l + ".maps." + p), c.src = this.url + "?" + g, v[p] = M, c.onerror = () => n = F(Error(h + " could not load.")), c.nonce = this.nonce || ((R = m.querySelector("script[nonce]")) === null || R === void 0 ? void 0 : R.nonce) || "", m.head.append(c);
+            v.set(a.replace(/[A-Z]/g, (H) => "_" + H[0].toLowerCase()), i[a]);
+          v.set("callback", l + ".maps." + p), c.src = this.url + "?" + v, g[p] = M, c.onerror = () => n = F(Error(h + " could not load.")), c.nonce = this.nonce || ((R = m.querySelector("script[nonce]")) === null || R === void 0 ? void 0 : R.nonce) || "", m.head.append(c);
         })))
       );
-      v[f] ? console.warn(h + " only loads once. Ignoring:", i) : v[f] = (M, ...F) => u.add(M) && y().then(() => v[f](M, ...F));
+      g[f] ? console.warn(h + " only loads once. Ignoring:", i) : g[f] = (M, ...F) => u.add(M) && y().then(() => g[f](M, ...F));
     })(r);
     const s = this.libraries.map((i) => this.importLibrary(i));
     s.length || s.push(this.importLibrary("core")), Promise.all(s).then(() => this.callback(), (i) => {
@@ -223,18 +223,18 @@ class Z {
       }
   }
 }
-const N = k(null), ge = k(null), ve = k(null), ye = k(null), ke = k(null);
+const N = k(null), ve = k(null), ge = k(null), ye = k(null), ke = k(null);
 async function Pe(o, e = []) {
   N.value || (N.value = new Z({
     apiKey: o,
     libraries: e
-  }), ge.value = await N.value.importLibrary("core"), ve.value = await N.value.importLibrary("maps"), ye.value = await N.value.importLibrary("marker"), ke.value = await N.value.importLibrary("visualization"));
+  }), ve.value = await N.value.importLibrary("core"), ge.value = await N.value.importLibrary("maps"), ye.value = await N.value.importLibrary("marker"), ke.value = await N.value.importLibrary("visualization"));
 }
 function j() {
   return {
-    maps: ve,
+    maps: ge,
     init: Pe,
-    core: ge,
+    core: ve,
     loader: N,
     markers: ye,
     visualization: ke
@@ -289,12 +289,12 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     let l = null, f = null, p = null;
     const m = k(null);
     P(async () => {
-      var u, g;
+      var u, v;
       !c.value || !m.value || (h.value = A(
         new c.value.Map(m.value, {
           ...r.options,
           zoom: i.value ?? ((u = r.options) == null ? void 0 : u.zoom),
-          center: n.value ?? ((g = r.options) == null ? void 0 : g.center)
+          center: n.value ?? ((v = r.options) == null ? void 0 : v.center)
         })
       ), a.value = !0, await ee(), d(), s("ready"));
     });
@@ -302,38 +302,38 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
       h.value && (l = h.value.addListener("click", (u) => {
         s("click", u);
       }), f = h.value.addListener("dragend", () => {
-        var u, g;
-        n.value = ((g = (u = h.value) == null ? void 0 : u.getCenter()) == null ? void 0 : g.toJSON()) ?? null;
+        var u, v;
+        n.value = ((v = (u = h.value) == null ? void 0 : u.getCenter()) == null ? void 0 : v.toJSON()) ?? null;
       }), p = h.value.addListener("zoom_changed", () => {
         var u;
         i.value = ((u = h.value) == null ? void 0 : u.getZoom()) ?? 0;
       }));
     }
-    function v() {
+    function g() {
       l == null || l.remove(), f == null || f.remove(), p == null || p.remove();
     }
     return _(
       () => r.options,
-      (u, g) => {
-        !h.value || w(u, g) || h.value.setOptions(r.options);
+      (u, v) => {
+        !h.value || w(u, v) || h.value.setOptions(r.options);
       },
       {
         deep: !0
       }
     ), _(
       n,
-      (u, g) => {
-        w(u, g) || !h.value || !u || h.value.setCenter({
+      (u, v) => {
+        w(u, v) || !h.value || !u || h.value.setCenter({
           ...u
         });
       }
-    ), _(i, (u, g) => {
-      w(u, g) || !h.value || !u || h.value.setZoom(u);
+    ), _(i, (u, v) => {
+      w(u, v) || !h.value || !u || h.value.setZoom(u);
     }), e({
       map: h
     }), te(S, h), I(() => {
-      v(), h.value = null;
-    }), (u, g) => (re(), ne(Ce, null, [
+      g(), h.value = null;
+    }), (u, v) => (re(), ne(Ce, null, [
       se("div", {
         ref_key: "mapRef",
         ref: m,
@@ -363,13 +363,13 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     const { maps: s } = j(), i = O(S, k(null)), n = k(null);
     let c = null, a = null, h = null;
     P(() => {
-      var d, v;
+      var d, g;
       i.value && s.value && (n.value = A(
         new s.value.Circle({
           ...o.options,
           map: i.value,
           center: l.value ?? ((d = o.options) == null ? void 0 : d.center),
-          radius: f.value ?? ((v = o.options) == null ? void 0 : v.radius)
+          radius: f.value ?? ((g = o.options) == null ? void 0 : g.radius)
         })
       ), p());
     });
@@ -395,8 +395,8 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
         var d;
         f.value = ((d = n.value) == null ? void 0 : d.getRadius()) ?? null;
       }), h = n.value.addListener("center_changed", () => {
-        var v, u;
-        const d = (u = (v = n.value) == null ? void 0 : v.getCenter()) == null ? void 0 : u.toJSON();
+        var g, u;
+        const d = (u = (g = n.value) == null ? void 0 : g.getCenter()) == null ? void 0 : u.toJSON();
         d && (l.value = {
           ...d
         });
@@ -407,21 +407,21 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     }
     return _(
       () => o.options,
-      (d, v) => {
-        !n.value || w(d, v) || n.value.setOptions(o.options);
+      (d, g) => {
+        !n.value || w(d, g) || n.value.setOptions(o.options);
       },
       {
         deep: !0
       }
     ), _(
       l,
-      (d, v) => {
-        !n.value || !d || w(d, v) || n.value.setCenter({
+      (d, g) => {
+        !n.value || !d || w(d, g) || n.value.setCenter({
           ...d
         });
       }
-    ), _(f, (d, v) => {
-      !n.value || !d || w(d, v) || n.value.setRadius(d);
+    ), _(f, (d, g) => {
+      !n.value || !d || w(d, g) || n.value.setRadius(d);
     }), t({
       circle: n
     }), I(() => {
@@ -510,8 +510,8 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
           e("mouseover", d);
         }
       ), a = n.value.addListener("mouseup", () => {
-        var v, u, g;
-        const d = (g = (u = (v = n.value) == null ? void 0 : v.getPath()) == null ? void 0 : u.getArray()) == null ? void 0 : g.map((y) => y.toJSON());
+        var g, u, v;
+        const d = (v = (u = (g = n.value) == null ? void 0 : g.getPath()) == null ? void 0 : u.getArray()) == null ? void 0 : v.map((y) => y.toJSON());
         d && (f.value = [...d]);
       }));
     }
@@ -520,16 +520,16 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     }
     return _(
       () => o.options,
-      (d, v) => {
-        !n.value || w(d, v) || n.value.setOptions(o.options);
+      (d, g) => {
+        !n.value || w(d, g) || n.value.setOptions(o.options);
       },
       {
         deep: !0
       }
     ), _(
       f,
-      (d, v) => {
-        !n.value || !d || w(d, v) || n.value.setPath(d);
+      (d, g) => {
+        !n.value || !d || w(d, g) || n.value.setPath(d);
       }
     ), t({
       polygon: n
@@ -562,7 +562,7 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
           ...t.options,
           content: m.value && !d.value ? h.value : (y = t.options) == null ? void 0 : y.content
         })
-      ), await ee(), v(), r.value && g());
+      ), await ee(), g(), r.value && v());
     });
     const m = b(() => {
       var y, M;
@@ -571,13 +571,13 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
       var y;
       return ((y = m.value) == null ? void 0 : y.type) === Comment;
     });
-    function v() {
-      !c.value || !l.value || (p = c.value.addListener("click", g), f = l.value.addListener("closeclick", g));
+    function g() {
+      !c.value || !l.value || (p = c.value.addListener("click", v), f = l.value.addListener("closeclick", v));
     }
     function u() {
       p && p.remove(), f && f.remove();
     }
-    function g() {
+    function v() {
       !l.value || !n.value || (a.value = !a.value, a.value ? l.value.open({
         map: n.value,
         anchor: c.value
@@ -592,7 +592,7 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
         deep: !0
       }
     ), _(r, (y) => {
-      y === null || y === a.value || g();
+      y === null || y === a.value || v();
     }), e({
       infoWindow: l
     }), I(() => {
@@ -612,7 +612,7 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
 }, De = /* @__PURE__ */ C({
   __name: "VGoogleMarker",
   props: /* @__PURE__ */ J({
-    options: {}
+    options: { default: void 0 }
   }, {
     modelValue: {
       default: null,
@@ -628,19 +628,19 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
       null
     );
     P(async () => {
-      var u, g;
+      var u, v;
       i.value && (l.value = A(
         new i.value.AdvancedMarkerElement({
           ...t.options,
           position: r.value ?? ((u = t.options) == null ? void 0 : u.position),
           map: c.value === null ? n.value : null,
-          content: f.value && !p.value && !m.value ? a.value : (g = t.options) == null ? void 0 : g.content
+          content: f.value && !p.value && !m.value ? a.value : (v = t.options) == null ? void 0 : v.content
         })
       ), await ee(), c.value && c.value.addMarker(l.value), d());
     });
     const f = b(() => {
-      var u, g;
-      return ((g = (u = s.default) == null ? void 0 : u.call(s)) == null ? void 0 : g[0]) ?? null;
+      var u, v;
+      return ((v = (u = s.default) == null ? void 0 : u.call(s)) == null ? void 0 : v[0]) ?? null;
     }), p = b(() => {
       var u;
       return ((u = f.value) == null ? void 0 : u.type) === Comment;
@@ -650,31 +650,31 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     });
     function d() {
       l.value && (h = l.value.addListener("dragend", (u) => {
-        var g;
-        r.value = ((g = u.latLng) == null ? void 0 : g.toJSON()) ?? null;
+        var v;
+        r.value = ((v = u.latLng) == null ? void 0 : v.toJSON()) ?? null;
       }));
     }
-    function v() {
+    function g() {
       h == null || h.remove();
     }
     return _(
       () => t.options,
-      (u, g) => {
-        !l.value || w(u, g) || (u != null && u.title && (l.value.title = u.title), u != null && u.zIndex && (l.value.zIndex = u.zIndex), u != null && u.content && (l.value.content = u.content), u != null && u.position && (l.value.position = u.position), u != null && u.gmpDraggable && (l.value.gmpDraggable = u.gmpDraggable));
+      (u, v) => {
+        !l.value || w(u, v) || (u != null && u.title && (l.value.title = u.title), u != null && u.zIndex && (l.value.zIndex = u.zIndex), u != null && u.content && (l.value.content = u.content), u != null && u.position && (l.value.position = u.position), u != null && u.gmpDraggable && (l.value.gmpDraggable = u.gmpDraggable));
       },
       {
         deep: !0
       }
     ), _(
       r,
-      (u, g) => {
-        !l.value || w(u, g) || (l.value.position = u);
+      (u, v) => {
+        !l.value || w(u, v) || (l.value.position = u);
       }
     ), e({
       marker: l
     }), te(Me, l), I(() => {
-      v(), l.value && (c.value && c.value.removeMarker(l.value), l.value.map = null, l.value = null);
-    }), (u, g) => f.value && !p.value ? (re(), ne("div", $e, [
+      g(), l.value && (c.value && c.value.removeMarker(l.value), l.value.map = null, l.value = null);
+    }), (u, v) => f.value && !p.value ? (re(), ne("div", $e, [
       se("div", {
         ref_key: "contentRef",
         ref: a
@@ -721,8 +721,8 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
       n.value && (c = n.value.addListener("click", (p) => {
         e("click", p);
       }), a = n.value.addListener("mouseup", () => {
-        var m, d, v;
-        const p = (v = (d = (m = n.value) == null ? void 0 : m.getPath()) == null ? void 0 : d.getArray()) == null ? void 0 : v.map((u) => u.toJSON());
+        var m, d, g;
+        const p = (g = (d = (m = n.value) == null ? void 0 : m.getPath()) == null ? void 0 : d.getArray()) == null ? void 0 : g.map((u) => u.toJSON());
         p && (h.value = [...p]);
       }));
     }
@@ -901,13 +901,13 @@ class ae {
       const l = a.pop() || 0, f = a.pop() || 0, p = a.pop() || 0;
       if (f - p <= c) {
         for (let u = p; u <= f; u++) {
-          const g = n[2 * u], y = n[2 * u + 1];
-          g >= e && g <= r && y >= t && y <= s && h.push(i[u]);
+          const v = n[2 * u], y = n[2 * u + 1];
+          v >= e && v <= r && y >= t && y <= s && h.push(i[u]);
         }
         continue;
       }
-      const m = p + f >> 1, d = n[2 * m], v = n[2 * m + 1];
-      d >= e && d <= r && v >= t && v <= s && h.push(i[m]), (l === 0 ? e <= d : t <= v) && (a.push(p), a.push(m - 1), a.push(1 - l)), (l === 0 ? r >= d : s >= v) && (a.push(m + 1), a.push(f), a.push(1 - l));
+      const m = p + f >> 1, d = n[2 * m], g = n[2 * m + 1];
+      d >= e && d <= r && g >= t && g <= s && h.push(i[m]), (l === 0 ? e <= d : t <= g) && (a.push(p), a.push(m - 1), a.push(1 - l)), (l === 0 ? r >= d : s >= g) && (a.push(m + 1), a.push(f), a.push(1 - l));
     }
     return h;
   }
@@ -928,8 +928,8 @@ class ae {
           pe(i[2 * u], i[2 * u + 1], e, t) <= h && a.push(s[u]);
         continue;
       }
-      const m = p + f >> 1, d = i[2 * m], v = i[2 * m + 1];
-      pe(d, v, e, t) <= h && a.push(s[m]), (l === 0 ? e - r <= d : t - r <= v) && (c.push(p), c.push(m - 1), c.push(1 - l)), (l === 0 ? e + r >= d : t + r >= v) && (c.push(m + 1), c.push(f), c.push(1 - l));
+      const m = p + f >> 1, d = i[2 * m], g = i[2 * m + 1];
+      pe(d, g, e, t) <= h && a.push(s[m]), (l === 0 ? e - r <= d : t - r <= g) && (c.push(p), c.push(m - 1), c.push(1 - l)), (l === 0 ? e + r >= d : t + r >= g) && (c.push(m + 1), c.push(f), c.push(1 - l));
     }
     return a;
   }
@@ -942,8 +942,8 @@ function V(o, e, t, r, s, i) {
 function Ee(o, e, t, r, s, i) {
   for (; s > r; ) {
     if (s - r > 600) {
-      const h = s - r + 1, l = t - r + 1, f = Math.log(h), p = 0.5 * Math.exp(2 * f / 3), m = 0.5 * Math.sqrt(f * p * (h - p) / h) * (l - h / 2 < 0 ? -1 : 1), d = Math.max(r, Math.floor(t - l * p / h + m)), v = Math.min(s, Math.floor(t + (h - l) * p / h + m));
-      Ee(o, e, t, d, v, i);
+      const h = s - r + 1, l = t - r + 1, f = Math.log(h), p = 0.5 * Math.exp(2 * f / 3), m = 0.5 * Math.sqrt(f * p * (h - p) / h) * (l - h / 2 < 0 ? -1 : 1), d = Math.max(r, Math.floor(t - l * p / h + m)), g = Math.min(s, Math.floor(t + (h - l) * p / h + m));
+      Ee(o, e, t, d, g, i);
     }
     const n = e[2 * t + i];
     let c = r, a = s;
@@ -1117,10 +1117,10 @@ class qe {
       if (h)
         l = Oe(t, a, this.clusterProps), f = t[a], p = t[a + 1];
       else {
-        const v = this.points[t[a + x]];
-        l = v.properties;
-        const [u, g] = v.geometry.coordinates;
-        f = z(u), p = q(g);
+        const g = this.points[t[a + x]];
+        l = g.properties;
+        const [u, v] = g.geometry.coordinates;
+        f = z(u), p = q(v);
       }
       const m = {
         type: 1,
@@ -1142,28 +1142,28 @@ class qe {
     for (let f = 0; f < a.length; f += l) {
       if (a[f + G] <= t) continue;
       a[f + G] = t;
-      const p = a[f], m = a[f + 1], d = e.within(a[f], a[f + 1], c), v = a[f + L];
-      let u = v;
-      for (const g of d) {
-        const y = g * l;
+      const p = a[f], m = a[f + 1], d = e.within(a[f], a[f + 1], c), g = a[f + L];
+      let u = g;
+      for (const v of d) {
+        const y = v * l;
         a[y + G] > t && (u += a[y + L]);
       }
-      if (u > v && u >= n) {
-        let g = p * v, y = m * v, M, F = -1;
+      if (u > g && u >= n) {
+        let v = p * g, y = m * g, M, F = -1;
         const R = ((f / l | 0) << 5) + (t + 1) + this.points.length;
         for (const H of d) {
           const T = H * l;
           if (a[T + G] <= t) continue;
           a[T + G] = t;
           const ue = a[T + L];
-          g += a[T] * ue, y += a[T + 1] * ue, a[T + Q] = R, i && (M || (M = this._map(a, f, !0), F = this.clusterProps.length, this.clusterProps.push(M)), i(M, this._map(a, T)));
+          v += a[T] * ue, y += a[T + 1] * ue, a[T + Q] = R, i && (M || (M = this._map(a, f, !0), F = this.clusterProps.length, this.clusterProps.push(M)), i(M, this._map(a, T)));
         }
-        a[f + Q] = R, h.push(g / u, y / u, 1 / 0, R, -1, u), i && h.push(F);
+        a[f + Q] = R, h.push(v / u, y / u, 1 / 0, R, -1, u), i && h.push(F);
       } else {
-        for (let g = 0; g < l; g++) h.push(a[f + g]);
+        for (let v = 0; v < l; v++) h.push(a[f + v]);
         if (u > 1)
-          for (const g of d) {
-            const y = g * l;
+          for (const v of d) {
+            const y = v * l;
             if (!(a[y + G] <= t)) {
               a[y + G] = t;
               for (let M = 0; M < l; M++) h.push(a[y + M]);

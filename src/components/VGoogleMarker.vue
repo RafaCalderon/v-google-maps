@@ -40,10 +40,12 @@ import VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
 // Definitions
 
 interface Props {
-  options: google.maps.marker.AdvancedMarkerElementOptions;
+  options?: google.maps.marker.AdvancedMarkerElementOptions;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  options: undefined,
+});
 
 const model = defineModel<google.maps.LatLngLiteral | null>({
   default: null,
@@ -122,10 +124,7 @@ function removeListeners() {
 
 watch(
   () => props.options,
-  (
-    newValue: google.maps.marker.AdvancedMarkerElementOptions | null,
-    oldValue: google.maps.marker.AdvancedMarkerElementOptions | null,
-  ) => {
+  (newValue, oldValue) => {
     if (!marker.value || equal(newValue, oldValue)) return;
     if (newValue?.title) marker.value.title = newValue.title;
     if (newValue?.zIndex) marker.value.zIndex = newValue.zIndex;
