@@ -3,10 +3,13 @@ import eslingConfigPrettier from "@vue/eslint-config-prettier";
 import eslintConfigTypescript from "@vue/eslint-config-typescript";
 
 export default [
+  {
+    ignores: ["src/typings/**/*.d.ts"],
+  },
   ...pluginVue.configs["flat/recommended"],
   ...eslintConfigTypescript(),
   eslingConfigPrettier,
   {
-    files: ["**/*.ts", "**/*.vue"],
+    files: ["src/**/*.ts", "src/**/*.vue"],
   },
 ];

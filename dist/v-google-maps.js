@@ -665,12 +665,9 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
       {
         deep: !0
       }
-    ), _(
-      r,
-      (u, v) => {
-        !l.value || w(u, v) || (l.value.position = u);
-      }
-    ), e({
+    ), _(r, (u, v) => {
+      !l.value || w(u, v) || (l.value.position = u);
+    }), e({
       marker: l
     }), te(Me, l), I(() => {
       g(), l.value && (c.value && c.value.removeMarker(l.value), l.value.map = null, l.value = null);

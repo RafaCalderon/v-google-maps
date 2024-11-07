@@ -21,7 +21,6 @@ const showing = ref(false);
       <VGoogleMarker
         v-if="showing"
         :options="{
-
           position: { lat: -35.4293256, lng: -71.6556442 },
         }"
       >

@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   options: undefined,
 });
 
-const model = defineModel<google.maps.LatLngLiteral | null>({
+const model = defineModel<google.maps.LatLngLiteral | google.maps.LatLng | null>({
   default: null,
   required: false,
 });
@@ -137,13 +137,10 @@ watch(
   },
 );
 
-watch(
-  model,
-  (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
-    if (!marker.value || equal(newValue, oldValue)) return;
-    marker.value.position = newValue;
-  },
-);
+watch(model, (newValue, oldValue) => {
+  if (!marker.value || equal(newValue, oldValue)) return;
+  marker.value.position = newValue;
+});
 
 // Exposes
 
