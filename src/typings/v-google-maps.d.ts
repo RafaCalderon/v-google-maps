@@ -63,14 +63,14 @@ export interface VGoogleInfoWindowRef {
 
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
-    VGoogleMap: VGoogleMap;
-    VGoogleCircle: VGoogleCircle;
-    VGoogleMarker: VGoogleMarker;
-    VGoogleHeatmap: VGoogleHeatmap;
-    VGooglePolygon: VGooglePolygon;
-    VGooglePolyline: VGooglePolyline;
-    VGoogleRectangle: VGoogleRectangle;
-    VGoogleInfoWindow: VGoogleInfoWindow;
-    VGoogleMarkerClusterer: VGoogleMarkerClusterer;
+    VGoogleMap: typeof VGoogleMap;
+    VGoogleCircle: typeof VGoogleCircle;
+    VGoogleMarker: typeof VGoogleMarker;
+    VGoogleHeatmap: typeof VGoogleHeatmap;
+    VGooglePolygon: typeof VGooglePolygon;
+    VGooglePolyline: typeof VGooglePolyline;
+    VGoogleRectangle: typeof VGoogleRectangle;
+    VGoogleInfoWindow: typeof VGoogleInfoWindow;
+    VGoogleMarkerClusterer: typeof VGoogleMarkerClusterer;
   }
 }

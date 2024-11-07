@@ -2,8 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
+    "declaration": true,
     "outDir": "src/typings",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
   },
   "include": ["src/components/**/*"]
 }
