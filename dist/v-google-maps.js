@@ -1,4 +1,4 @@
-import { ref as k, defineComponent as C, mergeModels as J, useModel as K, onMounted as P, markRaw as A, nextTick as ee, watch as _, provide as te, onBeforeUnmount as I, openBlock as re, createElementBlock as ne, Fragment as Ce, createElementVNode as se, normalizeClass as Ae, renderSlot as oe, createCommentVNode as ie, inject as O, computed as b, useSlots as me } from "vue";
+import { ref as M, defineComponent as A, mergeModels as z, useModel as K, onMounted as j, markRaw as I, nextTick as ee, watch as E, provide as te, onBeforeUnmount as S, openBlock as re, createElementBlock as ne, Fragment as Ce, createElementVNode as se, normalizeClass as Ae, renderSlot as oe, createCommentVNode as ie, inject as C, computed as O, useSlots as me } from "vue";
 function Ie(o, e, t, r) {
   function s(i) {
     return i instanceof t ? i : new t(function(n) {
@@ -6,24 +6,24 @@ function Ie(o, e, t, r) {
     });
   }
   return new (t || (t = Promise))(function(i, n) {
-    function c(l) {
+    function h(d) {
       try {
-        h(r.next(l));
-      } catch (f) {
-        n(f);
+        l(r.next(d));
+      } catch (p) {
+        n(p);
       }
     }
-    function a(l) {
+    function a(d) {
       try {
-        h(r.throw(l));
-      } catch (f) {
-        n(f);
+        l(r.throw(d));
+      } catch (p) {
+        n(p);
       }
     }
-    function h(l) {
-      l.done ? i(l.value) : s(l.value).then(c, a);
+    function l(d) {
+      d.done ? i(d.value) : s(d.value).then(h, a);
     }
-    h((r = r.apply(o, [])).next());
+    l((r = r.apply(o, [])).next());
   });
 }
 function Se(o) {
@@ -59,7 +59,7 @@ var $;
 (function(o) {
   o[o.INITIALIZED = 0] = "INITIALIZED", o[o.LOADING = 1] = "LOADING", o[o.SUCCESS = 2] = "SUCCESS", o[o.FAILURE = 3] = "FAILURE";
 })($ || ($ = {}));
-class Z {
+class F {
   /**
    * Creates an instance of Loader using [[LoaderOptions]]. No defaults are set
    * using this library, instead the defaults are set by the Google Maps
@@ -69,13 +69,13 @@ class Z {
    * const loader = Loader({apiKey, version: 'weekly', libraries: ['places']});
    * ```
    */
-  constructor({ apiKey: e, authReferrerPolicy: t, channel: r, client: s, id: i = ce, language: n, libraries: c = [], mapIds: a, nonce: h, region: l, retries: f = 3, url: p = "https://maps.googleapis.com/maps/api/js", version: m }) {
-    if (this.callbacks = [], this.done = !1, this.loading = !1, this.errors = [], this.apiKey = e, this.authReferrerPolicy = t, this.channel = r, this.client = s, this.id = i || ce, this.language = n, this.libraries = c, this.mapIds = a, this.nonce = h, this.region = l, this.retries = f, this.url = p, this.version = m, Z.instance) {
-      if (!xe(this.options, Z.instance.options))
-        throw new Error(`Loader must not be called again with different options. ${JSON.stringify(this.options)} !== ${JSON.stringify(Z.instance.options)}`);
-      return Z.instance;
+  constructor({ apiKey: e, authReferrerPolicy: t, channel: r, client: s, id: i = ce, language: n, libraries: h = [], mapIds: a, nonce: l, region: d, retries: p = 3, url: u = "https://maps.googleapis.com/maps/api/js", version: f }) {
+    if (this.callbacks = [], this.done = !1, this.loading = !1, this.errors = [], this.apiKey = e, this.authReferrerPolicy = t, this.channel = r, this.client = s, this.id = i || ce, this.language = n, this.libraries = h, this.mapIds = a, this.nonce = l, this.region = d, this.retries = p, this.url = u, this.version = f, F.instance) {
+      if (!xe(this.options, F.instance.options))
+        throw new Error(`Loader must not be called again with different options. ${JSON.stringify(this.options)} !== ${JSON.stringify(F.instance.options)}`);
+      return F.instance;
     }
-    Z.instance = this;
+    F.instance = this;
   }
   get options() {
     return {
@@ -167,19 +167,19 @@ class Z {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (i) => !r[i] && delete r[i]
     ), !((t = (e = window == null ? void 0 : window.google) === null || e === void 0 ? void 0 : e.maps) === null || t === void 0) && t.importLibrary || ((i) => {
-      let n, c, a, h = "The Google Maps JavaScript API", l = "google", f = "importLibrary", p = "__ib__", m = document, d = window;
-      d = d[l] || (d[l] = {});
-      const g = d.maps || (d.maps = {}), u = /* @__PURE__ */ new Set(), v = new URLSearchParams(), y = () => (
+      let n, h, a, l = "The Google Maps JavaScript API", d = "google", p = "importLibrary", u = "__ib__", f = document, c = window;
+      c = c[d] || (c[d] = {});
+      const g = c.maps || (c.maps = {}), v = /* @__PURE__ */ new Set(), y = new URLSearchParams(), k = () => (
         // @ts-ignore
-        n || (n = new Promise((M, F) => Ie(this, void 0, void 0, function* () {
-          var R;
-          yield c = m.createElement("script"), c.id = this.id, v.set("libraries", [...u] + "");
+        n || (n = new Promise((m, w) => Ie(this, void 0, void 0, function* () {
+          var T;
+          yield h = f.createElement("script"), h.id = this.id, y.set("libraries", [...v] + "");
           for (a in i)
-            v.set(a.replace(/[A-Z]/g, (H) => "_" + H[0].toLowerCase()), i[a]);
-          v.set("callback", l + ".maps." + p), c.src = this.url + "?" + v, g[p] = M, c.onerror = () => n = F(Error(h + " could not load.")), c.nonce = this.nonce || ((R = m.querySelector("script[nonce]")) === null || R === void 0 ? void 0 : R.nonce) || "", m.head.append(c);
+            y.set(a.replace(/[A-Z]/g, (H) => "_" + H[0].toLowerCase()), i[a]);
+          y.set("callback", d + ".maps." + u), h.src = this.url + "?" + y, g[u] = m, h.onerror = () => n = w(Error(l + " could not load.")), h.nonce = this.nonce || ((T = f.querySelector("script[nonce]")) === null || T === void 0 ? void 0 : T.nonce) || "", f.head.append(h);
         })))
       );
-      g[f] ? console.warn(h + " only loads once. Ignoring:", i) : g[f] = (M, ...F) => u.add(M) && y().then(() => g[f](M, ...F));
+      g[p] ? console.warn(l + " only loads once. Ignoring:", i) : g[p] = (m, ...w) => v.add(m) && k().then(() => g[p](m, ...w));
     })(r);
     const s = this.libraries.map((i) => this.importLibrary(i));
     s.length || s.push(this.importLibrary("core")), Promise.all(s).then(() => this.callback(), (i) => {
@@ -223,19 +223,19 @@ class Z {
       }
   }
 }
-const N = k(null), ve = k(null), ge = k(null), ye = k(null), ke = k(null);
+const Z = M(null), ve = M(null), ge = M(null), ye = M(null), ke = M(null);
 async function Pe(o, e = []) {
-  N.value || (N.value = new Z({
+  Z.value || (Z.value = new F({
     apiKey: o,
     libraries: e
-  }), ve.value = await N.value.importLibrary("core"), ge.value = await N.value.importLibrary("maps"), ye.value = await N.value.importLibrary("marker"), ke.value = await N.value.importLibrary("visualization"));
+  }), ve.value = await Z.value.importLibrary("core"), ge.value = await Z.value.importLibrary("maps"), ye.value = await Z.value.importLibrary("marker"), ke.value = await Z.value.importLibrary("visualization"));
 }
-function j() {
+function R() {
   return {
     maps: ge,
     init: Pe,
     core: ve,
-    loader: N,
+    loader: Z,
     markers: ye,
     visualization: ke
   };
@@ -268,9 +268,9 @@ var Re = function o(e, t) {
   }
   return e !== e && t !== t;
 };
-const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we = Symbol("marker-clusterer"), Te = /* @__PURE__ */ C({
+const _ = /* @__PURE__ */ je(Re), L = Symbol("map"), Me = Symbol("marker"), we = Symbol("marker-clusterer"), Te = /* @__PURE__ */ A({
   __name: "VGoogleMap",
-  props: /* @__PURE__ */ J({
+  props: /* @__PURE__ */ z({
     class: {},
     options: {}
   }, {
@@ -283,66 +283,66 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     },
     centerModifiers: {}
   }),
-  emits: /* @__PURE__ */ J(["ready", "click"], ["update:zoom", "update:center"]),
+  emits: /* @__PURE__ */ z(["ready", "click"], ["update:zoom", "update:center"]),
   setup(o, { expose: e, emit: t }) {
-    const r = o, s = t, i = K(o, "zoom"), n = K(o, "center"), { maps: c } = j(), a = k(!1), h = k(null);
-    let l = null, f = null, p = null;
-    const m = k(null);
-    P(async () => {
-      var u, v;
-      !c.value || !m.value || (h.value = A(
-        new c.value.Map(m.value, {
+    const r = o, s = t, i = K(o, "zoom"), n = K(o, "center"), { maps: h } = R(), a = M(!1), l = M(null);
+    let d = null, p = null, u = null;
+    const f = M(null);
+    j(async () => {
+      var v, y;
+      !h.value || !f.value || (l.value = I(
+        new h.value.Map(f.value, {
           ...r.options,
-          zoom: i.value ?? ((u = r.options) == null ? void 0 : u.zoom),
-          center: n.value ?? ((v = r.options) == null ? void 0 : v.center)
+          zoom: i.value ?? ((v = r.options) == null ? void 0 : v.zoom),
+          center: n.value ?? ((y = r.options) == null ? void 0 : y.center)
         })
-      ), a.value = !0, await ee(), d(), s("ready"));
+      ), a.value = !0, await ee(), c(), s("ready"));
     });
-    function d() {
-      h.value && (l = h.value.addListener("click", (u) => {
-        s("click", u);
-      }), f = h.value.addListener("dragend", () => {
-        var u, v;
-        n.value = ((v = (u = h.value) == null ? void 0 : u.getCenter()) == null ? void 0 : v.toJSON()) ?? null;
-      }), p = h.value.addListener("zoom_changed", () => {
-        var u;
-        i.value = ((u = h.value) == null ? void 0 : u.getZoom()) ?? 0;
+    function c() {
+      l.value && (d = l.value.addListener("click", (v) => {
+        s("click", v);
+      }), p = l.value.addListener("dragend", () => {
+        var v, y;
+        n.value = ((y = (v = l.value) == null ? void 0 : v.getCenter()) == null ? void 0 : y.toJSON()) ?? null;
+      }), u = l.value.addListener("zoom_changed", () => {
+        var v;
+        i.value = ((v = l.value) == null ? void 0 : v.getZoom()) ?? 0;
       }));
     }
     function g() {
-      l == null || l.remove(), f == null || f.remove(), p == null || p.remove();
+      d == null || d.remove(), p == null || p.remove(), u == null || u.remove();
     }
-    return _(
+    return E(
       () => r.options,
-      (u, v) => {
-        !h.value || w(u, v) || h.value.setOptions(r.options);
+      (v, y) => {
+        !l.value || _(v, y) || l.value.setOptions(r.options);
       },
       {
         deep: !0
       }
-    ), _(
+    ), E(
       n,
-      (u, v) => {
-        w(u, v) || !h.value || !u || h.value.setCenter({
-          ...u
+      (v, y) => {
+        _(v, y) || !l.value || !v || l.value.setCenter({
+          ...v
         });
       }
-    ), _(i, (u, v) => {
-      w(u, v) || !h.value || !u || h.value.setZoom(u);
+    ), E(i, (v, y) => {
+      _(v, y) || !l.value || !v || l.value.setZoom(v);
     }), e({
-      map: h
-    }), te(S, h), I(() => {
-      g(), h.value = null;
-    }), (u, v) => (re(), ne(Ce, null, [
+      map: l
+    }), te(L, l), S(() => {
+      g(), l.value = null;
+    }), (v, y) => (re(), ne(Ce, null, [
       se("div", {
         ref_key: "mapRef",
-        ref: m,
+        ref: f,
         class: Ae(r.class)
       }, null, 2),
-      a.value ? oe(u.$slots, "default", { key: 0 }) : ie("", !0)
+      a.value ? oe(v.$slots, "default", { key: 0 }) : ie("", !0)
     ], 64));
   }
-}), Ge = C({
+}), Ge = A({
   name: "VGoogleCircle",
   props: {
     options: {
@@ -360,78 +360,78 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
   },
   emits: ["click", "update:center", "update:radius"],
   setup(o, { emit: e, expose: t, slots: r }) {
-    const { maps: s } = j(), i = O(S, k(null)), n = k(null);
-    let c = null, a = null, h = null;
-    P(() => {
-      var d, g;
-      i.value && s.value && (n.value = A(
+    const { maps: s } = R(), i = C(L, M(null)), n = M(null);
+    let h = null, a = null, l = null;
+    j(() => {
+      var c, g;
+      i.value && s.value && (n.value = I(
         new s.value.Circle({
           ...o.options,
           map: i.value,
-          center: l.value ?? ((d = o.options) == null ? void 0 : d.center),
-          radius: f.value ?? ((g = o.options) == null ? void 0 : g.radius)
+          center: d.value ?? ((c = o.options) == null ? void 0 : c.center),
+          radius: p.value ?? ((g = o.options) == null ? void 0 : g.radius)
         })
-      ), p());
+      ), u());
     });
-    const l = b({
+    const d = O({
       get() {
         return o.center;
       },
-      set(d) {
-        e("update:center", d);
+      set(c) {
+        e("update:center", c);
       }
-    }), f = b({
+    }), p = O({
       get() {
         return o.radius;
       },
-      set(d) {
-        e("update:radius", d);
+      set(c) {
+        e("update:radius", c);
       }
     });
-    function p() {
-      n.value && (c = n.value.addListener("click", (d) => {
-        e("click", d);
+    function u() {
+      n.value && (h = n.value.addListener("click", (c) => {
+        e("click", c);
       }), a = n.value.addListener("radius_changed", () => {
-        var d;
-        f.value = ((d = n.value) == null ? void 0 : d.getRadius()) ?? null;
-      }), h = n.value.addListener("center_changed", () => {
-        var g, u;
-        const d = (u = (g = n.value) == null ? void 0 : g.getCenter()) == null ? void 0 : u.toJSON();
-        d && (l.value = {
-          ...d
+        var c;
+        p.value = ((c = n.value) == null ? void 0 : c.getRadius()) ?? null;
+      }), l = n.value.addListener("center_changed", () => {
+        var g, v;
+        const c = (v = (g = n.value) == null ? void 0 : g.getCenter()) == null ? void 0 : v.toJSON();
+        c && (d.value = {
+          ...c
         });
       }));
     }
-    function m() {
-      c == null || c.remove(), a == null || a.remove(), h == null || h.remove();
+    function f() {
+      h == null || h.remove(), a == null || a.remove(), l == null || l.remove();
     }
-    return _(
+    return E(
       () => o.options,
-      (d, g) => {
-        !n.value || w(d, g) || n.value.setOptions(o.options);
+      (c, g) => {
+        !n.value || _(c, g) || n.value.setOptions(o.options);
       },
       {
         deep: !0
       }
-    ), _(
-      l,
-      (d, g) => {
-        !n.value || !d || w(d, g) || n.value.setCenter({
-          ...d
+    ), E(
+      d,
+      (c, g) => {
+        !n.value || !c || _(c, g) || n.value.setCenter({
+          ...c
         });
       }
-    ), _(f, (d, g) => {
-      !n.value || !d || w(d, g) || n.value.setRadius(d);
+    ), E(p, (c, g) => {
+      !n.value || !c || _(c, g) || n.value.setRadius(c);
     }), t({
       circle: n
-    }), I(() => {
-      m(), n.value && (n.value.setMap(null), n.value = null);
+    }), S(() => {
+      f(), n.value && (n.value.setMap(null), n.value = null);
     }), () => {
-      var d;
-      return (d = r.default) == null ? void 0 : d.call(r);
+      var c;
+      return (c = r.default) == null ? void 0 : c.call(r);
     };
   }
-}), Ne = C({
+}), Ne = A({
   name: "VGoogleHeatmap",
   props: {
     options: {
@@ -440,32 +440,32 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     }
   },
   setup(o, { expose: e, slots: t }) {
-    const { visualization: r } = j(), s = O(S, k(null)), i = k(null);
-    return P(() => {
-      s.value && r.value && (i.value = A(
+    const { visualization: r } = R(), s = C(L, M(null)), i = M(null);
+    return j(() => {
+      s.value && r.value && (i.value = I(
         new r.value.HeatmapLayer({
           map: s.value,
           ...o.options
         })
       ));
-    }), _(
+    }), E(
       () => o.options,
-      (n, c) => {
-        !i.value || w(n, c) || i.value.setOptions(o.options);
+      (n, h) => {
+        !i.value || _(n, h) || i.value.setOptions(o.options);
       },
       {
         deep: !0
       }
     ), e({
       heatmap: i
-    }), I(() => {
+    }), S(() => {
       i.value && (i.value.setMap(null), i.value = null);
     }), () => {
       var n;
       return (n = t.default) == null ? void 0 : n.call(t);
     };
   }
-}), Ze = C({
+}), Ze = A({
   name: "VGooglePolygon",
   props: {
     options: {
@@ -479,73 +479,73 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
   },
   emits: ["click", "mouseover", "mouseout", "update:model-value"],
   setup(o, { emit: e, expose: t, slots: r }) {
-    const { maps: s } = j(), i = O(S, k(null)), n = k(null);
-    let c = null, a = null, h = null, l = null;
-    P(() => {
-      var d;
-      i.value && s.value && (n.value = A(
+    const { maps: s } = R(), i = C(L, M(null)), n = M(null);
+    let h = null, a = null, l = null, d = null;
+    j(() => {
+      var c;
+      i.value && s.value && (n.value = I(
         new s.value.Polygon({
           ...o.options,
           map: i.value,
-          paths: f.value ? [...f.value] : (d = o.options) == null ? void 0 : d.paths
+          paths: p.value ? [...p.value] : (c = o.options) == null ? void 0 : c.paths
         })
-      ), p());
+      ), u());
     });
-    const f = b({
+    const p = O({
       get() {
         return o.modelValue;
       },
-      set(d) {
-        e("update:model-value", d);
+      set(c) {
+        e("update:model-value", c);
       }
     });
-    function p() {
-      n.value && (c = n.value.addListener("click", (d) => {
-        e("click", d);
-      }), h = n.value.addListener("mouseout", (d) => {
-        e("mouseout", d);
-      }), l = n.value.addListener(
+    function u() {
+      n.value && (h = n.value.addListener("click", (c) => {
+        e("click", c);
+      }), l = n.value.addListener("mouseout", (c) => {
+        e("mouseout", c);
+      }), d = n.value.addListener(
         "mouseover",
-        (d) => {
-          e("mouseover", d);
+        (c) => {
+          e("mouseover", c);
         }
       ), a = n.value.addListener("mouseup", () => {
-        var g, u, v;
-        const d = (v = (u = (g = n.value) == null ? void 0 : g.getPath()) == null ? void 0 : u.getArray()) == null ? void 0 : v.map((y) => y.toJSON());
-        d && (f.value = [...d]);
+        var g, v, y;
+        const c = (y = (v = (g = n.value) == null ? void 0 : g.getPath()) == null ? void 0 : v.getArray()) == null ? void 0 : y.map((k) => k.toJSON());
+        c && (p.value = [...c]);
       }));
     }
-    function m() {
-      c == null || c.remove(), a == null || a.remove(), h == null || h.remove(), l == null || l.remove();
+    function f() {
+      h == null || h.remove(), a == null || a.remove(), l == null || l.remove(), d == null || d.remove();
     }
-    return _(
+    return E(
       () => o.options,
-      (d, g) => {
-        !n.value || w(d, g) || n.value.setOptions(o.options);
+      (c, g) => {
+        !n.value || _(c, g) || n.value.setOptions(o.options);
       },
       {
         deep: !0
       }
-    ), _(
-      f,
-      (d, g) => {
-        !n.value || !d || w(d, g) || n.value.setPath(d);
+    ), E(
+      p,
+      (c, g) => {
+        !n.value || !c || _(c, g) || n.value.setPath(c);
       }
     ), t({
       polygon: n
-    }), I(() => {
-      m(), n.value && (n.value.setMap(null), n.value = null);
+    }), S(() => {
+      f(), n.value && (n.value.setMap(null), n.value = null);
     }), () => {
-      var d;
-      return (d = r.default) == null ? void 0 : d.call(r);
+      var c;
+      return (c = r.default) == null ? void 0 : c.call(r);
     };
   }
 }), Fe = {
   key: 0,
   style: { display: "none" }
-}, _e = /* @__PURE__ */ C({
+}, _e = /* @__PURE__ */ A({
   __name: "VGoogleInfoWindow",
-  props: /* @__PURE__ */ J({
+  props: /* @__PURE__ */ z({
     options: { default: null }
   }, {
     modelValue: { type: Boolean, default: !1, required: !1 },
@@ -553,65 +553,65 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
   }),
   emits: ["update:modelValue"],
   setup(o, { expose: e }) {
-    const t = o, r = K(o, "modelValue"), s = me(), { maps: i } = j(), n = O(S, k(null)), c = O(Me, k(null)), a = k(!1), h = k(), l = k(null);
-    let f = null, p = null;
-    P(async () => {
-      var y;
-      i.value && (l.value = A(
+    const t = o, r = K(o, "modelValue"), s = me(), { maps: i } = R(), n = C(L, M(null)), h = C(Me, M(null)), a = M(!1), l = M(), d = M(null);
+    let p = null, u = null;
+    j(async () => {
+      var k;
+      i.value && (d.value = I(
         new i.value.InfoWindow({
           ...t.options,
-          content: m.value && !d.value ? h.value : (y = t.options) == null ? void 0 : y.content
+          content: f.value && !c.value ? l.value : (k = t.options) == null ? void 0 : k.content
         })
-      ), await ee(), g(), r.value && v());
+      ), await ee(), g(), r.value && y());
     });
-    const m = b(() => {
-      var y, M;
-      return ((M = (y = s.default) == null ? void 0 : y.call(s)) == null ? void 0 : M[0]) ?? null;
-    }), d = b(() => {
-      var y;
-      return ((y = m.value) == null ? void 0 : y.type) === Comment;
+    const f = O(() => {
+      var k, m;
+      return ((m = (k = s.default) == null ? void 0 : k.call(s)) == null ? void 0 : m[0]) ?? null;
+    }), c = O(() => {
+      var k;
+      return ((k = f.value) == null ? void 0 : k.type) === Comment;
     });
     function g() {
-      !c.value || !l.value || (p = c.value.addListener("click", v), f = l.value.addListener("closeclick", v));
-    }
-    function u() {
-      p && p.remove(), f && f.remove();
+      !h.value || !d.value || (u = h.value.addListener("click", y), p = d.value.addListener("closeclick", y));
     }
     function v() {
-      !l.value || !n.value || (a.value = !a.value, a.value ? l.value.open({
-        map: n.value,
-        anchor: c.value
-      }) : l.value.close(), r.value = a.value);
+      u && u.remove(), p && p.remove();
     }
-    return _(
+    function y() {
+      !d.value || !n.value || (a.value = !a.value, a.value ? d.value.open({
+        map: n.value,
+        anchor: h.value
+      }) : d.value.close(), r.value = a.value);
+    }
+    return E(
       () => t.options,
-      (y, M) => {
-        !l.value || w(y, M) || l.value.setOptions(t.options);
+      (k, m) => {
+        !d.value || _(k, m) || d.value.setOptions(t.options);
       },
       {
         deep: !0
       }
-    ), _(r, (y) => {
-      y === null || y === a.value || v();
+    ), E(r, (k) => {
+      k === null || k === a.value || y();
     }), e({
-      infoWindow: l
-    }), I(() => {
-      u(), l.value && (l.value.close(), l.value = null);
-    }), (y, M) => m.value && !d.value ? (re(), ne("div", Fe, [
+      infoWindow: d
+    }), S(() => {
+      v(), d.value && (d.value.close(), d.value = null);
+    }), (k, m) => f.value && !c.value ? (re(), ne("div", Fe, [
       se("div", {
         ref_key: "contentRef",
-        ref: h
+        ref: l
       }, [
-        oe(y.$slots, "default")
+        oe(k.$slots, "default")
       ], 512)
     ])) : ie("", !0);
   }
 }), $e = {
   key: 0,
   style: { display: "none" }
-}, De = /* @__PURE__ */ C({
+}, De = /* @__PURE__ */ A({
   __name: "VGoogleMarker",
-  props: /* @__PURE__ */ J({
+  props: /* @__PURE__ */ z({
     options: { default: void 0 }
   }, {
     modelValue: {
@@ -620,67 +620,69 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
     },
     modelModifiers: {}
   }),
-  emits: ["update:modelValue"],
-  setup(o, { expose: e }) {
-    const t = o, r = K(o, "modelValue"), s = me(), { markers: i } = j(), n = O(S, k(null)), c = O(we, k(null)), a = k();
-    let h = null;
-    const l = k(
+  emits: /* @__PURE__ */ z(["click"], ["update:modelValue"]),
+  setup(o, { expose: e, emit: t }) {
+    const r = o, s = t, i = K(o, "modelValue"), n = me(), { markers: h } = R(), a = C(L, M(null)), l = C(we, M(null)), d = M();
+    let p = null, u = null;
+    const f = M(
       null
     );
-    P(async () => {
-      var u, v;
-      i.value && (l.value = A(
-        new i.value.AdvancedMarkerElement({
-          ...t.options,
-          position: r.value ?? ((u = t.options) == null ? void 0 : u.position),
-          map: c.value === null ? n.value : null,
-          content: f.value && !p.value && !m.value ? a.value : (v = t.options) == null ? void 0 : v.content
+    j(async () => {
+      var m, w;
+      h.value && (f.value = I(
+        new h.value.AdvancedMarkerElement({
+          ...r.options,
+          position: i.value ?? ((m = r.options) == null ? void 0 : m.position),
+          map: l.value === null ? a.value : null,
+          content: c.value && !g.value && !v.value ? d.value : (w = r.options) == null ? void 0 : w.content
         })
-      ), await ee(), c.value && c.value.addMarker(l.value), d());
+      ), await ee(), l.value && l.value.addMarker(f.value), y());
     });
-    const f = b(() => {
-      var u, v;
-      return ((v = (u = s.default) == null ? void 0 : u.call(s)) == null ? void 0 : v[0]) ?? null;
-    }), p = b(() => {
-      var u;
-      return ((u = f.value) == null ? void 0 : u.type) === Comment;
-    }), m = b(() => {
-      var u;
-      return ((u = f.value) == null ? void 0 : u.type) === _e;
+    const c = O(() => {
+      var m, w;
+      return ((w = (m = n.default) == null ? void 0 : m.call(n)) == null ? void 0 : w[0]) ?? null;
+    }), g = O(() => {
+      var m;
+      return ((m = c.value) == null ? void 0 : m.type) === Comment;
+    }), v = O(() => {
+      var m;
+      return ((m = c.value) == null ? void 0 : m.type) === _e;
     });
-    function d() {
-      l.value && (h = l.value.addListener("dragend", (u) => {
-        var v;
-        r.value = ((v = u.latLng) == null ? void 0 : v.toJSON()) ?? null;
+    function y() {
+      f.value && (u = f.value.addListener("dragend", (m) => {
+        var w;
+        i.value = ((w = m.latLng) == null ? void 0 : w.toJSON()) ?? null;
+      }), p = f.value.addListener("click", (m) => {
+        s("click", m);
       }));
     }
-    function g() {
-      h == null || h.remove();
+    function k() {
+      p == null || p.remove(), u == null || u.remove();
     }
-    return _(
-      () => t.options,
-      (u, v) => {
-        !l.value || w(u, v) || (u != null && u.title && (l.value.title = u.title), u != null && u.zIndex && (l.value.zIndex = u.zIndex), u != null && u.content && (l.value.content = u.content), u != null && u.position && (l.value.position = u.position), u != null && u.gmpDraggable && (l.value.gmpDraggable = u.gmpDraggable));
+    return E(
+      () => r.options,
+      (m, w) => {
+        !f.value || _(m, w) || (m != null && m.title && (f.value.title = m.title), m != null && m.zIndex && (f.value.zIndex = m.zIndex), m != null && m.content && (f.value.content = m.content), m != null && m.position && (f.value.position = m.position), m != null && m.gmpDraggable && (f.value.gmpDraggable = m.gmpDraggable));
       },
       {
         deep: !0
       }
-    ), _(r, (u, v) => {
-      !l.value || w(u, v) || (l.value.position = u);
+    ), E(i, (m, w) => {
+      !f.value || _(m, w) || (f.value.position = m);
     }), e({
-      marker: l
-    }), te(Me, l), I(() => {
-      g(), l.value && (c.value && c.value.removeMarker(l.value), l.value.map = null, l.value = null);
-    }), (u, v) => f.value && !p.value ? (re(), ne("div", $e, [
+      marker: f
+    }), te(Me, f), S(() => {
+      k(), f.value && (l.value && l.value.removeMarker(f.value), f.value.map = null, f.value = null);
+    }), (m, w) => c.value && !g.value ? (re(), ne("div", $e, [
       se("div", {
         ref_key: "contentRef",
-        ref: a
+        ref: d
       }, [
-        oe(u.$slots, "default")
+        oe(m.$slots, "default")
       ], 512)
     ])) : ie("", !0);
   }
-}), Ue = C({
+}), Ue = A({
   name: "VGooglePolyline",
   props: {
     options: {
@@ -694,61 +696,61 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
   },
   emits: ["click", "update:model-value"],
   setup(o, { emit: e, expose: t, slots: r }) {
-    const { maps: s } = j(), i = O(S, k(null)), n = k(null);
-    let c = null, a = null;
-    P(() => {
-      var p;
-      i.value && s.value && (n.value = A(
+    const { maps: s } = R(), i = C(L, M(null)), n = M(null);
+    let h = null, a = null;
+    j(() => {
+      var u;
+      i.value && s.value && (n.value = I(
         new s.value.Polyline({
           ...o.options,
           map: i.value,
-          path: h.value ? [...h.value] : (p = o.options) == null ? void 0 : p.path
+          path: l.value ? [...l.value] : (u = o.options) == null ? void 0 : u.path
         })
-      ), l());
+      ), d());
     });
-    const h = b({
+    const l = O({
       get() {
         return o.modelValue;
       },
-      set(p) {
-        e("update:model-value", p);
+      set(u) {
+        e("update:model-value", u);
       }
     });
-    function l() {
-      n.value && (c = n.value.addListener("click", (p) => {
-        e("click", p);
+    function d() {
+      n.value && (h = n.value.addListener("click", (u) => {
+        e("click", u);
       }), a = n.value.addListener("mouseup", () => {
-        var m, d, g;
-        const p = (g = (d = (m = n.value) == null ? void 0 : m.getPath()) == null ? void 0 : d.getArray()) == null ? void 0 : g.map((u) => u.toJSON());
-        p && (h.value = [...p]);
+        var f, c, g;
+        const u = (g = (c = (f = n.value) == null ? void 0 : f.getPath()) == null ? void 0 : c.getArray()) == null ? void 0 : g.map((v) => v.toJSON());
+        u && (l.value = [...u]);
       }));
     }
-    function f() {
-      c == null || c.remove(), a == null || a.remove();
+    function p() {
+      h == null || h.remove(), a == null || a.remove();
     }
-    return _(
+    return E(
       () => o.options,
-      (p, m) => {
-        !n.value || w(p, m) || n.value.setOptions(o.options);
+      (u, f) => {
+        !n.value || _(u, f) || n.value.setOptions(o.options);
       },
       {
         deep: !0
       }
-    ), _(
-      h,
-      (p, m) => {
-        !n.value || !p || w(p, m) || n.value.setPath(p);
+    ), E(
+      l,
+      (u, f) => {
+        !n.value || !u || _(u, f) || n.value.setPath(u);
       }
     ), t({
       polyline: n
-    }), I(() => {
-      f(), n.value && (n.value.setMap(null), n.value = null);
+    }), S(() => {
+      p(), n.value && (n.value.setMap(null), n.value = null);
     }), () => {
-      var p;
-      return (p = r.default) == null ? void 0 : p.call(r);
+      var u;
+      return (u = r.default) == null ? void 0 : u.call(r);
     };
   }
-}), Be = C({
+}), Be = A({
   name: "VGoogleRectangle",
   props: {
     options: {
@@ -762,60 +764,60 @@ const w = /* @__PURE__ */ je(Re), S = Symbol("map"), Me = Symbol("marker"), we =
   },
   emits: ["click", "update:model-value"],
   setup(o, { emit: e, expose: t, slots: r }) {
-    const { maps: s } = j(), i = O(S, k(null)), n = k(null);
-    let c = null, a = null;
-    P(() => {
-      var p;
-      i.value && s.value && (n.value = A(
+    const { maps: s } = R(), i = C(L, M(null)), n = M(null);
+    let h = null, a = null;
+    j(() => {
+      var u;
+      i.value && s.value && (n.value = I(
         new s.value.Rectangle({
           ...o.options,
           map: i.value,
-          bounds: h.value ?? ((p = o.options) == null ? void 0 : p.bounds)
+          bounds: l.value ?? ((u = o.options) == null ? void 0 : u.bounds)
         })
-      ), l());
+      ), d());
     });
-    const h = b({
+    const l = O({
       get() {
         return o.modelValue;
       },
-      set(p) {
-        e("update:model-value", p);
+      set(u) {
+        e("update:model-value", u);
       }
     });
-    function l() {
-      n.value && (c = n.value.addListener("click", (p) => {
-        e("click", p);
+    function d() {
+      n.value && (h = n.value.addListener("click", (u) => {
+        e("click", u);
       }), a = n.value.addListener("bounds_changed", () => {
-        var m, d;
-        const p = (d = (m = n.value) == null ? void 0 : m.getBounds()) == null ? void 0 : d.toJSON();
-        p && (h.value = {
-          ...p
+        var f, c;
+        const u = (c = (f = n.value) == null ? void 0 : f.getBounds()) == null ? void 0 : c.toJSON();
+        u && (l.value = {
+          ...u
         });
       }));
     }
-    function f() {
-      c == null || c.remove(), a == null || a.remove();
+    function p() {
+      h == null || h.remove(), a == null || a.remove();
     }
-    return _(
+    return E(
       () => o.options,
-      (p, m) => {
-        !n.value || w(p, m) || n.value.setOptions(o.options);
+      (u, f) => {
+        !n.value || _(u, f) || n.value.setOptions(o.options);
       },
       {
         deep: !0
       }
-    ), _(
-      h,
-      (p, m) => {
-        !n.value || !p || w(p, m) || n.value.setBounds(p);
+    ), E(
+      l,
+      (u, f) => {
+        !n.value || !u || _(u, f) || n.value.setBounds(u);
       }
     ), t({
       rectangle: n
-    }), I(() => {
-      f(), n.value && (n.value.setMap(null), n.value = null);
+    }), S(() => {
+      p(), n.value && (n.value.setMap(null), n.value = null);
     }), () => {
-      var p;
-      return (p = r.default) == null ? void 0 : p.call(r);
+      var u;
+      return (u = r.default) == null ? void 0 : u.call(r);
     };
   }
 }), he = [
@@ -846,8 +848,8 @@ class ae {
     const i = he[r & 15];
     if (!i)
       throw new Error("Unrecognized array type.");
-    const [n] = new Uint16Array(e, 2, 1), [c] = new Uint32Array(e, 4, 1);
-    return new ae(c, n, i, e);
+    const [n] = new Uint16Array(e, 2, 1), [h] = new Uint32Array(e, 4, 1);
+    return new ae(h, n, i, e);
   }
   /**
    * Creates an index that will hold a given number of items.
@@ -859,10 +861,10 @@ class ae {
   constructor(e, t = 64, r = Float64Array, s) {
     if (isNaN(e) || e < 0) throw new Error(`Unpexpected numItems value: ${e}.`);
     this.numItems = +e, this.nodeSize = Math.min(Math.max(+t, 2), 65535), this.ArrayType = r, this.IndexArrayType = e < 65536 ? Uint16Array : Uint32Array;
-    const i = he.indexOf(this.ArrayType), n = e * 2 * this.ArrayType.BYTES_PER_ELEMENT, c = e * this.IndexArrayType.BYTES_PER_ELEMENT, a = (8 - c % 8) % 8;
+    const i = he.indexOf(this.ArrayType), n = e * 2 * this.ArrayType.BYTES_PER_ELEMENT, h = e * this.IndexArrayType.BYTES_PER_ELEMENT, a = (8 - h % 8) % 8;
     if (i < 0)
       throw new Error(`Unexpected typed array class: ${r}.`);
-    s && s instanceof ArrayBuffer ? (this.data = s, this.ids = new this.IndexArrayType(this.data, D, e), this.coords = new this.ArrayType(this.data, D + c + a, e * 2), this._pos = e * 2, this._finished = !0) : (this.data = new ArrayBuffer(D + n + c + a), this.ids = new this.IndexArrayType(this.data, D, e), this.coords = new this.ArrayType(this.data, D + c + a, e * 2), this._pos = 0, this._finished = !1, new Uint8Array(this.data, 0, 2).set([219, (W << 4) + i]), new Uint16Array(this.data, 2, 1)[0] = t, new Uint32Array(this.data, 4, 1)[0] = e);
+    s && s instanceof ArrayBuffer ? (this.data = s, this.ids = new this.IndexArrayType(this.data, D, e), this.coords = new this.ArrayType(this.data, D + h + a, e * 2), this._pos = e * 2, this._finished = !0) : (this.data = new ArrayBuffer(D + n + h + a), this.ids = new this.IndexArrayType(this.data, D, e), this.coords = new this.ArrayType(this.data, D + h + a, e * 2), this._pos = 0, this._finished = !1, new Uint8Array(this.data, 0, 2).set([219, (W << 4) + i]), new Uint16Array(this.data, 2, 1)[0] = t, new Uint32Array(this.data, 4, 1)[0] = e);
   }
   /**
    * Add a point to the index.
@@ -893,20 +895,20 @@ class ae {
    */
   range(e, t, r, s) {
     if (!this._finished) throw new Error("Data not yet indexed - call index.finish().");
-    const { ids: i, coords: n, nodeSize: c } = this, a = [0, i.length - 1, 0], h = [];
+    const { ids: i, coords: n, nodeSize: h } = this, a = [0, i.length - 1, 0], l = [];
     for (; a.length; ) {
-      const l = a.pop() || 0, f = a.pop() || 0, p = a.pop() || 0;
-      if (f - p <= c) {
-        for (let u = p; u <= f; u++) {
-          const v = n[2 * u], y = n[2 * u + 1];
-          v >= e && v <= r && y >= t && y <= s && h.push(i[u]);
+      const d = a.pop() || 0, p = a.pop() || 0, u = a.pop() || 0;
+      if (p - u <= h) {
+        for (let v = u; v <= p; v++) {
+          const y = n[2 * v], k = n[2 * v + 1];
+          y >= e && y <= r && k >= t && k <= s && l.push(i[v]);
         }
         continue;
       }
-      const m = p + f >> 1, d = n[2 * m], g = n[2 * m + 1];
-      d >= e && d <= r && g >= t && g <= s && h.push(i[m]), (l === 0 ? e <= d : t <= g) && (a.push(p), a.push(m - 1), a.push(1 - l)), (l === 0 ? r >= d : s >= g) && (a.push(m + 1), a.push(f), a.push(1 - l));
+      const f = u + p >> 1, c = n[2 * f], g = n[2 * f + 1];
+      c >= e && c <= r && g >= t && g <= s && l.push(i[f]), (d === 0 ? e <= c : t <= g) && (a.push(u), a.push(f - 1), a.push(1 - d)), (d === 0 ? r >= c : s >= g) && (a.push(f + 1), a.push(p), a.push(1 - d));
     }
-    return h;
+    return l;
   }
   /**
    * Search the index for items within a given radius.
@@ -917,16 +919,16 @@ class ae {
    */
   within(e, t, r) {
     if (!this._finished) throw new Error("Data not yet indexed - call index.finish().");
-    const { ids: s, coords: i, nodeSize: n } = this, c = [0, s.length - 1, 0], a = [], h = r * r;
-    for (; c.length; ) {
-      const l = c.pop() || 0, f = c.pop() || 0, p = c.pop() || 0;
-      if (f - p <= n) {
-        for (let u = p; u <= f; u++)
-          pe(i[2 * u], i[2 * u + 1], e, t) <= h && a.push(s[u]);
+    const { ids: s, coords: i, nodeSize: n } = this, h = [0, s.length - 1, 0], a = [], l = r * r;
+    for (; h.length; ) {
+      const d = h.pop() || 0, p = h.pop() || 0, u = h.pop() || 0;
+      if (p - u <= n) {
+        for (let v = u; v <= p; v++)
+          pe(i[2 * v], i[2 * v + 1], e, t) <= l && a.push(s[v]);
         continue;
       }
-      const m = p + f >> 1, d = i[2 * m], g = i[2 * m + 1];
-      pe(d, g, e, t) <= h && a.push(s[m]), (l === 0 ? e - r <= d : t - r <= g) && (c.push(p), c.push(m - 1), c.push(1 - l)), (l === 0 ? e + r >= d : t + r >= g) && (c.push(m + 1), c.push(f), c.push(1 - l));
+      const f = u + p >> 1, c = i[2 * f], g = i[2 * f + 1];
+      pe(c, g, e, t) <= l && a.push(s[f]), (d === 0 ? e - r <= c : t - r <= g) && (h.push(u), h.push(f - 1), h.push(1 - d)), (d === 0 ? e + r >= c : t + r >= g) && (h.push(f + 1), h.push(p), h.push(1 - d));
     }
     return a;
   }
@@ -939,13 +941,13 @@ function V(o, e, t, r, s, i) {
 function Ee(o, e, t, r, s, i) {
   for (; s > r; ) {
     if (s - r > 600) {
-      const h = s - r + 1, l = t - r + 1, f = Math.log(h), p = 0.5 * Math.exp(2 * f / 3), m = 0.5 * Math.sqrt(f * p * (h - p) / h) * (l - h / 2 < 0 ? -1 : 1), d = Math.max(r, Math.floor(t - l * p / h + m)), g = Math.min(s, Math.floor(t + (h - l) * p / h + m));
-      Ee(o, e, t, d, g, i);
+      const l = s - r + 1, d = t - r + 1, p = Math.log(l), u = 0.5 * Math.exp(2 * p / 3), f = 0.5 * Math.sqrt(p * u * (l - u) / l) * (d - l / 2 < 0 ? -1 : 1), c = Math.max(r, Math.floor(t - d * u / l + f)), g = Math.min(s, Math.floor(t + (l - d) * u / l + f));
+      Ee(o, e, t, c, g, i);
     }
     const n = e[2 * t + i];
-    let c = r, a = s;
-    for (U(o, e, r, t), e[2 * s + i] > n && U(o, e, r, s); c < a; ) {
-      for (U(o, e, c, a), c++, a--; e[2 * c + i] < n; ) c++;
+    let h = r, a = s;
+    for (U(o, e, r, t), e[2 * s + i] > n && U(o, e, r, s); h < a; ) {
+      for (U(o, e, h, a), h++, a--; e[2 * h + i] < n; ) h++;
       for (; e[2 * a + i] > n; ) a--;
     }
     e[2 * r + i] === n ? U(o, e, r, a) : (a++, U(o, e, a, s)), a <= t && (r = a + 1), t <= a && (s = a - 1);
@@ -985,7 +987,7 @@ const ze = {
   // properties to use for individual points when running the reducer
   map: (o) => o
   // props => ({sum: props.my_value})
-}, de = Math.fround || /* @__PURE__ */ ((o) => (e) => (o[0] = +e, o[0]))(new Float32Array(1)), G = 2, x = 3, Q = 4, L = 5, be = 6;
+}, de = Math.fround || /* @__PURE__ */ ((o) => (e) => (o[0] = +e, o[0]))(new Float32Array(1)), N = 2, P = 3, Q = 4, x = 5, be = 6;
 class qe {
   constructor(e) {
     this.options = Object.assign(Object.create(ze), e), this.trees = new Array(this.options.maxZoom + 1), this.stride = this.options.reduce ? 7 : 6, this.clusterProps = [];
@@ -997,12 +999,12 @@ class qe {
     t && console.time(i), this.points = e;
     const n = [];
     for (let a = 0; a < e.length; a++) {
-      const h = e[a];
-      if (!h.geometry) continue;
-      const [l, f] = h.geometry.coordinates, p = de(z(l)), m = de(q(f));
+      const l = e[a];
+      if (!l.geometry) continue;
+      const [d, p] = l.geometry.coordinates, u = de(q(d)), f = de(J(p));
       n.push(
-        p,
-        m,
+        u,
+        f,
         // projected point coordinates
         1 / 0,
         // the last zoom the point was processed at
@@ -1014,11 +1016,11 @@ class qe {
         // number of points in a cluster
       ), this.options.reduce && n.push(0);
     }
-    let c = this.trees[s + 1] = this._createTree(n);
+    let h = this.trees[s + 1] = this._createTree(n);
     t && console.timeEnd(i);
     for (let a = s; a >= r; a--) {
-      const h = +Date.now();
-      c = this.trees[a] = this._createTree(this._cluster(c, a)), t && console.log("z%d: %d clusters in %dms", a, c.numItems, +Date.now() - h);
+      const l = +Date.now();
+      h = this.trees[a] = this._createTree(this._cluster(h, a)), t && console.log("z%d: %d clusters in %dms", a, h.numItems, +Date.now() - l);
     }
     return t && console.timeEnd("total time"), this;
   }
@@ -1030,28 +1032,28 @@ class qe {
     if (e[2] - e[0] >= 360)
       r = -180, i = 180;
     else if (r > i) {
-      const f = this.getClusters([r, s, 180, n], t), p = this.getClusters([-180, s, i, n], t);
-      return f.concat(p);
+      const p = this.getClusters([r, s, 180, n], t), u = this.getClusters([-180, s, i, n], t);
+      return p.concat(u);
     }
-    const c = this.trees[this._limitZoom(t)], a = c.range(z(r), q(n), z(i), q(s)), h = c.data, l = [];
-    for (const f of a) {
-      const p = this.stride * f;
-      l.push(h[p + L] > 1 ? fe(h, p, this.clusterProps) : this.points[h[p + x]]);
+    const h = this.trees[this._limitZoom(t)], a = h.range(q(r), J(n), q(i), J(s)), l = h.data, d = [];
+    for (const p of a) {
+      const u = this.stride * p;
+      d.push(l[u + x] > 1 ? fe(l, u, this.clusterProps) : this.points[l[u + P]]);
     }
-    return l;
+    return d;
   }
   getChildren(e) {
     const t = this._getOriginId(e), r = this._getOriginZoom(e), s = "No cluster with the specified id.", i = this.trees[r];
     if (!i) throw new Error(s);
     const n = i.data;
     if (t * this.stride >= n.length) throw new Error(s);
-    const c = this.options.radius / (this.options.extent * Math.pow(2, r - 1)), a = n[t * this.stride], h = n[t * this.stride + 1], l = i.within(a, h, c), f = [];
-    for (const p of l) {
-      const m = p * this.stride;
-      n[m + Q] === e && f.push(n[m + L] > 1 ? fe(n, m, this.clusterProps) : this.points[n[m + x]]);
+    const h = this.options.radius / (this.options.extent * Math.pow(2, r - 1)), a = n[t * this.stride], l = n[t * this.stride + 1], d = i.within(a, l, h), p = [];
+    for (const u of d) {
+      const f = u * this.stride;
+      n[f + Q] === e && p.push(n[f + x] > 1 ? fe(n, f, this.clusterProps) : this.points[n[f + P]]);
     }
-    if (f.length === 0) throw new Error(s);
-    return f;
+    if (p.length === 0) throw new Error(s);
+    return p;
   }
   getLeaves(e, t, r) {
     t = t || 10, r = r || 0;
@@ -1059,31 +1061,31 @@ class qe {
     return this._appendLeaves(s, e, t, r, 0), s;
   }
   getTile(e, t, r) {
-    const s = this.trees[this._limitZoom(e)], i = Math.pow(2, e), { extent: n, radius: c } = this.options, a = c / n, h = (r - a) / i, l = (r + 1 + a) / i, f = {
+    const s = this.trees[this._limitZoom(e)], i = Math.pow(2, e), { extent: n, radius: h } = this.options, a = h / n, l = (r - a) / i, d = (r + 1 + a) / i, p = {
       features: []
     };
     return this._addTileFeatures(
-      s.range((t - a) / i, h, (t + 1 + a) / i, l),
+      s.range((t - a) / i, l, (t + 1 + a) / i, d),
       s.data,
       t,
       r,
       i,
-      f
+      p
     ), t === 0 && this._addTileFeatures(
-      s.range(1 - a / i, h, 1, l),
+      s.range(1 - a / i, l, 1, d),
       s.data,
       i,
       r,
       i,
-      f
+      p
     ), t === i - 1 && this._addTileFeatures(
-      s.range(0, h, a / i, l),
+      s.range(0, l, a / i, d),
       s.data,
       -1,
       r,
       i,
-      f
-    ), f.features.length ? f : null;
+      p
+    ), p.features.length ? p : null;
   }
   getClusterExpansionZoom(e) {
     let t = this._getOriginZoom(e) - 1;
@@ -1096,9 +1098,9 @@ class qe {
   }
   _appendLeaves(e, t, r, s, i) {
     const n = this.getChildren(t);
-    for (const c of n) {
-      const a = c.properties;
-      if (a && a.cluster ? i + a.point_count <= s ? i += a.point_count : i = this._appendLeaves(e, a.cluster_id, r, s, i) : i < s ? i++ : e.push(c), e.length === r) break;
+    for (const h of n) {
+      const a = h.properties;
+      if (a && a.cluster ? i + a.point_count <= s ? i += a.point_count : i = this._appendLeaves(e, a.cluster_id, r, s, i) : i < s ? i++ : e.push(h), e.length === r) break;
     }
     return i;
   }
@@ -1108,67 +1110,67 @@ class qe {
     return t.finish(), t.data = e, t;
   }
   _addTileFeatures(e, t, r, s, i, n) {
-    for (const c of e) {
-      const a = c * this.stride, h = t[a + L] > 1;
-      let l, f, p;
-      if (h)
-        l = Oe(t, a, this.clusterProps), f = t[a], p = t[a + 1];
+    for (const h of e) {
+      const a = h * this.stride, l = t[a + x] > 1;
+      let d, p, u;
+      if (l)
+        d = Oe(t, a, this.clusterProps), p = t[a], u = t[a + 1];
       else {
-        const g = this.points[t[a + x]];
-        l = g.properties;
-        const [u, v] = g.geometry.coordinates;
-        f = z(u), p = q(v);
+        const g = this.points[t[a + P]];
+        d = g.properties;
+        const [v, y] = g.geometry.coordinates;
+        p = q(v), u = J(y);
       }
-      const m = {
+      const f = {
         type: 1,
         geometry: [[
-          Math.round(this.options.extent * (f * i - r)),
-          Math.round(this.options.extent * (p * i - s))
+          Math.round(this.options.extent * (p * i - r)),
+          Math.round(this.options.extent * (u * i - s))
         ]],
-        tags: l
+        tags: d
       };
-      let d;
-      h || this.options.generateId ? d = t[a + x] : d = this.points[t[a + x]].id, d !== void 0 && (m.id = d), n.features.push(m);
+      let c;
+      l || this.options.generateId ? c = t[a + P] : c = this.points[t[a + P]].id, c !== void 0 && (f.id = c), n.features.push(f);
     }
   }
   _limitZoom(e) {
     return Math.max(this.options.minZoom, Math.min(Math.floor(+e), this.options.maxZoom + 1));
   }
   _cluster(e, t) {
-    const { radius: r, extent: s, reduce: i, minPoints: n } = this.options, c = r / (s * Math.pow(2, t)), a = e.data, h = [], l = this.stride;
-    for (let f = 0; f < a.length; f += l) {
-      if (a[f + G] <= t) continue;
-      a[f + G] = t;
-      const p = a[f], m = a[f + 1], d = e.within(a[f], a[f + 1], c), g = a[f + L];
-      let u = g;
-      for (const v of d) {
-        const y = v * l;
-        a[y + G] > t && (u += a[y + L]);
+    const { radius: r, extent: s, reduce: i, minPoints: n } = this.options, h = r / (s * Math.pow(2, t)), a = e.data, l = [], d = this.stride;
+    for (let p = 0; p < a.length; p += d) {
+      if (a[p + N] <= t) continue;
+      a[p + N] = t;
+      const u = a[p], f = a[p + 1], c = e.within(a[p], a[p + 1], h), g = a[p + x];
+      let v = g;
+      for (const y of c) {
+        const k = y * d;
+        a[k + N] > t && (v += a[k + x]);
       }
-      if (u > g && u >= n) {
-        let v = p * g, y = m * g, M, F = -1;
-        const R = ((f / l | 0) << 5) + (t + 1) + this.points.length;
-        for (const H of d) {
-          const T = H * l;
-          if (a[T + G] <= t) continue;
-          a[T + G] = t;
-          const ue = a[T + L];
-          v += a[T] * ue, y += a[T + 1] * ue, a[T + Q] = R, i && (M || (M = this._map(a, f, !0), F = this.clusterProps.length, this.clusterProps.push(M)), i(M, this._map(a, T)));
+      if (v > g && v >= n) {
+        let y = u * g, k = f * g, m, w = -1;
+        const T = ((p / d | 0) << 5) + (t + 1) + this.points.length;
+        for (const H of c) {
+          const G = H * d;
+          if (a[G + N] <= t) continue;
+          a[G + N] = t;
+          const ue = a[G + x];
+          y += a[G] * ue, k += a[G + 1] * ue, a[G + Q] = T, i && (m || (m = this._map(a, p, !0), w = this.clusterProps.length, this.clusterProps.push(m)), i(m, this._map(a, G)));
         }
-        a[f + Q] = R, h.push(v / u, y / u, 1 / 0, R, -1, u), i && h.push(F);
+        a[p + Q] = T, l.push(y / v, k / v, 1 / 0, T, -1, v), i && l.push(w);
       } else {
-        for (let v = 0; v < l; v++) h.push(a[f + v]);
-        if (u > 1)
-          for (const v of d) {
-            const y = v * l;
-            if (!(a[y + G] <= t)) {
-              a[y + G] = t;
-              for (let M = 0; M < l; M++) h.push(a[y + M]);
+        for (let y = 0; y < d; y++) l.push(a[p + y]);
+        if (v > 1)
+          for (const y of c) {
+            const k = y * d;
+            if (!(a[k + N] <= t)) {
+              a[k + N] = t;
+              for (let m = 0; m < d; m++) l.push(a[k + m]);
             }
           }
       }
     }
-    return h;
+    return l;
   }
   // get index of the point from which the cluster originated
   _getOriginId(e) {
@@ -1179,18 +1181,18 @@ class qe {
     return (e - this.points.length) % 32;
   }
   _map(e, t, r) {
-    if (e[t + L] > 1) {
+    if (e[t + x] > 1) {
       const n = this.clusterProps[e[t + be]];
       return r ? Object.assign({}, n) : n;
     }
-    const s = this.points[e[t + x]].properties, i = this.options.map(s);
+    const s = this.points[e[t + P]].properties, i = this.options.map(s);
     return r && i === s ? Object.assign({}, i) : i;
   }
 }
 function fe(o, e, t) {
   return {
     type: "Feature",
-    id: o[e + x],
+    id: o[e + P],
     properties: Oe(o, e, t),
     geometry: {
       type: "Point",
@@ -1199,18 +1201,18 @@ function fe(o, e, t) {
   };
 }
 function Oe(o, e, t) {
-  const r = o[e + L], s = r >= 1e4 ? `${Math.round(r / 1e3)}k` : r >= 1e3 ? `${Math.round(r / 100) / 10}k` : r, i = o[e + be], n = i === -1 ? {} : Object.assign({}, t[i]);
+  const r = o[e + x], s = r >= 1e4 ? `${Math.round(r / 1e3)}k` : r >= 1e3 ? `${Math.round(r / 100) / 10}k` : r, i = o[e + be], n = i === -1 ? {} : Object.assign({}, t[i]);
   return Object.assign(n, {
     cluster: !0,
-    cluster_id: o[e + x],
+    cluster_id: o[e + P],
     point_count: r,
     point_count_abbreviated: s
   });
 }
-function z(o) {
+function q(o) {
   return o / 360 + 0.5;
 }
-function q(o) {
+function J(o) {
   const e = Math.sin(o * Math.PI / 180), t = 0.5 - 0.25 * Math.log((1 + e) / (1 - e)) / Math.PI;
   return t < 0 ? 0 : t > 1 ? 1 : t;
 }
@@ -1243,7 +1245,7 @@ function He(o, e) {
       e.indexOf(r[s]) < 0 && Object.prototype.propertyIsEnumerable.call(o, r[s]) && (t[r[s]] = o[r[s]]);
   return t;
 }
-class E {
+class b {
   static isAdvancedMarkerAvailable(e) {
     return google.maps.marker && e.getMapCapabilities().isAdvancedMarkersAvailable === !0;
   }
@@ -1278,7 +1280,7 @@ class X {
       return;
     const e = new google.maps.LatLngBounds(this._position, this._position);
     for (const t of this.markers)
-      e.extend(E.getPosition(t));
+      e.extend(b.getPosition(t));
     return e;
   }
   get position() {
@@ -1288,7 +1290,7 @@ class X {
    * Get the count of **visible** markers.
    */
   get count() {
-    return this.markers.filter((e) => E.getVisible(e)).length;
+    return this.markers.filter((e) => b.getVisible(e)).length;
   }
   /**
    * Add a marker to the cluster.
@@ -1300,7 +1302,7 @@ class X {
    * Cleanup references and remove marker from map.
    */
   delete() {
-    this.marker && (E.setMap(this.marker, null), this.marker = void 0), this.markers.length = 0;
+    this.marker && (b.setMap(this.marker, null), this.marker = void 0), this.markers.length = 0;
   }
 }
 class We {
@@ -1324,7 +1326,7 @@ class We {
   }
 }
 const Ye = (o) => o.map((t) => new X({
-  position: E.getPosition(t),
+  position: b.getPosition(t),
   markers: [t]
 }));
 class Qe extends We {
@@ -1335,10 +1337,10 @@ class Qe extends We {
   calculate(e) {
     let t = !1;
     const r = { zoom: e.map.getZoom() };
-    if (!w(e.markers, this.markers)) {
+    if (!_(e.markers, this.markers)) {
       t = !0, this.markers = [...e.markers];
       const s = this.markers.map((i) => {
-        const n = E.getPosition(i);
+        const n = b.getPosition(i);
         return {
           type: "Feature",
           geometry: {
@@ -1350,7 +1352,7 @@ class Qe extends We {
       });
       this.superCluster.load(s);
     }
-    return t || (this.state.zoom <= this.maxZoom || r.zoom <= this.maxZoom) && (t = !w(this.state, r)), this.state = r, t && (this.clusters = this.cluster(e)), { clusters: this.clusters, changed: t };
+    return t || (this.state.zoom <= this.maxZoom || r.zoom <= this.maxZoom) && (t = !_(this.state, r)), this.state = r, t && (this.clusters = this.cluster(e)), { clusters: this.clusters, changed: t };
   }
   cluster({ map: e }) {
     return this.superCluster.getClusters([-180, -90, 180, 90], Math.round(e.getZoom())).map((t) => this.transformCluster(t));
@@ -1364,7 +1366,7 @@ class Qe extends We {
     const s = r.marker;
     return new X({
       markers: [s],
-      position: E.getPosition(s)
+      position: b.getPosition(s)
     });
   }
 }
@@ -1428,29 +1430,29 @@ class Xe {
 <circle cx="120" cy="120" opacity=".3" r="90" />
 <circle cx="120" cy="120" opacity=".2" r="110" />
 <text x="50%" y="50%" style="fill:#fff" text-anchor="middle" font-size="50" dominant-baseline="middle" font-family="roboto,arial,sans-serif">${e}</text>
-</svg>`, c = `Cluster of ${e} markers`, a = Number(google.maps.Marker.MAX_ZINDEX) + e;
-    if (E.isAdvancedMarkerAvailable(s)) {
-      const f = new DOMParser().parseFromString(n, "image/svg+xml").documentElement;
-      f.setAttribute("transform", "translate(0 25)");
-      const p = {
+</svg>`, h = `Cluster of ${e} markers`, a = Number(google.maps.Marker.MAX_ZINDEX) + e;
+    if (b.isAdvancedMarkerAvailable(s)) {
+      const p = new DOMParser().parseFromString(n, "image/svg+xml").documentElement;
+      p.setAttribute("transform", "translate(0 25)");
+      const u = {
         map: s,
         position: t,
         zIndex: a,
-        title: c,
-        content: f
+        title: h,
+        content: p
       };
-      return new google.maps.marker.AdvancedMarkerElement(p);
+      return new google.maps.marker.AdvancedMarkerElement(u);
     }
-    const h = {
+    const l = {
       position: t,
       zIndex: a,
-      title: c,
+      title: h,
       icon: {
         url: `data:image/svg+xml;base64,${btoa(n)}`,
         anchor: new google.maps.Point(25, 25)
       }
     };
-    return new google.maps.Marker(h);
+    return new google.maps.Marker(l);
   }
 }
 function et(o, e) {
@@ -1483,7 +1485,7 @@ class rt extends le {
   }
   removeMarker(e, t) {
     const r = this.markers.indexOf(e);
-    return r === -1 ? !1 : (E.setMap(e, null), this.markers.splice(r, 1), t || this.render(), !0);
+    return r === -1 ? !1 : (b.setMap(e, null), this.markers.splice(r, 1), t || this.render(), !0);
   }
   removeMarkers(e, t) {
     let r = !1;
@@ -1512,8 +1514,8 @@ class rt extends le {
           n.markers.length == 1 && s.add(n.markers[0]);
         const i = [];
         for (const n of this.clusters)
-          n.marker != null && (n.markers.length == 1 ? s.has(n.marker) || E.setMap(n.marker, null) : i.push(n.marker));
-        this.clusters = t, this.renderClusters(), requestAnimationFrame(() => i.forEach((n) => E.setMap(n, null)));
+          n.marker != null && (n.markers.length == 1 ? s.has(n.marker) || b.setMap(n.marker, null) : i.push(n.marker));
+        this.clusters = t, this.renderClusters(), requestAnimationFrame(() => i.forEach((n) => b.setMap(n, null)));
       }
       google.maps.event.trigger(this, B.CLUSTERING_END, this);
     }
@@ -1525,22 +1527,22 @@ class rt extends le {
     google.maps.event.removeListener(this.idleListener), this.reset();
   }
   reset() {
-    this.markers.forEach((e) => E.setMap(e, null)), this.clusters.forEach((e) => e.delete()), this.clusters = [];
+    this.markers.forEach((e) => b.setMap(e, null)), this.clusters.forEach((e) => e.delete()), this.clusters = [];
   }
   renderClusters() {
     const e = new Ve(this.markers, this.clusters), t = this.getMap();
     this.clusters.forEach((r) => {
-      r.markers.length === 1 ? r.marker = r.markers[0] : (r.marker = this.renderer.render(r, e, t), r.markers.forEach((s) => E.setMap(s, null)), this.onClusterClick && r.marker.addListener(
+      r.markers.length === 1 ? r.marker = r.markers[0] : (r.marker = this.renderer.render(r, e, t), r.markers.forEach((s) => b.setMap(s, null)), this.onClusterClick && r.marker.addListener(
         "click",
         /* istanbul ignore next */
         (s) => {
           google.maps.event.trigger(this, B.CLUSTER_CLICK, r), this.onClusterClick(s, r, t);
         }
-      )), E.setMap(r.marker, t);
+      )), b.setMap(r.marker, t);
     });
   }
 }
-const nt = C({
+const nt = A({
   name: "VGoogleMarkerClusterer",
   props: {
     options: {
@@ -1549,13 +1551,13 @@ const nt = C({
     }
   },
   setup(o, { slots: e }) {
-    const t = O(S, k(null)), r = k(null);
-    return t.value && (r.value = A(
+    const t = C(L, M(null)), r = M(null);
+    return t.value && (r.value = I(
       new rt({
         ...o.options,
         map: t.value
       })
-    )), te(we, r), I(() => {
+    )), te(we, r), S(() => {
       r.value && (r.value.setMap(null), r.value.clearMarkers(), r.value = null);
     }), () => {
       var s;
@@ -1567,6 +1569,6 @@ function ot(o) {
   o.component("VGoogleMap", Te), o.component("VGoogleCircle", Ge), o.component("VGoogleMarker", De), o.component("VGoogleHeatmap", Ne), o.component("VGooglePolygon", Ze), o.component("VGooglePolyline", Ue), o.component("VGoogleRectangle", Be), o.component("VGoogleInfoWindow", _e), o.component("VGoogleMarkerClusterer", nt);
 }
 export {
-  j as useGoogleMapsLoader,
+  R as useGoogleMapsLoader,
   ot as vGoogleMaps
 };

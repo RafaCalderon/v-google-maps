@@ -32,11 +32,14 @@ declare const __VLS_component: import("vue").DefineComponent<
   import("vue").ComponentOptionsMixin,
   {
     "update:modelValue": (value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any;
+  } & {
+    click: (event: google.maps.MapMouseEvent) => any;
   },
   string,
   import("vue").PublicProps,
   Readonly<__VLS_PublicProps> &
     Readonly<{
+      onClick?: ((event: google.maps.MapMouseEvent) => any) | undefined;
       "onUpdate:modelValue"?:
         | ((value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any)
         | undefined;

@@ -47,6 +47,10 @@ const props = withDefaults(defineProps<Props>(), {
   options: undefined,
 });
 
+const emit = defineEmits<{
+  (e: "click", event: google.maps.MapMouseEvent): void;
+}>();
+
 const model = defineModel<google.maps.LatLngLiteral | google.maps.LatLng | null>({
   default: null,
   required: false,
@@ -65,6 +69,7 @@ const markerClusterer = inject(markerClustererSymbol, ref(null));
 // Data
 
 const contentRef = ref<HTMLElement>();
+let clickListener: google.maps.MapsEventListener | null = null;
 let dragendListener: google.maps.MapsEventListener | null = null;
 const marker = ref<google.maps.marker.AdvancedMarkerElement | null>(
   null,
@@ -114,9 +119,13 @@ function addListeners() {
   dragendListener = marker.value.addListener("dragend", (event: google.maps.MapMouseEvent) => {
     model.value = event.latLng?.toJSON() ?? null;
   });
+  clickListener = marker.value.addListener("click", (event: google.maps.MapMouseEvent) => {
+    emit("click", event);
+  });
 }
 
 function removeListeners() {
+  clickListener?.remove();
   dragendListener?.remove();
 }
 
