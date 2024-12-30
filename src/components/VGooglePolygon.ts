@@ -4,10 +4,10 @@ import {
   watch,
   inject,
   markRaw,
-  computed,
   onMounted,
   defineComponent,
   onBeforeUnmount,
+  getCurrentInstance,
   type PropType,
 } from "vue";
 
@@ -44,6 +44,8 @@ export default defineComponent({
 
     // Data
 
+    const vm = getCurrentInstance();
+    const internalModelValue = ref(props.modelValue);
     const polygon = ref<google.maps.Polygon | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let mouseUpListener: google.maps.MapsEventListener | null = null;
@@ -58,48 +60,51 @@ export default defineComponent({
           new maps.value.Polygon({
             ...props.options,
             map: map.value,
-            paths: model.value ? [...model.value] : props.options?.paths,
+            paths: props.modelValue ? [...props.modelValue] : props.options?.paths,
           }),
         );
         addListeners();
       }
     });
 
-    // Computed
-
-    const model = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: google.maps.LatLngLiteral[] | null) {
-        emit("update:model-value", value);
-      },
-    });
-
     // Methods
 
     function addListeners() {
+      removeListeners();
       if (!polygon.value) return;
-      clickListener = polygon.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
-        emit("click", ev);
-      });
-      mouseOutListener = polygon.value.addListener("mouseout", (ev: google.maps.MapMouseEvent) => {
-        emit("mouseout", ev);
-      });
-      mouseOverListener = polygon.value.addListener(
-        "mouseover",
-        (ev: google.maps.MapMouseEvent) => {
-          emit("mouseover", ev);
-        },
-      );
-      mouseUpListener = polygon.value.addListener("mouseup", () => {
-        const path = polygon.value
-          ?.getPath()
-          ?.getArray()
-          ?.map((position) => position.toJSON());
-        if (!path) return;
-        model.value = [...path];
-      });
+      const props = vm?.vnode?.props;
+      if (props?.["onClick"]) {
+        clickListener = polygon.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+          emit("click", ev);
+        });
+      }
+      if (props?.["onMouseout"]) {
+        mouseOutListener = polygon.value.addListener(
+          "mouseout",
+          (ev: google.maps.MapMouseEvent) => {
+            emit("mouseout", ev);
+          },
+        );
+      }
+      if (props?.["onMouseover"]) {
+        mouseOverListener = polygon.value.addListener(
+          "mouseover",
+          (ev: google.maps.MapMouseEvent) => {
+            emit("mouseover", ev);
+          },
+        );
+      }
+      if (props?.["onUpdate:modelValue"]) {
+        mouseUpListener = polygon.value.addListener("mouseup", () => {
+          const path = polygon.value
+            ?.getPath()
+            ?.getArray()
+            ?.map((position) => position.toJSON());
+          if (!path) return;
+          internalModelValue.value = [...path];
+          emit("update:model-value", internalModelValue.value);
+        });
+      }
     }
 
     function removeListeners() {
@@ -123,13 +128,10 @@ export default defineComponent({
     );
 
     watch(
-      model,
-      (
-        newValue: google.maps.LatLngLiteral[] | null,
-        oldValue: google.maps.LatLngLiteral[] | null,
-      ) => {
-        if (!polygon.value || !newValue || equal(newValue, oldValue)) return;
-        polygon.value.setPath(newValue);
+      () => props.modelValue,
+      (value) => {
+        if (!polygon.value || !value || equal(value, internalModelValue.value)) return;
+        polygon.value.setPath(value);
       },
     );
 

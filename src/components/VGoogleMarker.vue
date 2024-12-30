@@ -22,6 +22,7 @@ import {
   useSlots,
   onMounted,
   onBeforeUnmount,
+  getCurrentInstance,
   type Ref,
 } from "vue";
 
@@ -41,20 +42,18 @@ import VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
 
 interface Props {
   options?: google.maps.marker.AdvancedMarkerElementOptions;
+  modelValue?: google.maps.LatLngLiteral | google.maps.LatLng | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  modelValue: null,
   options: undefined,
 });
 
 const emit = defineEmits<{
   (e: "click", event: google.maps.MapMouseEvent): void;
+  (e: "update:model-value", value: google.maps.LatLngLiteral | google.maps.LatLng | null): void;
 }>();
-
-const model = defineModel<google.maps.LatLngLiteral | google.maps.LatLng | null>({
-  default: null,
-  required: false,
-});
 
 // Composables
 
@@ -68,7 +67,9 @@ const markerClusterer = inject(markerClustererSymbol, ref(null));
 
 // Data
 
+const vm = getCurrentInstance();
 const contentRef = ref<HTMLElement>();
+const internalModelValue = ref(props.modelValue);
 let clickListener: google.maps.MapsEventListener | null = null;
 let dragendListener: google.maps.MapsEventListener | null = null;
 const marker = ref<google.maps.marker.AdvancedMarkerElement | null>(
@@ -82,7 +83,7 @@ onMounted(async () => {
     marker.value = markRaw(
       new markers.value.AdvancedMarkerElement({
         ...props.options,
-        position: model.value ?? props.options?.position,
+        position: props.modelValue ?? props.options?.position,
         map: markerClusterer.value === null ? map.value : null,
         content:
           defaultSlot.value && !slotIsComment.value && !slotIsInfoWindow.value
@@ -101,7 +102,7 @@ onMounted(async () => {
 // Computed
 
 const defaultSlot = computed(() => {
-  return slots.default?.()?.[0] ?? null;
+  return slots.default?.({})?.[0] ?? null;
 });
 
 const slotIsComment = computed(() => {
@@ -115,13 +116,22 @@ const slotIsInfoWindow = computed(() => {
 // Methods
 
 function addListeners() {
+  removeListeners();
   if (!marker.value) return;
-  dragendListener = marker.value.addListener("dragend", (event: google.maps.MapMouseEvent) => {
-    model.value = event.latLng?.toJSON() ?? null;
-  });
-  clickListener = marker.value.addListener("click", (event: google.maps.MapMouseEvent) => {
-    emit("click", event);
-  });
+  const props = vm?.vnode?.props;
+  if (props?.["onUpdate:modelValue"]) {
+    dragendListener = marker.value.addListener("dragend", (event: google.maps.MapMouseEvent) => {
+      const center = event.latLng?.toJSON();
+      if (!center) return;
+      internalModelValue.value = { ...center };
+      emit("update:model-value", internalModelValue.value);
+    });
+  }
+  if (props?.["onClick"]) {
+    clickListener = marker.value.addListener("click", (event: google.maps.MapMouseEvent) => {
+      emit("click", event);
+    });
+  }
 }
 
 function removeListeners() {
@@ -146,10 +156,13 @@ watch(
   },
 );
 
-watch(model, (newValue, oldValue) => {
-  if (!marker.value || equal(newValue, oldValue)) return;
-  marker.value.position = newValue;
-});
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (!marker.value || equal(value, internalModelValue.value)) return;
+    marker.value.position = value;
+  },
+);
 
 // Exposes
 

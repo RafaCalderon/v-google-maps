@@ -329,21 +329,7 @@ export declare function useGoogleMapsLoader(): {
       readonly retries: number;
       readonly url: string;
       readonly authReferrerPolicy: "origin";
-      readonly options: {
-        apiKey: string;
-        channel?: string | undefined;
-        client?: string | undefined;
-        version?: string | undefined;
-        id?: string | undefined;
-        libraries?: import("@googlemaps/js-api-loader").Library[] | undefined;
-        language?: string | undefined;
-        region?: string | undefined;
-        mapIds?: string[] | undefined;
-        url?: string | undefined;
-        nonce?: string | undefined;
-        retries?: number | undefined;
-        authReferrerPolicy?: "origin" | undefined;
-      };
+      readonly options: import("@googlemaps/js-api-loader").LoaderOptions;
       readonly status: import("@googlemaps/js-api-loader").LoaderStatus;
       createUrl: () => string;
       deleteScript: () => void;
@@ -381,21 +367,7 @@ export declare function useGoogleMapsLoader(): {
         readonly retries: number;
         readonly url: string;
         readonly authReferrerPolicy: "origin";
-        readonly options: {
-          apiKey: string;
-          channel?: string | undefined;
-          client?: string | undefined;
-          version?: string | undefined;
-          id?: string | undefined;
-          libraries?: import("@googlemaps/js-api-loader").Library[] | undefined;
-          language?: string | undefined;
-          region?: string | undefined;
-          mapIds?: string[] | undefined;
-          url?: string | undefined;
-          nonce?: string | undefined;
-          retries?: number | undefined;
-          authReferrerPolicy?: "origin" | undefined;
-        };
+        readonly options: import("@googlemaps/js-api-loader").LoaderOptions;
         readonly status: import("@googlemaps/js-api-loader").LoaderStatus;
         createUrl: () => string;
         deleteScript: () => void;

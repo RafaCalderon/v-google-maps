@@ -1,13 +1,9 @@
-import { type Ref } from "vue";
 interface Props {
   class?: string;
-  options: google.maps.MapOptions;
-}
-type __VLS_Props = Props;
-type __VLS_PublicProps = {
   zoom?: number | null;
+  options: google.maps.MapOptions;
   center?: google.maps.LatLngLiteral | null;
-} & __VLS_Props;
+}
 declare function __VLS_template(): {
   attrs: Partial<{}>;
   slots: {
@@ -20,9 +16,9 @@ declare function __VLS_template(): {
 };
 type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
 declare const __VLS_component: import("vue").DefineComponent<
-  __VLS_PublicProps,
+  Props,
   {
-    map: Ref<
+    map: import("vue").Ref<
       {
         controls: {
           clear: () => void;
@@ -366,16 +362,15 @@ declare const __VLS_component: import("vue").DefineComponent<
   {},
   import("vue").ComponentOptionsMixin,
   import("vue").ComponentOptionsMixin,
-  {
-    "update:center": (value: google.maps.LatLngLiteral | null) => any;
-    "update:zoom": (value: number | null) => any;
-  } & {
+  {} & {
     click: (ev: google.maps.MapMouseEvent) => any;
+    "update:center": (value: google.maps.LatLngLiteral | null) => any;
     ready: () => any;
+    "update:zoom": (value: number | null) => any;
   },
   string,
   import("vue").PublicProps,
-  Readonly<__VLS_PublicProps> &
+  Readonly<Props> &
     Readonly<{
       onClick?: ((ev: google.maps.MapMouseEvent) => any) | undefined;
       "onUpdate:center"?: ((value: google.maps.LatLngLiteral | null) => any) | undefined;
@@ -389,7 +384,9 @@ declare const __VLS_component: import("vue").DefineComponent<
   string,
   import("vue").ComponentProvideOptions,
   false,
-  {},
+  {
+    mapRef: HTMLDivElement;
+  },
   any
 >;
 declare const _default: __VLS_WithTemplateSlots<

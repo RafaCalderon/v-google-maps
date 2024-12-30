@@ -57,10 +57,7 @@ export default defineComponent({
 
     watch(
       () => props.options,
-      (
-        newValue: google.maps.visualization.HeatmapLayerOptions,
-        oldValue: google.maps.visualization.HeatmapLayerOptions,
-      ) => {
+      (newValue, oldValue) => {
         if (!heatmap.value || equal(newValue, oldValue)) return;
         heatmap.value.setOptions(props.options);
       },

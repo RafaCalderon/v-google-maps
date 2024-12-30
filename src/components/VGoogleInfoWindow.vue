@@ -85,7 +85,7 @@ onMounted(async () => {
 // Computed
 
 const defaultSlot = computed(() => {
-  return slots.default?.()?.[0] ?? null;
+  return slots.default?.({})?.[0] ?? null;
 });
 
 const slotIsComment = computed(() => {
@@ -101,12 +101,8 @@ function addListeners() {
 }
 
 function removeListeners() {
-  if (markerClickListener) {
-    markerClickListener.remove();
-  }
-  if (closeClickListener) {
-    closeClickListener.remove();
-  }
+  markerClickListener?.remove();
+  closeClickListener?.remove();
 }
 
 function toggle() {

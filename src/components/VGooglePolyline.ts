@@ -4,10 +4,10 @@ import {
   watch,
   inject,
   markRaw,
-  computed,
   onMounted,
   defineComponent,
   onBeforeUnmount,
+  getCurrentInstance,
   type PropType,
 } from "vue";
 
@@ -44,6 +44,8 @@ export default defineComponent({
 
     // Data
 
+    const vm = getCurrentInstance();
+    const internalModelValue = ref(props.modelValue);
     const polyline = ref<google.maps.Polyline | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let mouseUpListener: google.maps.MapsEventListener | null = null;
@@ -56,39 +58,35 @@ export default defineComponent({
           new maps.value.Polyline({
             ...props.options,
             map: map.value,
-            path: model.value ? [...model.value] : props.options?.path,
+            path: props.modelValue ? [...props.modelValue] : props.options?.path,
           }),
         );
         addListeners();
       }
     });
 
-    // Computed
-
-    const model = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: google.maps.LatLngLiteral[] | null) {
-        emit("update:model-value", value);
-      },
-    });
-
     // Methods
 
     function addListeners() {
+      removeListeners();
       if (!polyline.value) return;
-      clickListener = polyline.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
-        emit("click", ev);
-      });
-      mouseUpListener = polyline.value.addListener("mouseup", () => {
-        const path = polyline.value
-          ?.getPath()
-          ?.getArray()
-          ?.map((position) => position.toJSON());
-        if (!path) return;
-        model.value = [...path];
-      });
+      const props = vm?.vnode?.props;
+      if (props?.["onClick"]) {
+        clickListener = polyline.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+          emit("click", ev);
+        });
+      }
+      if (props?.["onUpdate:modelValue"]) {
+        mouseUpListener = polyline.value.addListener("mouseup", () => {
+          const path = polyline.value
+            ?.getPath()
+            ?.getArray()
+            ?.map((position) => position.toJSON());
+          if (!path) return;
+          internalModelValue.value = [...path];
+          emit("update:model-value", internalModelValue.value);
+        });
+      }
     }
 
     function removeListeners() {
@@ -110,13 +108,10 @@ export default defineComponent({
     );
 
     watch(
-      model,
-      (
-        newValue: google.maps.LatLngLiteral[] | null,
-        oldValue: google.maps.LatLngLiteral[] | null,
-      ) => {
-        if (!polyline.value || !newValue || equal(newValue, oldValue)) return;
-        polyline.value.setPath(newValue);
+      () => props.modelValue,
+      (value) => {
+        if (!polyline.value || !value || equal(value, internalModelValue.value)) return;
+        polyline.value.setPath(value);
       },
     );
 

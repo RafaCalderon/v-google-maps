@@ -8,7 +8,16 @@
 
 <script setup lang="ts">
 // Vue
-import { ref, watch, provide, markRaw, nextTick, onMounted, onBeforeUnmount, type Ref } from "vue";
+import {
+  ref,
+  watch,
+  provide,
+  markRaw,
+  nextTick,
+  onMounted,
+  onBeforeUnmount,
+  getCurrentInstance,
+} from "vue";
 
 // Deep equal
 import equal from "fast-deep-equal";
@@ -23,23 +32,19 @@ import { mapSymbol } from "@/shared/symbols";
 
 interface Props {
   class?: string;
+  zoom?: number | null;
   options: google.maps.MapOptions;
+  center?: google.maps.LatLngLiteral | null;
 }
 
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
   (event: "ready"): void;
+  (event: "update:zoom", value: number | null): void;
   (event: "click", ev: google.maps.MapMouseEvent): void;
+  (event: "update:center", value: google.maps.LatLngLiteral | null): void;
 }>();
-
-const zoom = defineModel<number | null>("zoom", {
-  default: null,
-});
-
-const center = defineModel<google.maps.LatLngLiteral | null>("center", {
-  default: null,
-});
 
 // Composables
 
@@ -48,11 +53,14 @@ const { maps } = useGoogleMapsLoader();
 // Data
 
 const mounted = ref(false);
+const vm = getCurrentInstance();
+const internalZoom = ref(props.zoom);
+const interalCenter = ref(props.center);
 const map = ref<google.maps.Map | null>(null);
+const mapRef = ref<HTMLDivElement | null>(null);
 let clickListener: google.maps.MapsEventListener | null = null;
 let dragEndListener: google.maps.MapsEventListener | null = null;
 let zoomChangedListener: google.maps.MapsEventListener | null = null;
-const mapRef = ref<HTMLDivElement | null>(null) as Ref<HTMLDivElement | null>;
 
 // Mounted
 
@@ -61,8 +69,8 @@ onMounted(async () => {
   map.value = markRaw(
     new maps.value.Map(mapRef.value, {
       ...props.options,
-      zoom: zoom.value ?? props.options?.zoom,
-      center: center.value ?? props.options?.center,
+      zoom: props.zoom ?? props.options?.zoom,
+      center: props.center ?? props.options?.center,
     }),
   );
   mounted.value = true;
@@ -74,16 +82,28 @@ onMounted(async () => {
 // Methods
 
 function addListeners() {
+  removeListeners();
   if (!map.value) return;
-  clickListener = map.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
-    emit("click", ev);
-  });
-  dragEndListener = map.value.addListener("dragend", () => {
-    center.value = map.value?.getCenter()?.toJSON() ?? null;
-  });
-  zoomChangedListener = map.value.addListener("zoom_changed", () => {
-    zoom.value = map.value?.getZoom() ?? 0;
-  });
+  const props = vm?.vnode?.props;
+  if (props?.["onClick"]) {
+    clickListener = map.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+      emit("click", ev);
+    });
+  }
+  if (props?.["onUpdate:center"]) {
+    dragEndListener = map.value.addListener("dragend", () => {
+      const center = map.value?.getCenter()?.toJSON();
+      if (!center) return;
+      interalCenter.value = { ...center };
+      emit("update:center", interalCenter.value);
+    });
+  }
+  if (props?.["onUpdate:zoom"]) {
+    zoomChangedListener = map.value.addListener("zoom_changed", () => {
+      internalZoom.value = map.value?.getZoom() ?? 0;
+      emit("update:zoom", internalZoom.value);
+    });
+  }
 }
 
 function removeListeners() {
@@ -106,19 +126,20 @@ watch(
 );
 
 watch(
-  center,
-  (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
-    if (equal(newValue, oldValue) || !map.value || !newValue) return;
-    map.value.setCenter({
-      ...newValue,
-    });
+  () => props.center,
+  (value) => {
+    if (!map.value || !value || equal(value, interalCenter.value)) return;
+    map.value.setCenter({ ...value });
   },
 );
 
-watch(zoom, (newValue: number | null, oldValue: number | null) => {
-  if (equal(newValue, oldValue) || !map.value || !newValue) return;
-  map.value.setZoom(newValue);
-});
+watch(
+  () => props.zoom,
+  (value) => {
+    if (!map.value || !value || equal(value, internalZoom.value)) return;
+    map.value.setZoom(value);
+  },
+);
 
 // Expose
 

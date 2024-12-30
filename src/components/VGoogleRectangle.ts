@@ -4,10 +4,10 @@ import {
   watch,
   inject,
   markRaw,
-  computed,
   onMounted,
   defineComponent,
   onBeforeUnmount,
+  getCurrentInstance,
   type PropType,
 } from "vue";
 
@@ -44,6 +44,8 @@ export default defineComponent({
 
     // Data
 
+    const vm = getCurrentInstance();
+    const internalModelValue = ref(props.modelValue);
     const rectangle = ref<google.maps.Rectangle | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let boundsChangedListener: google.maps.MapsEventListener | null = null;
@@ -56,38 +58,32 @@ export default defineComponent({
           new maps.value.Rectangle({
             ...props.options,
             map: map.value,
-            bounds: model.value ?? props.options?.bounds,
+            bounds: props.modelValue ?? props.options?.bounds,
           }),
         );
         addListeners();
       }
     });
 
-    // Computed
-
-    const model = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: google.maps.LatLngBoundsLiteral | null) {
-        emit("update:model-value", value);
-      },
-    });
-
     // Methods
 
     function addListeners() {
+      removeListeners();
       if (!rectangle.value) return;
-      clickListener = rectangle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
-        emit("click", ev);
-      });
-      boundsChangedListener = rectangle.value.addListener("bounds_changed", () => {
-        const bounds = rectangle.value?.getBounds()?.toJSON();
-        if (!bounds) return;
-        model.value = {
-          ...bounds,
-        };
-      });
+      const props = vm?.vnode?.props;
+      if (props?.["onClick"]) {
+        clickListener = rectangle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+          emit("click", ev);
+        });
+      }
+      if (props?.["onUpdate:modelValue"]) {
+        boundsChangedListener = rectangle.value.addListener("bounds_changed", () => {
+          const bounds = rectangle.value?.getBounds()?.toJSON();
+          if (!bounds) return;
+          internalModelValue.value = { ...bounds };
+          emit("update:model-value", internalModelValue.value);
+        });
+      }
     }
 
     function removeListeners() {
@@ -109,13 +105,10 @@ export default defineComponent({
     );
 
     watch(
-      model,
-      (
-        newValue: google.maps.LatLngBoundsLiteral | null,
-        oldValue: google.maps.LatLngBoundsLiteral | null,
-      ) => {
-        if (!rectangle.value || !newValue || equal(newValue, oldValue)) return;
-        rectangle.value.setBounds(newValue);
+      () => props.modelValue,
+      (value) => {
+        if (!rectangle.value || !value || equal(value, internalModelValue.value)) return;
+        rectangle.value.setBounds(value);
       },
     );
 

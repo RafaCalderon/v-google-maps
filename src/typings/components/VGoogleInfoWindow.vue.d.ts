@@ -121,7 +121,9 @@ declare const __VLS_component: import("vue").DefineComponent<
   string,
   import("vue").ComponentProvideOptions,
   false,
-  {},
+  {
+    contentRef: HTMLDivElement;
+  },
   any
 >;
 declare const _default: __VLS_WithTemplateSlots<

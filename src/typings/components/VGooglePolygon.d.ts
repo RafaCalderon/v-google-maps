@@ -24,8 +24,8 @@ declare const _default: import("vue").DefineComponent<
   {},
   import("vue").ComponentOptionsMixin,
   import("vue").ComponentOptionsMixin,
-  ("click" | "mouseover" | "mouseout" | "update:model-value")[],
-  "click" | "mouseover" | "mouseout" | "update:model-value",
+  ("click" | "update:model-value" | "mouseover" | "mouseout")[],
+  "click" | "update:model-value" | "mouseover" | "mouseout",
   import("vue").PublicProps,
   Readonly<
     import("vue").ExtractPropTypes<{

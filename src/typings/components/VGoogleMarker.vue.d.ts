@@ -1,11 +1,8 @@
 import { type Ref } from "vue";
 interface Props {
   options?: google.maps.marker.AdvancedMarkerElementOptions;
-}
-type __VLS_Props = Props;
-type __VLS_PublicProps = {
   modelValue?: google.maps.LatLngLiteral | google.maps.LatLng | null;
-} & __VLS_Props;
+}
 declare function __VLS_template(): {
   attrs: Partial<{}>;
   slots: {
@@ -18,7 +15,7 @@ declare function __VLS_template(): {
 };
 type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
 declare const __VLS_component: import("vue").DefineComponent<
-  __VLS_PublicProps,
+  Props,
   {
     marker: Ref<
       google.maps.marker.AdvancedMarkerElement | null,
@@ -30,22 +27,22 @@ declare const __VLS_component: import("vue").DefineComponent<
   {},
   import("vue").ComponentOptionsMixin,
   import("vue").ComponentOptionsMixin,
-  {
-    "update:modelValue": (value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any;
-  } & {
+  {} & {
     click: (event: google.maps.MapMouseEvent) => any;
+    "update:model-value": (value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any;
   },
   string,
   import("vue").PublicProps,
-  Readonly<__VLS_PublicProps> &
+  Readonly<Props> &
     Readonly<{
       onClick?: ((event: google.maps.MapMouseEvent) => any) | undefined;
-      "onUpdate:modelValue"?:
+      "onUpdate:model-value"?:
         | ((value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any)
         | undefined;
     }>,
   {
     options: google.maps.marker.AdvancedMarkerElementOptions;
+    modelValue: google.maps.LatLngLiteral | google.maps.LatLng | null;
   },
   {},
   {},
@@ -53,7 +50,9 @@ declare const __VLS_component: import("vue").DefineComponent<
   string,
   import("vue").ComponentProvideOptions,
   false,
-  {},
+  {
+    contentRef: HTMLDivElement;
+  },
   any
 >;
 declare const _default: __VLS_WithTemplateSlots<
