@@ -72,6 +72,7 @@ export default defineComponent({
       removeListeners();
       if (!polyline.value) return;
       const props = vm?.vnode?.props;
+      console.log(props?.["onContextmenu"]);
       if (props?.["onClick"]) {
         clickListener = polyline.value.addListener("click", (ev: google.maps.PolyMouseEvent) => {
           emit("click", ev);
