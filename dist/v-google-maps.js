@@ -1,5 +1,5 @@
 import { ref as M, defineComponent as I, getCurrentInstance as D, onMounted as R, markRaw as x, nextTick as te, watch as b, provide as ne, onBeforeUnmount as S, openBlock as re, createElementBlock as oe, Fragment as Ae, createElementVNode as se, normalizeClass as Ie, renderSlot as ie, createCommentVNode as ae, inject as A, mergeModels as xe, useModel as Se, useSlots as ve, computed as z } from "vue";
-function Pe(o, e, t, n) {
+function Le(o, e, t, n) {
   function s(i) {
     return i instanceof t ? i : new t(function(a) {
       a(i);
@@ -26,7 +26,7 @@ function Pe(o, e, t, n) {
     u((n = n.apply(o, [])).next());
   });
 }
-function Le(o) {
+function Pe(o) {
   return o && o.__esModule && Object.prototype.hasOwnProperty.call(o, "default") ? o.default : o;
 }
 var je = function o(e, t) {
@@ -53,7 +53,7 @@ var je = function o(e, t) {
     return !0;
   }
   return e !== e && t !== t;
-}, Re = /* @__PURE__ */ Le(je);
+}, Re = /* @__PURE__ */ Pe(je);
 const ce = "__googleMapsScriptId";
 var F;
 (function(o) {
@@ -171,7 +171,7 @@ class Z {
       d = d[l] || (d[l] = {});
       const c = d.maps || (d.maps = {}), y = /* @__PURE__ */ new Set(), p = new URLSearchParams(), k = () => (
         // @ts-ignore
-        a || (a = new Promise((w, g) => Pe(this, void 0, void 0, function* () {
+        a || (a = new Promise((w, g) => Le(this, void 0, void 0, function* () {
           var _;
           yield f = m.createElement("script"), f.id = this.id, p.set("libraries", [...y] + "");
           for (r in i)
@@ -272,7 +272,7 @@ function Ue() {
   }), H;
 }
 var Ne = Ue();
-const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e = Symbol("marker-clusterer"), Ze = /* @__PURE__ */ I({
+const E = /* @__PURE__ */ Ge(Ne), L = Symbol("map"), Me = Symbol("marker"), _e = Symbol("marker-clusterer"), Ze = /* @__PURE__ */ I({
   __name: "VGoogleMap",
   props: {
     class: {},
@@ -332,7 +332,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
       }
     ), e({
       map: l
-    }), ne(P, l), S(() => {
+    }), ne(L, l), S(() => {
       y(), l.value = null;
     }), (p, k) => (re(), oe(Ae, null, [
       se("div", {
@@ -361,7 +361,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
   },
   emits: ["click", "update:center", "update:radius"],
   setup(o, { emit: e, expose: t, slots: n }) {
-    const { maps: s } = T(), i = A(P, M(null)), a = D(), f = M(o.center), r = M(o.radius), u = M(null);
+    const { maps: s } = T(), i = A(L, M(null)), a = D(), f = M(o.center), r = M(o.radius), u = M(null);
     let l = null, h = null, v = null;
     R(() => {
       var c, y;
@@ -428,7 +428,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
     }
   },
   setup(o, { expose: e, slots: t }) {
-    const { visualization: n } = T(), s = A(P, M(null)), i = M(null);
+    const { visualization: n } = T(), s = A(L, M(null)), i = M(null);
     return R(() => {
       s.value && n.value && (i.value = x(
         new n.value.HeatmapLayer({
@@ -467,7 +467,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
   },
   emits: ["click", "mouseover", "mouseout", "update:model-value"],
   setup(o, { emit: e, expose: t, slots: n }) {
-    const { maps: s } = T(), i = A(P, M(null)), a = D(), f = M(o.modelValue), r = M(null);
+    const { maps: s } = T(), i = A(L, M(null)), a = D(), f = M(o.modelValue), r = M(null);
     let u = null, l = null, h = null, v = null;
     R(() => {
       var c;
@@ -539,7 +539,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
   }),
   emits: ["update:modelValue"],
   setup(o, { expose: e }) {
-    const t = o, n = Se(o, "modelValue"), s = ve(), { maps: i } = T(), a = A(P, M(null)), f = A(Me, M(null)), r = M(!1), u = M(), l = M(null);
+    const t = o, n = Se(o, "modelValue"), s = ve(), { maps: i } = T(), a = A(L, M(null)), f = A(Me, M(null)), r = M(!1), u = M(), l = M(null);
     let h = null, v = null;
     R(async () => {
       var k;
@@ -603,7 +603,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
   },
   emits: ["click", "update:model-value"],
   setup(o, { expose: e, emit: t }) {
-    const n = o, s = t, i = ve(), { markers: a } = T(), f = A(P, M(null)), r = A(_e, M(null)), u = D(), l = M(), h = M(n.modelValue);
+    const n = o, s = t, i = ve(), { markers: a } = T(), f = A(L, M(null)), r = A(_e, M(null)), u = D(), l = M(), h = M(n.modelValue);
     let v = null, m = null;
     const d = M(
       null
@@ -684,7 +684,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
   },
   emits: ["click", "contextmenu", "update:model-value"],
   setup(o, { emit: e, expose: t, slots: n }) {
-    const { maps: s } = T(), i = A(P, M(null)), a = D(), f = M(o.modelValue), r = M(null);
+    const { maps: s } = T(), i = A(L, M(null)), a = D(), f = M(o.modelValue), r = M(null);
     let u = null, l = null, h = null;
     R(() => {
       var d;
@@ -698,7 +698,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
     });
     function v() {
       var c;
-      if (m(), !r.value) return;
+      if (m(), console.log("addListeners"), !r.value) return;
       const d = (c = a == null ? void 0 : a.vnode) == null ? void 0 : c.props;
       console.log(d == null ? void 0 : d.onContextmenu), d != null && d.onClick && (u = r.value.addListener("click", (y) => {
         e("click", y);
@@ -752,7 +752,7 @@ const E = /* @__PURE__ */ Ge(Ne), P = Symbol("map"), Me = Symbol("marker"), _e =
   },
   emits: ["click", "update:model-value"],
   setup(o, { emit: e, expose: t, slots: n }) {
-    const { maps: s } = T(), i = A(P, M(null)), a = D(), f = M(o.modelValue), r = M(null);
+    const { maps: s } = T(), i = A(L, M(null)), a = D(), f = M(o.modelValue), r = M(null);
     let u = null, l = null;
     R(() => {
       var m;
@@ -968,7 +968,7 @@ const Ke = {
   // properties to use for individual points when running the reducer
   map: (o) => o
   // props => ({sum: props.my_value})
-}, pe = Math.fround || /* @__PURE__ */ ((o) => (e) => (o[0] = +e, o[0]))(new Float32Array(1)), U = 2, j = 3, Q = 4, L = 5, Oe = 6;
+}, pe = Math.fround || /* @__PURE__ */ ((o) => (e) => (o[0] = +e, o[0]))(new Float32Array(1)), U = 2, j = 3, Q = 4, P = 5, Oe = 6;
 class He {
   constructor(e) {
     this.options = Object.assign(Object.create(Ke), e), this.trees = new Array(this.options.maxZoom + 1), this.stride = this.options.reduce ? 7 : 6, this.clusterProps = [];
@@ -1019,7 +1019,7 @@ class He {
     const f = this.trees[this._limitZoom(t)], r = f.range(J(n), K(a), J(i), K(s)), u = f.data, l = [];
     for (const h of r) {
       const v = this.stride * h;
-      l.push(u[v + L] > 1 ? me(u, v, this.clusterProps) : this.points[u[v + j]]);
+      l.push(u[v + P] > 1 ? me(u, v, this.clusterProps) : this.points[u[v + j]]);
     }
     return l;
   }
@@ -1031,7 +1031,7 @@ class He {
     const f = this.options.radius / (this.options.extent * Math.pow(2, n - 1)), r = a[t * this.stride], u = a[t * this.stride + 1], l = i.within(r, u, f), h = [];
     for (const v of l) {
       const m = v * this.stride;
-      a[m + Q] === e && h.push(a[m + L] > 1 ? me(a, m, this.clusterProps) : this.points[a[m + j]]);
+      a[m + Q] === e && h.push(a[m + P] > 1 ? me(a, m, this.clusterProps) : this.points[a[m + j]]);
     }
     if (h.length === 0) throw new Error(s);
     return h;
@@ -1092,7 +1092,7 @@ class He {
   }
   _addTileFeatures(e, t, n, s, i, a) {
     for (const f of e) {
-      const r = f * this.stride, u = t[r + L] > 1;
+      const r = f * this.stride, u = t[r + P] > 1;
       let l, h, v;
       if (u)
         l = Ce(t, r, this.clusterProps), h = t[r], v = t[r + 1];
@@ -1122,11 +1122,11 @@ class He {
     for (let h = 0; h < r.length; h += l) {
       if (r[h + U] <= t) continue;
       r[h + U] = t;
-      const v = r[h], m = r[h + 1], d = e.within(r[h], r[h + 1], f), c = r[h + L];
+      const v = r[h], m = r[h + 1], d = e.within(r[h], r[h + 1], f), c = r[h + P];
       let y = c;
       for (const p of d) {
         const k = p * l;
-        r[k + U] > t && (y += r[k + L]);
+        r[k + U] > t && (y += r[k + P]);
       }
       if (y > c && y >= a) {
         let p = v * c, k = m * c, w, g = -1;
@@ -1135,7 +1135,7 @@ class He {
           const C = G * l;
           if (r[C + U] <= t) continue;
           r[C + U] = t;
-          const $ = r[C + L];
+          const $ = r[C + P];
           p += r[C] * $, k += r[C + 1] * $, r[C + Q] = _, i && (w || (w = this._map(r, h, !0), g = this.clusterProps.length, this.clusterProps.push(w)), i(w, this._map(r, C)));
         }
         r[h + Q] = _, u.push(p / y, k / y, 1 / 0, _, -1, y), i && u.push(g);
@@ -1162,7 +1162,7 @@ class He {
     return (e - this.points.length) % 32;
   }
   _map(e, t, n) {
-    if (e[t + L] > 1) {
+    if (e[t + P] > 1) {
       const a = this.clusterProps[e[t + Oe]];
       return n ? Object.assign({}, a) : a;
     }
@@ -1182,7 +1182,7 @@ function me(o, e, t) {
   };
 }
 function Ce(o, e, t) {
-  const n = o[e + L], s = n >= 1e4 ? `${Math.round(n / 1e3)}k` : n >= 1e3 ? `${Math.round(n / 100) / 10}k` : n, i = o[e + Oe], a = i === -1 ? {} : Object.assign({}, t[i]);
+  const n = o[e + P], s = n >= 1e4 ? `${Math.round(n / 1e3)}k` : n >= 1e3 ? `${Math.round(n / 100) / 10}k` : n, i = o[e + Oe], a = i === -1 ? {} : Object.assign({}, t[i]);
   return Object.assign(a, {
     cluster: !0,
     cluster_id: o[e + j],
@@ -1532,7 +1532,7 @@ const at = I({
     }
   },
   setup(o, { slots: e }) {
-    const t = A(P, M(null)), n = M(null);
+    const t = A(L, M(null)), n = M(null);
     return t.value && (n.value = x(
       new it({
         ...o.options,
