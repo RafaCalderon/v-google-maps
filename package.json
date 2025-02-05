@@ -7,7 +7,9 @@
   "type": "module",
   "types": "src/typings/v-google-maps.d.ts",
   "files": [
-    "dist/*.{js,cjs,mjs}",
+    "README.md",
+    "dist/**/*",
+    "package.json",
     "src/typings/**/*.d.ts"
   ],
   "exports": {
