@@ -32,7 +32,7 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngLiteral[] | null>,
     },
   },
-  emits: ["click", "update:model-value"],
+  emits: ["click", "contextmenu", "update:model-value"],
   setup(props, { emit, expose, slots }) {
     // Composables
 
@@ -49,6 +49,7 @@ export default defineComponent({
     const polyline = ref<google.maps.Polyline | null>(null);
     let clickListener: google.maps.MapsEventListener | null = null;
     let mouseUpListener: google.maps.MapsEventListener | null = null;
+    let contextmenuListener: google.maps.MapsEventListener | null = null;
 
     // Mounted
 
@@ -72,9 +73,17 @@ export default defineComponent({
       if (!polyline.value) return;
       const props = vm?.vnode?.props;
       if (props?.["onClick"]) {
-        clickListener = polyline.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+        clickListener = polyline.value.addListener("click", (ev: google.maps.PolyMouseEvent) => {
           emit("click", ev);
         });
+      }
+      if (props?.["onContextmenu"]) {
+        contextmenuListener = polyline.value.addListener(
+          "contextmenu",
+          (ev: google.maps.PolyMouseEvent) => {
+            emit("contextmenu", ev);
+          },
+        );
       }
       if (props?.["onUpdate:modelValue"]) {
         mouseUpListener = polyline.value.addListener("mouseup", () => {
@@ -92,6 +101,7 @@ export default defineComponent({
     function removeListeners() {
       clickListener?.remove();
       mouseUpListener?.remove();
+      contextmenuListener?.remove();
     }
 
     // Watchs
