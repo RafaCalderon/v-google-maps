@@ -48,10 +48,6 @@ jobs:
         with:
           name: src-typings
           path: src/typings
-      - name: List files after downloading artifact
-        run: |
-          echo "Current directory: $(pwd)"
-          ls -R
       - run: npm ci
       - run: npm publish
         env:
