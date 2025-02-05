@@ -1,11 +1,11 @@
-import {createApp} from 'vue';
-import App from './App.vue';
+import App from "./App.vue";
+import { createApp } from "vue";
 
-import {useGmapLoader} from "@/composables/gmapLoader";
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 
-const {load} = useGmapLoader();
+const { init } = useGoogleMapsLoader();
 
 (async () => {
-  await load("");
-  createApp(App).mount('#app');
+  await init("");
+  createApp(App).mount("#app");
 })();

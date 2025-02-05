@@ -4,18 +4,20 @@ import {
   watch,
   inject,
   markRaw,
-  computed,
   onMounted,
   defineComponent,
   onBeforeUnmount,
+  getCurrentInstance,
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
 export default defineComponent({
@@ -34,78 +36,59 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
 
+    // Data
+
+    const vm = getCurrentInstance();
+    const internalModelValue = ref(props.modelValue);
+    const rectangle = ref<google.maps.Rectangle | null>(null);
+    let clickListener: google.maps.MapsEventListener | null = null;
+    let boundsChangedListener: google.maps.MapsEventListener | null = null;
+
     // Mounted
 
     onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.RectangleOptions = {
-          ...props.options,
-        };
-        if (model.value) {
-          options.bounds = {
-            ...model.value,
-          };
-        }
+      if (map.value && maps.value) {
         rectangle.value = markRaw(
-          new gmapApi.value.maps.Rectangle({
+          new maps.value.Rectangle({
+            ...props.options,
             map: map.value,
-            ...options,
+            bounds: props.modelValue ?? props.options?.bounds,
           }),
         );
         addListeners();
       }
     });
 
-    // Data
-
-    const rectangle = ref<google.maps.Rectangle | null>(null);
-    let clickListener: google.maps.MapsEventListener | null = null;
-    let boundsChangedListener: google.maps.MapsEventListener | null = null;
-
-    // Computed
-
-    const model = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: google.maps.LatLngBoundsLiteral | null) {
-        emit("update:model-value", value);
-      },
-    });
-
     // Methods
 
     function addListeners() {
+      removeListeners();
       if (!rectangle.value) return;
-      clickListener = rectangle.value.addListener("click", onClick);
-      boundsChangedListener = rectangle.value.addListener("bounds_changed", () => {
-        const bounds = rectangle.value?.getBounds()?.toJSON();
-        if (!bounds) return;
-        model.value = {
-          ...bounds,
-        };
-      });
+      const props = vm?.vnode?.props;
+      if (props?.["onClick"]) {
+        clickListener = rectangle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+          emit("click", ev);
+        });
+      }
+      if (props?.["onUpdate:modelValue"]) {
+        boundsChangedListener = rectangle.value.addListener("bounds_changed", () => {
+          const bounds = rectangle.value?.getBounds()?.toJSON();
+          if (!bounds) return;
+          internalModelValue.value = { ...bounds };
+          emit("update:model-value", internalModelValue.value);
+        });
+      }
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (boundsChangedListener) {
-        boundsChangedListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
+      clickListener?.remove();
+      boundsChangedListener?.remove();
     }
 
     // Watchs
@@ -122,13 +105,10 @@ export default defineComponent({
     );
 
     watch(
-      model,
-      (
-        newValue: google.maps.LatLngBoundsLiteral | null,
-        oldValue: google.maps.LatLngBoundsLiteral | null,
-      ) => {
-        if (equal(newValue, oldValue) || !rectangle.value || !newValue) return;
-        rectangle.value.setBounds(newValue);
+      () => props.modelValue,
+      (value) => {
+        if (!rectangle.value || !value || equal(value, internalModelValue.value)) return;
+        rectangle.value.setBounds(value);
       },
     );
 

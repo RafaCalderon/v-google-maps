@@ -4,18 +4,20 @@ import {
   watch,
   inject,
   markRaw,
-  computed,
   onMounted,
   defineComponent,
   onBeforeUnmount,
+  getCurrentInstance,
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
 export default defineComponent({
@@ -38,104 +40,76 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
 
+    // Data
+
+    const vm = getCurrentInstance();
+    const internalCenter = ref(props.center);
+    const internalRadius = ref(props.radius);
+    const circle = ref<google.maps.Circle | null>(null);
+    let clickListener: google.maps.MapsEventListener | null = null;
+    let radiusChangedListener: google.maps.MapsEventListener | null = null;
+    let centerChangedListener: google.maps.MapsEventListener | null = null;
+
     // Mounted
 
     onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.CircleOptions = {
-          ...props.options,
-        };
-        if (centerValue.value) {
-          options.center = {
-            ...centerValue.value,
-          };
-        }
-        if (radiusValue.value) {
-          options.radius = radiusValue.value;
-        }
+      if (map.value && maps.value) {
         circle.value = markRaw(
-          new gmapApi.value.maps.Circle({
+          new maps.value.Circle({
+            ...props.options,
             map: map.value,
-            ...options,
+            center: props.center ?? props.options?.center,
+            radius: props.radius ?? props.options?.radius,
           }),
         );
         addListeners();
       }
     });
 
-    // Data
-
-    const circle = ref<google.maps.Circle | null>(null);
-    let clickListener: google.maps.MapsEventListener | null = null;
-    let radiusChangedListener: google.maps.MapsEventListener | null = null;
-    let centerChangedListener: google.maps.MapsEventListener | null = null;
-
-    // Computed
-
-    const centerValue = computed({
-      get() {
-        return props.center;
-      },
-      set(value: google.maps.LatLngLiteral | null) {
-        emit("update:center", value);
-      },
-    });
-
-    const radiusValue = computed({
-      get() {
-        return props.radius;
-      },
-      set(value: number | null) {
-        emit("update:radius", value);
-      },
-    });
-
     // Methods
 
     function addListeners() {
+      removeListeners();
       if (!circle.value) return;
-      clickListener = circle.value.addListener("click", onClick);
-      radiusChangedListener = circle.value.addListener("radius_changed", () => {
-        radiusValue.value = circle.value?.getRadius() ?? null;
-      });
-      centerChangedListener = circle.value.addListener("center_changed", () => {
-        const center = circle.value?.getCenter()?.toJSON();
-        if (!center) return;
-        centerValue.value = {
-          ...center,
-        };
-      });
+      const props = vm?.vnode?.props;
+      if (props?.["onClick"]) {
+        clickListener = circle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+          emit("click", ev);
+        });
+      }
+      if (props?.["onUpdate:radius"]) {
+        radiusChangedListener = circle.value.addListener("radius_changed", () => {
+          internalRadius.value = circle.value?.getRadius() ?? 0;
+          emit("update:radius", internalRadius.value);
+        });
+      }
+      if (props?.["onUpdate:center"]) {
+        centerChangedListener = circle.value.addListener("center_changed", () => {
+          const center = circle.value?.getCenter()?.toJSON();
+          if (!center) return;
+          internalCenter.value = { ...center };
+          emit("update:center", internalCenter.value);
+        });
+      }
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (radiusChangedListener) {
-        radiusChangedListener.remove();
-      }
-      if (centerChangedListener) {
-        centerChangedListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
+      clickListener?.remove();
+      radiusChangedListener?.remove();
+      centerChangedListener?.remove();
     }
 
     // Watchs
 
     watch(
       () => props.options,
-      (newValue: google.maps.CircleOptions, oldValue: google.maps.CircleOptions) => {
+      (newValue, oldValue) => {
         if (!circle.value || equal(newValue, oldValue)) return;
         circle.value.setOptions(props.options);
       },
@@ -145,19 +119,20 @@ export default defineComponent({
     );
 
     watch(
-      centerValue,
-      (newValue: google.maps.LatLngLiteral | null, oldValue: google.maps.LatLngLiteral | null) => {
-        if (equal(newValue, oldValue) || !circle.value || !newValue) return;
-        circle.value.setCenter({
-          ...newValue,
-        });
+      () => props.center,
+      (value) => {
+        if (!circle.value || !value || equal(value, internalCenter.value)) return;
+        circle.value.setCenter({ ...value });
       },
     );
 
-    watch(radiusValue, (newValue: number | null, oldValue: number | null) => {
-      if (equal(newValue, oldValue) || !circle.value || !newValue) return;
-      circle.value.setRadius(newValue);
-    });
+    watch(
+      () => props.radius,
+      (value: number | null) => {
+        if (!circle.value || !value || equal(value, internalRadius.value)) return;
+        circle.value.setRadius(value);
+      },
+    );
 
     // Exposes
 

@@ -4,18 +4,20 @@ import {
   watch,
   inject,
   markRaw,
-  computed,
   onMounted,
   defineComponent,
   onBeforeUnmount,
+  getCurrentInstance,
   type PropType,
 } from "vue";
 
-// Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
-
-// Utils
+// Deep equal
 import equal from "fast-deep-equal";
+
+// Composables
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
+
+// Symbols
 import { mapSymbol } from "@/shared/symbols";
 
 export default defineComponent({
@@ -30,99 +32,96 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngLiteral[] | null>,
     },
   },
-  emits: ["click", "mouseover", "mouseout", "update:model-value"],
+  emits: ["click", "mouseover", "mouseout", "contextmenu", "update:model-value"],
   setup(props, { emit, expose, slots }) {
     // Composables
 
-    const { gmapApi } = useGmapLoader();
+    const { maps } = useGoogleMapsLoader();
 
     // Injects
 
     const map = inject(mapSymbol, ref(null));
 
+    // Data
+
+    const vm = getCurrentInstance();
+    const internalModelValue = ref(props.modelValue);
+    const polygon = ref<google.maps.Polygon | null>(null);
+    let clickListener: google.maps.MapsEventListener | null = null;
+    let mouseUpListener: google.maps.MapsEventListener | null = null;
+    let mouseOutListener: google.maps.MapsEventListener | null = null;
+    let mouseOverListener: google.maps.MapsEventListener | null = null;
+    let contextmenuListener: google.maps.MapsEventListener | null = null;
+
     // Mounted
 
     onMounted(() => {
-      if (map.value && gmapApi.value) {
-        const options: google.maps.PolygonOptions = {
-          ...props.options,
-        };
-        if (model.value) {
-          options.paths = [...model.value];
-        }
+      if (map.value && maps.value) {
         polygon.value = markRaw(
-          new gmapApi.value.maps.Polygon({
+          new maps.value.Polygon({
+            ...props.options,
             map: map.value,
-            ...options,
+            paths: props.modelValue ? [...props.modelValue] : props.options?.paths,
           }),
         );
         addListeners();
       }
     });
 
-    // Data
-
-    const polygon = ref<google.maps.Polygon | null>(null);
-    let clickListener: google.maps.MapsEventListener | null = null;
-    let mouseUpListener: google.maps.MapsEventListener | null = null;
-    let mouseOutListener: google.maps.MapsEventListener | null = null;
-    let mouseOverListener: google.maps.MapsEventListener | null = null;
-
-    // Computed
-
-    const model = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value: google.maps.LatLngLiteral[] | null) {
-        emit("update:model-value", value);
-      },
-    });
-
     // Methods
 
     function addListeners() {
+      removeListeners();
       if (!polygon.value) return;
-      clickListener = polygon.value.addListener("click", onClick);
-      mouseOutListener = polygon.value.addListener("mouseout", onMouseOut);
-      mouseOverListener = polygon.value.addListener("mouseover", onMouseOver);
-      mouseUpListener = polygon.value.addListener("mouseup", () => {
-        const path = polygon.value
-          ?.getPath()
-          ?.getArray()
-          ?.map((position) => position.toJSON());
-        if (!path) return;
-        model.value = [...path];
-      });
+      const props = vm?.vnode?.props;
+      if (props?.["onClick"]) {
+        clickListener = polygon.value.addListener("click", (ev: google.maps.PolyMouseEvent) => {
+          emit("click", ev);
+        });
+      }
+      if (props?.["onContextmenu"]) {
+        contextmenuListener = polygon.value.addListener(
+          "contextmenu",
+          (ev: google.maps.PolyMouseEvent) => {
+            emit("contextmenu", ev);
+          },
+        );
+      }
+      if (props?.["onMouseout"]) {
+        mouseOutListener = polygon.value.addListener(
+          "mouseout",
+          (ev: google.maps.MapMouseEvent) => {
+            emit("mouseout", ev);
+          },
+        );
+      }
+      if (props?.["onMouseover"]) {
+        mouseOverListener = polygon.value.addListener(
+          "mouseover",
+          (ev: google.maps.MapMouseEvent) => {
+            emit("mouseover", ev);
+          },
+        );
+      }
+      if (props?.["onUpdate:modelValue"]) {
+        mouseUpListener = polygon.value.addListener("mouseup", () => {
+          const path = polygon.value
+            ?.getPath()
+            ?.getArray()
+            ?.map((position) => position.toJSON());
+          if (!path) return;
+          internalModelValue.value = [...path];
+          emit("update:model-value", internalModelValue.value);
+        });
+      }
     }
 
     function removeListeners() {
-      if (clickListener) {
-        clickListener.remove();
-      }
-      if (mouseUpListener) {
-        mouseUpListener.remove();
-      }
-      if (mouseOutListener) {
-        mouseOutListener.remove();
-      }
-      if (mouseOverListener) {
-        mouseOverListener.remove();
-      }
-    }
-
-    // Emits
-
-    function onClick(ev: google.maps.MapMouseEvent) {
-      emit("click", ev);
-    }
-
-    function onMouseOver(ev: google.maps.MapMouseEvent) {
-      emit("mouseover", ev);
-    }
-
-    function onMouseOut(ev: google.maps.MapMouseEvent) {
-      emit("mouseout", ev);
+      clickListener?.remove();
+      mouseUpListener?.remove();
+      mouseOutListener?.remove();
+      mouseOverListener?.remove();
+      contextmenuListener?.remove();
     }
 
     // Watchs
@@ -139,13 +138,10 @@ export default defineComponent({
     );
 
     watch(
-      model,
-      (
-        newValue: google.maps.LatLngLiteral[] | null,
-        oldValue: google.maps.LatLngLiteral[] | null,
-      ) => {
-        if (equal(newValue, oldValue) || !polygon.value || !newValue) return;
-        polygon.value.setPath(newValue);
+      () => props.modelValue,
+      (value) => {
+        if (!polygon.value || !value || equal(value, internalModelValue.value)) return;
+        polygon.value.setPath(value);
       },
     );
 

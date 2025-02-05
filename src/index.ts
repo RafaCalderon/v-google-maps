@@ -1,21 +1,21 @@
-// Tipos
+// Types
 import type { App } from "vue";
 
 // Composables
-import { useGmapLoader } from "@/composables/gmapLoader";
+import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 
-// Componentes
+// Components
 import VGoogleMap from "@/components/VGoogleMap.vue";
 import VGoogleCircle from "@/components/VGoogleCircle";
-import VGoogleMarker from "@/components/VGoogleMarker";
 import VGoogleHeatmap from "@/components/VGoogleHeatmap";
 import VGooglePolygon from "@/components/VGooglePolygon";
+import VGoogleMarker from "@/components/VGoogleMarker.vue";
 import VGooglePolyline from "@/components/VGooglePolyline";
 import VGoogleRectangle from "@/components/VGoogleRectangle";
 import VGoogleInfoWindow from "@/components/VGoogleInfoWindow.vue";
 import VGoogleMarkerClusterer from "@/components/VGoogleMarkerClusterer";
 
-export { useGmapLoader };
+export { useGoogleMapsLoader };
 
 export function vGoogleMaps(app: App) {
   app.component("VGoogleMap", VGoogleMap);

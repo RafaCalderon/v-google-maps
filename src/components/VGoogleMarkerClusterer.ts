@@ -34,8 +34,8 @@ export default defineComponent({
     if (map.value) {
       markerClusterer.value = markRaw(
         new MarkerClusterer({
-          map: map.value,
           ...props.options,
+          map: map.value,
         }),
       );
     }
