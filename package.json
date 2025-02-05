@@ -8,8 +8,8 @@
   "types": "src/typings/v-google-maps.d.ts",
   "files": [
     "README.md",
-    "dist/**/*",
     "package.json",
+    "dist/*.{js,cjs,mjs}",
     "src/typings/**/*.d.ts"
   ],
   "exports": {
