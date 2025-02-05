@@ -23,7 +23,7 @@ jobs:
       - name: Upload typings folder
         uses: actions/upload-artifact@v4
         with:
-          name: src/typings
+          name: src-typings
           path: src/typings
 
   publish-gpr:
@@ -45,7 +45,7 @@ jobs:
       - name: Download typings artifact
         uses: actions/download-artifact@v4
         with:
-          name: src/typings
+          name: src-typings
       - run: npm ci
       - run: npm publish
         env:
