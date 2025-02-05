@@ -1,6 +1,6 @@
 {
   "name": "v-google-maps",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "main": "dist/v-google-maps.umd.cjs",
   "module": "dist/v-google-maps.js",
