@@ -1,5 +1,5 @@
 {
-  "name": "@RafaCalderon/v-google-maps",
+  "name": "@rafacalderon/v-google-maps",
   "version": "1.2.1",
   "main": "dist/v-google-maps.umd.cjs",
   "module": "dist/v-google-maps.js",
@@ -56,6 +56,6 @@
     "vue": "^3"
   },
   "publishConfig": {
-    "@RafaCalderon:registry": "https://npm.pkg.github.com"
+    "@rafacalderon:registry": "https://npm.pkg.github.com"
   }
 }
