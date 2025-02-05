@@ -32,7 +32,7 @@ export default defineComponent({
       type: Object as PropType<google.maps.LatLngLiteral[] | null>,
     },
   },
-  emits: ["click", "mouseover", "mouseout", "update:model-value"],
+  emits: ["click", "mouseover", "mouseout", "contextmenu", "update:model-value"],
   setup(props, { emit, expose, slots }) {
     // Composables
 
@@ -51,6 +51,7 @@ export default defineComponent({
     let mouseUpListener: google.maps.MapsEventListener | null = null;
     let mouseOutListener: google.maps.MapsEventListener | null = null;
     let mouseOverListener: google.maps.MapsEventListener | null = null;
+    let contextmenuListener: google.maps.MapsEventListener | null = null;
 
     // Mounted
 
@@ -74,9 +75,17 @@ export default defineComponent({
       if (!polygon.value) return;
       const props = vm?.vnode?.props;
       if (props?.["onClick"]) {
-        clickListener = polygon.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
+        clickListener = polygon.value.addListener("click", (ev: google.maps.PolyMouseEvent) => {
           emit("click", ev);
         });
+      }
+      if (props?.["onContextmenu"]) {
+        contextmenuListener = polygon.value.addListener(
+          "contextmenu",
+          (ev: google.maps.PolyMouseEvent) => {
+            emit("contextmenu", ev);
+          },
+        );
       }
       if (props?.["onMouseout"]) {
         mouseOutListener = polygon.value.addListener(
@@ -112,6 +121,7 @@ export default defineComponent({
       mouseUpListener?.remove();
       mouseOutListener?.remove();
       mouseOverListener?.remove();
+      contextmenuListener?.remove();
     }
 
     // Watchs

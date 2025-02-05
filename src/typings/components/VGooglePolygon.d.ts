@@ -24,8 +24,8 @@ declare const _default: import("vue").DefineComponent<
   {},
   import("vue").ComponentOptionsMixin,
   import("vue").ComponentOptionsMixin,
-  ("click" | "update:model-value" | "mouseover" | "mouseout")[],
-  "click" | "update:model-value" | "mouseover" | "mouseout",
+  ("click" | "update:model-value" | "mouseover" | "mouseout" | "contextmenu")[],
+  "click" | "update:model-value" | "mouseover" | "mouseout" | "contextmenu",
   import("vue").PublicProps,
   Readonly<
     import("vue").ExtractPropTypes<{
@@ -41,6 +41,7 @@ declare const _default: import("vue").DefineComponent<
   > &
     Readonly<{
       onClick?: ((...args: any[]) => any) | undefined;
+      onContextmenu?: ((...args: any[]) => any) | undefined;
       onMouseout?: ((...args: any[]) => any) | undefined;
       onMouseover?: ((...args: any[]) => any) | undefined;
       "onUpdate:model-value"?: ((...args: any[]) => any) | undefined;
