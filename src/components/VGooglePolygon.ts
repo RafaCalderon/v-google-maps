@@ -73,13 +73,13 @@ export default defineComponent({
     function addListeners() {
       removeListeners();
       if (!polygon.value) return;
-      const props = vm?.vnode?.props;
-      if (props?.["onClick"]) {
+      const vmProps = vm?.vnode?.props;
+      if (vmProps?.onClick) {
         clickListener = polygon.value.addListener("click", (ev: google.maps.PolyMouseEvent) => {
           emit("click", ev);
         });
       }
-      if (props?.["onContextmenu"]) {
+      if (vmProps?.onContextmenu) {
         contextmenuListener = polygon.value.addListener(
           "contextmenu",
           (ev: google.maps.PolyMouseEvent) => {
@@ -87,7 +87,7 @@ export default defineComponent({
           },
         );
       }
-      if (props?.["onMouseout"]) {
+      if (vmProps?.onMouseout) {
         mouseOutListener = polygon.value.addListener(
           "mouseout",
           (ev: google.maps.MapMouseEvent) => {
@@ -95,7 +95,7 @@ export default defineComponent({
           },
         );
       }
-      if (props?.["onMouseover"]) {
+      if (vmProps?.onMouseover) {
         mouseOverListener = polygon.value.addListener(
           "mouseover",
           (ev: google.maps.MapMouseEvent) => {
@@ -103,7 +103,7 @@ export default defineComponent({
           },
         );
       }
-      if (props?.["onUpdate:modelValue"]) {
+      if (vmProps?.["onUpdate:modelValue"]) {
         mouseUpListener = polygon.value.addListener("mouseup", () => {
           const path = polygon.value
             ?.getPath()

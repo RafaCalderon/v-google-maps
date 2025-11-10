@@ -71,13 +71,13 @@ export default defineComponent({
     function addListeners() {
       removeListeners();
       if (!polyline.value) return;
-      const props = vm?.vnode?.props;
-      if (props?.["onClick"]) {
+      const vmProps = vm?.vnode?.props;
+      if (vmProps?.onClick) {
         clickListener = polyline.value.addListener("click", (ev: google.maps.PolyMouseEvent) => {
           emit("click", ev);
         });
       }
-      if (props?.["onContextmenu"]) {
+      if (vmProps?.onContextmenu) {
         contextmenuListener = polyline.value.addListener(
           "contextmenu",
           (ev: google.maps.PolyMouseEvent) => {
@@ -85,7 +85,7 @@ export default defineComponent({
           },
         );
       }
-      if (props?.["onUpdate:modelValue"]) {
+      if (vmProps?.["onUpdate:modelValue"]) {
         mouseUpListener = polyline.value.addListener("mouseup", () => {
           const path = polyline.value
             ?.getPath()

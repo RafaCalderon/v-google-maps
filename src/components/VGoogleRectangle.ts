@@ -70,13 +70,13 @@ export default defineComponent({
     function addListeners() {
       removeListeners();
       if (!rectangle.value) return;
-      const props = vm?.vnode?.props;
-      if (props?.["onClick"]) {
+      const vmProps = vm?.vnode?.props;
+      if (vmProps?.onClick) {
         clickListener = rectangle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
           emit("click", ev);
         });
       }
-      if (props?.["onUpdate:modelValue"]) {
+      if (vmProps?.["onUpdate:modelValue"]) {
         boundsChangedListener = rectangle.value.addListener("bounds_changed", () => {
           const bounds = rectangle.value?.getBounds()?.toJSON();
           if (!bounds) return;

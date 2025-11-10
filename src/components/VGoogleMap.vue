@@ -84,13 +84,13 @@ onMounted(async () => {
 function addListeners() {
   removeListeners();
   if (!map.value) return;
-  const props = vm?.vnode?.props;
-  if (props?.["onClick"]) {
+  const vmProps = vm?.vnode?.props;
+  if (vmProps?.onClick) {
     clickListener = map.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
       emit("click", ev);
     });
   }
-  if (props?.["onUpdate:center"]) {
+  if (vmProps?.["onUpdate:center"]) {
     dragEndListener = map.value.addListener("dragend", () => {
       const center = map.value?.getCenter()?.toJSON();
       if (!center) return;
@@ -98,7 +98,7 @@ function addListeners() {
       emit("update:center", interalCenter.value);
     });
   }
-  if (props?.["onUpdate:zoom"]) {
+  if (vmProps?.["onUpdate:zoom"]) {
     zoomChangedListener = map.value.addListener("zoom_changed", () => {
       internalZoom.value = map.value?.getZoom() ?? 0;
       emit("update:zoom", internalZoom.value);

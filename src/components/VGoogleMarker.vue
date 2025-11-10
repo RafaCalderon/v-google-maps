@@ -118,8 +118,8 @@ const slotIsInfoWindow = computed(() => {
 function addListeners() {
   removeListeners();
   if (!marker.value) return;
-  const props = vm?.vnode?.props;
-  if (props?.["onUpdate:modelValue"]) {
+  const vmProps = vm?.vnode?.props;
+  if (vmProps?.["onUpdate:modelValue"]) {
     dragendListener = marker.value.addListener("dragend", (event: google.maps.MapMouseEvent) => {
       const center = event.latLng?.toJSON();
       if (!center) return;
@@ -127,7 +127,7 @@ function addListeners() {
       emit("update:model-value", internalModelValue.value);
     });
   }
-  if (props?.["onClick"]) {
+  if (vmProps?.onClick) {
     clickListener = marker.value.addListener("click", (event: google.maps.MapMouseEvent) => {
       emit("click", event);
     });

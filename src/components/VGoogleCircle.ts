@@ -77,19 +77,19 @@ export default defineComponent({
     function addListeners() {
       removeListeners();
       if (!circle.value) return;
-      const props = vm?.vnode?.props;
-      if (props?.["onClick"]) {
+      const vmProps = vm?.vnode?.props;
+      if (vmProps?.onClick) {
         clickListener = circle.value.addListener("click", (ev: google.maps.MapMouseEvent) => {
           emit("click", ev);
         });
       }
-      if (props?.["onUpdate:radius"]) {
+      if (vmProps?.["onUpdate:radius"]) {
         radiusChangedListener = circle.value.addListener("radius_changed", () => {
           internalRadius.value = circle.value?.getRadius() ?? 0;
           emit("update:radius", internalRadius.value);
         });
       }
-      if (props?.["onUpdate:center"]) {
+      if (vmProps?.["onUpdate:center"]) {
         centerChangedListener = circle.value.addListener("center_changed", () => {
           const center = circle.value?.getCenter()?.toJSON();
           if (!center) return;

@@ -1,67 +1,29 @@
 import { type Ref } from "vue";
 interface Props {
-  options?: google.maps.marker.AdvancedMarkerElementOptions;
-  modelValue?: google.maps.LatLngLiteral | google.maps.LatLng | null;
+    options?: google.maps.marker.AdvancedMarkerElementOptions;
+    modelValue?: google.maps.LatLngLiteral | google.maps.LatLng | null;
 }
-declare function __VLS_template(): {
-  attrs: Partial<{}>;
-  slots: {
-    default?(_: {}): any;
-  };
-  refs: {
-    contentRef: HTMLDivElement;
-  };
-  rootEl: any;
+declare var __VLS_1: {};
+type __VLS_Slots = {} & {
+    default?: (props: typeof __VLS_1) => any;
 };
-type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-declare const __VLS_component: import("vue").DefineComponent<
-  Props,
-  {
-    marker: Ref<
-      google.maps.marker.AdvancedMarkerElement | null,
-      google.maps.marker.AdvancedMarkerElement | null
-    >;
-  },
-  {},
-  {},
-  {},
-  import("vue").ComponentOptionsMixin,
-  import("vue").ComponentOptionsMixin,
-  {} & {
+declare const __VLS_base: import("vue").DefineComponent<Props, {
+    marker: Ref<google.maps.marker.AdvancedMarkerElement | null, google.maps.marker.AdvancedMarkerElement | null>;
+}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {} & {
     click: (event: google.maps.MapMouseEvent) => any;
-    "update:model-value": (value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any;
-  },
-  string,
-  import("vue").PublicProps,
-  Readonly<Props> &
-    Readonly<{
-      onClick?: ((event: google.maps.MapMouseEvent) => any) | undefined;
-      "onUpdate:model-value"?:
-        | ((value: google.maps.LatLngLiteral | google.maps.LatLng | null) => any)
-        | undefined;
-    }>,
-  {
+    "update:model-value": (value: google.maps.LatLng | google.maps.LatLngLiteral | null) => any;
+}, string, import("vue").PublicProps, Readonly<Props> & Readonly<{
+    onClick?: ((event: google.maps.MapMouseEvent) => any) | undefined;
+    "onUpdate:model-value"?: ((value: google.maps.LatLng | google.maps.LatLngLiteral | null) => any) | undefined;
+}>, {
     options: google.maps.marker.AdvancedMarkerElementOptions;
     modelValue: google.maps.LatLngLiteral | google.maps.LatLng | null;
-  },
-  {},
-  {},
-  {},
-  string,
-  import("vue").ComponentProvideOptions,
-  false,
-  {
-    contentRef: HTMLDivElement;
-  },
-  any
->;
-declare const _default: __VLS_WithTemplateSlots<
-  typeof __VLS_component,
-  __VLS_TemplateResult["slots"]
->;
+}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithTemplateSlots<T, S> = T & {
-  new (): {
-    $slots: S;
-  };
+type __VLS_WithSlots<T, S> = T & {
+    new (): {
+        $slots: S;
+    };
 };

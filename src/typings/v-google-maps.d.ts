@@ -1,5 +1,5 @@
 import type { App, Ref } from "vue";
-import type { Libraries, Loader } from "@googlemaps/js-api-loader";
+import type { GoogleMapsOverlay } from "@deck.gl/google-maps";
 import type { MarkerClustererOptions } from "@googlemaps/markerclusterer";
 
 import type VGoogleMap from "./components/VGoogleMap.vue";
@@ -10,6 +10,7 @@ import type VGoogleMarker from "./components/VGoogleMarker.vue";
 import type VGooglePolyline from "./components/VGooglePolyline";
 import type VGoogleRectangle from "./components/VGoogleRectangle";
 import type VGoogleInfoWindow from "./components/VGoogleInfoWindow.vue";
+import type VGoogleDeckHeatmap from "./components/VGoogleDeckHeatmap.vue";
 import type VGoogleMarkerClusterer from "./components/VGoogleMarkerClusterer";
 
 export declare interface VGoogleMaps {
@@ -17,12 +18,11 @@ export declare interface VGoogleMaps {
 }
 
 export declare function useGoogleMapsLoader(): {
-  loader: Ref<Loader | null>;
   maps: Ref<google.maps.MapsLibrary | null>;
   core: Ref<google.maps.CoreLibrary | null>;
   markers: Ref<google.maps.MarkerLibrary | null>;
   visualization: Ref<google.maps.VisualizationLibrary | null>;
-  init: (apiKey: string, libraries: Libraries = []) => Promise<void>;
+  init: (apiKey: string, libraries: string = []) => Promise<void>;
 };
 
 export declare function vGoogleMaps(): VGoogleMaps;
@@ -61,6 +61,10 @@ export interface VGoogleInfoWindowRef {
   infoWindow: google.maps.InfoWindow;
 }
 
+export interface VGoogleDeckHeatmapRef {
+  overlay: GoogleMapsOverlay;
+}
+
 declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     VGoogleMap: typeof VGoogleMap;
@@ -71,6 +75,7 @@ declare module "@vue/runtime-core" {
     VGooglePolyline: typeof VGooglePolyline;
     VGoogleRectangle: typeof VGoogleRectangle;
     VGoogleInfoWindow: typeof VGoogleInfoWindow;
+    VGoogleDeckHeatmap: typeof VGoogleDeckHeatmap;
     VGoogleMarkerClusterer: typeof VGoogleMarkerClusterer;
   }
 }

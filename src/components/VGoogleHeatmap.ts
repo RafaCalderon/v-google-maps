@@ -19,6 +19,9 @@ import { useGoogleMapsLoader } from "@/composables/googleMapsLoader";
 // Symbols
 import { mapSymbol } from "@/shared/symbols";
 
+/**
+ * @deprecated since version 1.3.0
+ */
 export default defineComponent({
   name: "VGoogleHeatmap",
   props: {
