@@ -22,7 +22,7 @@ export declare function useGoogleMapsLoader(): {
   core: Ref<google.maps.CoreLibrary | null>;
   markers: Ref<google.maps.MarkerLibrary | null>;
   visualization: Ref<google.maps.VisualizationLibrary | null>;
-  init: (apiKey: string, libraries: string = []) => Promise<void>;
+  init: (apiKey: string, libraries: string[] = []) => Promise<void>;
 };
 
 export declare function vGoogleMaps(): VGoogleMaps;
